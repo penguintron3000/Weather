@@ -7,14 +7,14 @@ The code for CS427 Android app.
 <br/>
 | Name          | NetID         | GitHub ID   | Role          | Experience    |
 | ------------- | ------------- | ------------| ------------- | ------------- |
-|               |               |             |               |               |            
-|               |               |             |               |               |
-|               |               |             |               |               |
-|               |               |             |               |               |
-|               |               |             |               |               |
-|               |               |             |               |               |
-|               |               |             |               |               |
-|               |               |             |               |               |
+| Lucas Eby     | leby2         | LucasEby    | Manager?      | Java, Python, C/C++, JavaScript, PHP, MATLAB, Verilog, MIPS Assembly, ROS, UML/SysML, Agile/Scrum, Database Schema Design, and Project Management |            
+| Padma Chandra |               |             | Developer?    |               |
+| Brandon Li    |               |             | Developer?    |               |
+| Yuhao Cheng   |               |             |               |               |
+| Ashmit Gaba   |               |             | Developer?    |               |
+| Eric Liu      |               |             |               |               |
+| Vishal Ramvelu|               |             |               |               |
+| Weijie Li     |               |             |               |               |
 <br/>
 
 
