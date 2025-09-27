@@ -9,7 +9,7 @@ The code for CS427 Android app.
 | ------------- | ------------- | ------------| ------------- | ------------- |
 | Lucas Eby     | leby2         | LucasEby    | Manager?      | Java, Python, C/C++, JavaScript, PHP, MATLAB, Verilog, MIPS Assembly, ROS, UML/SysML, Agile/Scrum, Database Schema Design, and Project Management |            
 | Padma Chandra |               |             | Developer?    |               |
-| Brandon Li    |               |             | Developer?    |               |
+| Brandon Li    | bcli3         | brdonli     | Developer     | Java, Python, C++, JavaScript, SQL  |
 | Yuhao Cheng   |               |             |               |               |
 | Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JS, Node, SQL |
 | Eric Liu      |               |             |               |               |
