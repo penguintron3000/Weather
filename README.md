@@ -8,7 +8,7 @@ The code for CS427 Android app.
 | Name          | NetID         | GitHub ID   | Role          | Experience    |
 | ------------- | ------------- | ------------| ------------- | ------------- |
 | Lucas Eby     | leby2         | LucasEby    | Manager       | Java, Python, C/C++, JavaScript, PHP, MATLAB, Verilog, MIPS Assembly, ROS, UML/SysML, Agile/Scrum, Database Schema Design, and Project Management |            
-| Padma Chandra |               | pooja52141  | Developer     |               |
+| Padma Pooja Chandran |     ppc2          | pooja52141  | Developer     | Java, Python, C++, JavaScript, SQL           |
 | Brandon Li    | bcli3         | brdonli     | Developer     | Java, Python, C++, JavaScript, SQL  |
 | Yuhao Cheng   | yuhaoc7       | laserrr17   | Developer     | Java, Python, C++, JavaScript, React, Vue, Node.js, SQL |
 | Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JavaScript, React, SQL |
