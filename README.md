@@ -7,8 +7,8 @@ The code for CS427 Android app.
 <br/>
 | Name          | NetID         | GitHub ID   | Role          | Experience    |
 | ------------- | ------------- | ------------| ------------- | ------------- |
-| Lucas Eby     | leby2         | LucasEby    | Manager?      | Java, Python, C/C++, JavaScript, PHP, MATLAB, Verilog, MIPS Assembly, ROS, UML/SysML, Agile/Scrum, Database Schema Design, and Project Management |            
-| Padma Chandra |               |             | Developer?    |               |
+| Lucas Eby     | leby2         | LucasEby    | Manager       | Java, Python, C/C++, JavaScript, PHP, MATLAB, Verilog, MIPS Assembly, ROS, UML/SysML, Agile/Scrum, Database Schema Design, and Project Management |            
+| Padma Chandra |               | pooja52141  | Developer     |               |
 | Brandon Li    | bcli3         | brdonli     | Developer     | Java, Python, C++, JavaScript, SQL  |
 | Yuhao Cheng   |               |             |               |               |
 | Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JavaScript, React, SQL |
@@ -21,9 +21,9 @@ The code for CS427 Android app.
 <b>Weekly Progress Reports</b>
 </br> 
 </br>
-Meeting time: 
+Meeting time: TODO
 </br> 
-Meeting location (zoom link):
+Meeting location (zoom link): https://illinois.zoom.us/j/6557575262?pwd=CVykGMmogrCVEHRSMZ6K8hkgeVtGJ0.1
 </br> 
 </br>
 <b>Project Week 1</b>
@@ -34,14 +34,14 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          | Set up project environment. Set up first meeting. | Familiarize oneself with code stack. Assign/complete Requirements Engineering tasks once released. |
+| Padma NetID TODO | N/A (first meeting)           | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
+| bcli3          | N/A (first meeting)             | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
+| Yuhao NetID TODO | N/A (first meeting)           | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
+| ashmitg2       | N/A (first meeting)             | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
+| ericnl2        | N/A (first meeting)             | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
+| ramvelu2       | N/A (first meeting)             | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
+| wli200         | N/A (first meeting)             | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
 </br>
 
 
