@@ -35,7 +35,7 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
 | leby2          | Set up project environment. Set up first meeting. | Familiarize oneself with code stack. Assign/complete Requirements Engineering tasks once released. |
-| Padma NetID TODO | N/A (first meeting)           | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
+| ppc2 | N/A (first meeting)           | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
 | bcli3          | N/A (first meeting)             | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
 | Yuhao NetID TODO | N/A (first meeting)           | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
 | ashmitg2       | N/A (first meeting)             | Set up project environment. Familiarize oneself with code stack. May potentially be assigned some Requirements Engineering tasks once the assignment is released. |
