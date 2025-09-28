@@ -12,7 +12,7 @@ The code for CS427 Android app.
 | Brandon Li    | bcli3         | brdonli     | Developer     | Java, Python, C++, JavaScript, SQL  |
 | Yuhao Cheng   |               |             |               |               |
 | Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JavaScript, React, SQL |
-| Eric Liu      |               |             |               |               |
+| Eric Liu      | ericnl2       | ericnl2     | Developer     | Java, JS, React, C#, SQL, Unity              |
 | Vishal Ramvelu| ramvelu2      |vishalramvelu| Developer     | Java, Python, C, C#, Javascript, SQL |
 | Weijie Li     |               |             |               |               |
 <br/>
