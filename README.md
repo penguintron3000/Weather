@@ -10,7 +10,7 @@ The code for CS427 Android app.
 | Lucas Eby     | leby2         | LucasEby    | Manager       | Java, Python, C/C++, JavaScript, PHP, MATLAB, Verilog, MIPS Assembly, ROS, UML/SysML, Agile/Scrum, Database Schema Design, and Project Management |            
 | Padma Chandra |               | pooja52141  | Developer     |               |
 | Brandon Li    | bcli3         | brdonli     | Developer     | Java, Python, C++, JavaScript, SQL  |
-| Yuhao Cheng   | yuhaoc7       | laser17     | Developer     | Java, Python, C++, JavaScript, React, Vue, Node.js, SQL |
+| Yuhao Cheng   | yuhaoc7       | laserrr17   | Developer     | Java, Python, C++, JavaScript, React, Vue, Node.js, SQL |
 | Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JavaScript, React, SQL |
 | Eric Liu      | ericnl2       | ericnl2     | Developer     | Java, JS, React, C#, SQL, Unity              |
 | Vishal Ramvelu| ramvelu2      |vishalramvelu| Developer     | Java, Python, C, C#, Javascript, SQL |
