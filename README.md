@@ -13,7 +13,7 @@ The code for CS427 Android app.
 | Yuhao Cheng   |               |             |               |               |
 | Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JavaScript, React, SQL |
 | Eric Liu      |               |             |               |               |
-| Vishal Ramvelu|               |             |               |               |
+| Vishal Ramvelu| ramvelu2      |vishalramvelu| Developer     | Java, Python, C, C#, Javascript, SQL |
 | Weijie Li     |               |             |               |               |
 <br/>
 
