@@ -14,7 +14,7 @@ The code for CS427 Android app.
 | Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JavaScript, React, SQL |
 | Eric Liu      | ericnl2       | ericnl2     | Developer     | Java, JS, React, C#, SQL, Unity              |
 | Vishal Ramvelu| ramvelu2      |vishalramvelu| Developer     | Java, Python, C, C#, Javascript, SQL |
-| Weijie Li     |               |             |               |               |
+| Weijie Li     | wli200        |jackli200    | Developer     | Java, Python, C, C++,  SQL                   |
 <br/>
 
 
