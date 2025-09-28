@@ -11,7 +11,7 @@ The code for CS427 Android app.
 | Padma Chandra |               |             | Developer?    |               |
 | Brandon Li    | bcli3         | brdonli     | Developer     | Java, Python, C++, JavaScript, SQL  |
 | Yuhao Cheng   |               |             |               |               |
-| Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JS, Node, SQL |
+| Ashmit Gaba   | ashmitg2      | AshmitGaba  | Developer     | Java, Python, C, C++, JavaScript, React, SQL |
 | Eric Liu      |               |             |               |               |
 | Vishal Ramvelu|               |             |               |               |
 | Weijie Li     |               |             |               |               |
