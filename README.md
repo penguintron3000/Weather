@@ -54,13 +54,13 @@ Meeting notes: Team members were reminded to join the discord server to make com
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
 | leby2          | Already set up project environment. Set up discord server. Read iteration 2 pdf. Came up with plan to assign tasking for Iteration 2. | Generate class diagram of current code base. Set up shared document and diagramming tools for group members to use to collaborate. Coordinate with team members to check in on tasking progress. Identify other areas to assist as needed. |
-| ppc2           | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and the class diagram for: 2. Ability to update list of cities. |
-| bcli3          | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and the class diagram for: 1. User login and authentication |
-| yuhaoc7        | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and the class diagram for: 3. Enhancing the UI and customizing it for different users. |
-| ashmitg2       | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and the class diagram for: 6. Showing the map of each city. |
+| ppc2           | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 2. Ability to update list of cities. |
+| bcli3          | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 1. User login and authentication |
+| yuhaoc7        | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 3. Enhancing the UI and customizing it for different users. |
+| ashmitg2       | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 6. Showing the map of each city. |
 | ericnl2        | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Create rough overview of the feature requirements / class diagram to assist developers with tasking. |
-| ramvelu2       | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and the class diagram for: 5. Ability to use LLM to suggest weather insights. |
-| wli200         | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and the class diagram for: 4. Showing weather information for each city. |
+| ramvelu2       | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 5. Ability to use LLM to suggest weather insights. |
+| wli200         | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 4. Showing weather information for each city. |
 </br>
 
 
