@@ -66,20 +66,20 @@ Meeting notes: Team members were reminded to join the discord server to make com
 
 <b>Project Week 3</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, yuhaoc7, ashmitg2, ericnl2, ramvelu2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We worked together on Iteration 2's tasking. We refined the requirements that had been written as well as writing some new ones. We scheduled a final Iteration 2 meeting for Saturday where all Iteration 2 tasks are due by. In this meeting we will finalize all of the work that has been done for Iteration 2. (TODO: Week 3 after Saturday meeting)
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          | Made some suggestions for informal requirements for components. Created discord meeting reminders. Generated class diagram of current code base. Set up shared document and diagramming tools. | Create a class diagram of the current code base so folks only need to add new componen ts to class diagram. Make suggestions to various tasks to help folks finish tasks before Saturday meeting. Give feedback on tasking once folks are finished with each task to help finalize things before Saturday meeting. |
+| ppc2           | Made a large amount of progress in informal requirements and fully dressed use cases. | Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| bcli3          | Made some progress towards informal requirement(s). | Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| yuhaoc7        | Made some progress towards informal requirement(s). | Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| ashmitg2       | Made some progress towards informal requirement(s). | Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| ericnl2        | Created a rough overview of the feature requirements / class diagram to assist developers with tasking. Made suggestions towards requirements for each component to help out developers. | Create example class diagram and a tool for everyone to understand the 4-5 types of Android. |
+| ramvelu2       | Made some progress towards informal requirement(s). | Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| wli200         | Made some progress towards informal requirement(s). | Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
 </br>
 
 
