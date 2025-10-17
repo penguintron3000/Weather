@@ -47,39 +47,39 @@ Meeting notes: We referenced the When2meet scheduler to decide on a weekly meeti
 
 <b>Project Week 2</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, bcli3, yuhaoc7, ashmitg2, ericnl2, ramvelu2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: Team members were reminded to join the discord server to make communication easier. We discussed the project some more and talked about Iteration 2. Tasking was assigned for Iteration 2. We discussed that, in later iterations, we will try to assign tasking in the same area(s) as folks have written requirements for (to incentivize folks to dive deeper into the subject matter they are assigned because it will help them more later).
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          | Already set up project environment. Set up discord server. Read iteration 2 pdf. Came up with plan to assign tasking for Iteration 2. | Generate class diagram of current code base. Set up shared document and diagramming tools for group members to use to collaborate. Coordinate with team members to check in on tasking progress. Identify other areas to assist as needed. |
+| ppc2           | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 2. Ability to update list of cities. |
+| bcli3          | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 1. User login and authentication |
+| yuhaoc7        | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 3. Enhancing the UI and customizing it for different users. |
+| ashmitg2       | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 6. Showing the map of each city. |
+| ericnl2        | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Create rough overview of the feature requirements / class diagram to assist developers with tasking. |
+| ramvelu2       | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 5. Ability to use LLM to suggest weather insights. |
+| wli200         | Started looking into code stack. Read Iteration 2 pdf. Ran project locally. | Identify at least 1 informal requirement, at least 1 fully dressed use case, and create the class diagram for: 4. Showing weather information for each city. |
 </br>
 
 
 <b>Project Week 3</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, bcli3, yuhaoc7, ashmitg2, ericnl2, ramvelu2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We worked together on Iteration 2's tasking. In Wednesday's meeting, we refined the informal requirements that had been written as well as wrote some new ones. Final Iteration 2 tasks were assigned and we scheduled a final Iteration 2 meeting for Saturday where all Iteration 2 tasks were due by. In our Saturday meeting we finalized the work that was previously done (informal requirements, use cases, class diagram). Using the work that was previously done, we created a detailed Component Transition Graph.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          | Made some suggestions for informal requirements for components. Created discord meeting reminders. Generated class diagram of current code base. Set up shared document and diagramming tools. Created class diagram of the current code base (most of the Android components were ignored). Looked over tasking that was completed and gave feedback to help finalize things before Saturday meeting. Helped finalize class diagram by fixing mistakes. Did a chunk of the Component Transition Graph before Saturday meeting and worked with group in meeting to finish it. | Wednesday meeting tasking assigned: Create a class diagram of the current code base so folks only need to add new componen ts to class diagram. Make suggestions to various tasks to help folks finish tasks before Saturday meeting. Give feedback on tasking once folks are finished with each task to help finalize things before Saturday meeting. |
+| ppc2           | Wrote 4 informal requirements, 2 use cases, and did a lot of work on the class diagram and helped with the Component Transition Graph. | Wednesday meeting tasking assigned: Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| bcli3          | Wrote 4 informal requirements, 2 use cases, and did a ton of work on the class diagram and helped with Component Transition Graph for assigned feature. | Wednesday meeting tasking assigned: Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| yuhaoc7        | Did some work on the class diagram (we were told not to go into much detail on UI components in informal requirements). Helped with Component Transition Graph. | Wednesday meeting tasking assigned: Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| ashmitg2       | Created a use case and added feature to class diagram. Helped with Component Transition Graph. | Wednesday meeting tasking assigned: Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| ericnl2        | Created a rough overview of the feature requirements / class diagram to assist developers with tasking. Made suggestions towards requirements for each component to help out developers. Created example class diagram and a tool for everyone to understand the 4-5 types of Android. Helped with class diagram and Component Transition Graph. | Wednesday meeting tasking assigned: Create example class diagram and a tool for everyone to understand the 4-5 types of Android. |
+| ramvelu2       | Created a use case. Added rough feature to class diagram that was not in a UML Class Diagram format. Helped some with Component Transition Graph. | Wednesday meeting tasking assigned: Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
+| wli200         | Wrote 4 informal requirements, a use case and added feature to class diagram. Helped with Component Transition Graph. | Wednesday meeting tasking assigned: Finalize informal requirement(s) for assigned component. Finalize fully dressed use case for assigned component. Add finalized components to combined class diagram. |
 </br>
 
 
