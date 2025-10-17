@@ -85,20 +85,20 @@ Meeting notes: We worked together on Iteration 2's tasking. In Wednesday's meeti
 
 <b>Project Week 4</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, bcli3, ashmitg2, ericnl2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We discussed what Iteration 3 entailed. We then divided up the major categories of tasks to each person. From there we went task by task to discuss the task, assign the task, and to assign an agreed upon amount of story points.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2 | Completed Iteration 2. Set up Jira. Created initial tasking and overarching User stories for Iteration 3. | Modify all tasking that was assigned to include much more detail, add acceptance criteria, and rework some of the tasks. Perform Technical Lead duties to investigate each task and add detailed plans to each of them. Assigned all leftover/missed tasks that were not assigned in the meeting. |
+| ppc2 | Completed Iteration 2. | Complete 4 story points. Has choice of the following tasks: (4) Add New Cities/Locations and (4) Search for City to Add with Google Maps API. |
+| bcli3 | Completed Iteration 2. | Complete 4 story points. Has choice of the following tasks: (1) Make Authentication the First Screen, (1) Show Username on the Main Screen, and (4) New Users Sign Up. |
+| yuhaoc7 | Completed Iteration 2. | Complete 4 story points. Has choice of the following tasks: (1) Create Backup/Default Theme JSON, (2) Make app theme customizable, and (4) Central UI Theme Class. |
+| ashmitg2 | Completed Iteration 2. | Complete 4 story points. Has choice of the following tasks: (2) Implement Log Off Button and (4) User Sign In. |
+| ericnl2 | Completed Iteration 2. | Complete 4 story points. Has choice of the following tasks: (2) City Class, (2) Remove Cities/Locations, and (2) Cities List UI. |
+| ramvelu2 | Completed Iteration 2. | Complete 4 story points. Has choice of the following tasks: (1) Add Theme Description to Authentication Page, (2) Set Up LLM (for LLM-generated Themes), and (4) Integrate LLM Theme Generator with App Theme. |
+| wli200 | Completed Iteration 2. | Complete 4 story points. Has choice of the following tasks: (2) Design Database Schema and (4) Integrate Database Into Codebase. |
 </br>
 
 
