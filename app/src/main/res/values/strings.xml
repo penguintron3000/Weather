@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Team 413</string>
+    <string name="layout_option_default">Default</string>
+    <string-array name="layout_options">
+        <item>@string/layout_option_default</item>
+    </string-array>
 </resources>
