@@ -22,6 +22,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailsActivity" android:exported="true"></activity>
+        <provider
+            android:name="edu.uiuc.cs427app.db.UserContentProvider"
+            android:authorities="edu.uiuc.cs427app.userprovider"
+            android:exported="false" />
+
+        <provider
+            android:name="edu.uiuc.cs427app.db.CityContentProvider"
+            android:authorities="edu.uiuc.cs427app.cityprovider"
+            android:exported="false" />
     </application>
 
 </manifest>

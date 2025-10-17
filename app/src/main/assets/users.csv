@@ -1,0 +1,3 @@
+username,password_hash,is_locked,locked_at,locked_until,theme_json
+alice,hash_of_alice,0,,,"{\"bgColor\":\"#FFFFFF\",\"textColor\":\"#000000\"}"
+bob,hash_of_bob,0,,,"{\"bgColor\":\"#000000\",\"textColor\":\"#FFFFFF\"}"

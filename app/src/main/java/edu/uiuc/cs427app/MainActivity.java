@@ -13,6 +13,9 @@ import edu.uiuc.cs427app.databinding.ActivityMainBinding;
 
 import android.widget.Button;
 
+import edu.uiuc.cs427app.db.DatabaseHelper;
+
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AppBarConfiguration appBarConfiguration;
@@ -22,6 +25,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //create db without imported csv
+//        DatabaseHelper dbHelper = new DatabaseHelper(this);
+//        dbHelper.getWritableDatabase();
+
+        //create db with imported csv
+        edu.uiuc.cs427app.db.DatabaseImporter.importFromAssets(this);
+
+        // Run the test /example code
+        edu.uiuc.cs427app.db.DatabaseTester.runTests(this);
+
 
         // Initializing the UI components
         // The list of locations should be customized per user (change the implementation so that
