@@ -1,7 +1,11 @@
 package edu.uiuc.cs427app;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +18,11 @@ import edu.uiuc.cs427app.databinding.ActivityMainBinding;
 
 import android.widget.Button;
 
+import com.google.android.libraries.places.api.Places;
+
 import edu.uiuc.cs427app.db.DatabaseHelper;
+import edu.uiuc.cs427app.db.CityContract;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,27 +47,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // dbHelper.getWritableDatabase();
 
         // create db with imported csv
-        edu.uiuc.cs427app.db.DatabaseImporter.importFromAssets(this);
+        //edu.uiuc.cs427app.db.DatabaseImporter.importFromAssets(this);
 
         // Run the test /example code
-        edu.uiuc.cs427app.db.DatabaseTester.runTests(this);
+        //edu.uiuc.cs427app.db.DatabaseTester.runTests(this);
+
+
+        // initialize the Places SDK
+        if (!Places.isInitialized()) {
+            // Read the API key from the build configuration
+            String apiKey = BuildConfig.MAPS_API_KEY;
+            Places.initialize(getApplicationContext(), apiKey);
+        }
 
         // update header to display "Team 413 - <username>"
         updateHeader();
 
-        // Initializing the UI components
-        // The list of locations should be customized per user (change the
-        // implementation so that
-        // buttons are added to layout programmatically
-        Button buttonChampaign = findViewById(R.id.buttonChampaign);
-        Button buttonChicago = findViewById(R.id.buttonChicago);
-        Button buttonLA = findViewById(R.id.buttonLA);
+        // initialize ONLY the "Add Location" button
         Button buttonNew = findViewById(R.id.buttonAddLocation);
-
-        buttonChampaign.setOnClickListener(this);
-        buttonChicago.setOnClickListener(this);
-        buttonLA.setOnClickListener(this);
         buttonNew.setOnClickListener(this);
+    }
+
+    /**
+     * Refreshes the list of city buttons.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh the city list when returning to this screen
+        populateCityList();
     }
 
     /**
@@ -77,28 +93,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Fetches the user's saved cities from the database
+     * and dynamically creates a view for each one using the city_list_item layout.
+     */
+    private void populateCityList() {
+        LinearLayout container = findViewById(R.id.cities_container);
+        container.removeAllViews(); // Clear old views to prevent duplicates
+
+        Long userIdLong = User.getInstance().getUserId();
+        if (userIdLong == null) {
+            Log.e("MainActivity", "Could not find user ID for username: " + User.getInstance().getUsername());
+            return;
+        }
+        int userId = userIdLong.intValue();
+
+        // Query the CityContentProvider for the user's saved cities
+        String[] projection = { CityContract.CityEntry.COLUMN_DISPLAY_NAME, CityContract.CityEntry.COLUMN_COUNTRY_CODE };
+        String selection = CityContract.CityEntry.COLUMN_USER_ID + "=?";
+        String[] selectionArgs = { String.valueOf(userId) };
+        String sortOrder = CityContract.CityEntry.COLUMN_DISPLAY_NAME + " ASC"; // Sort cities alphabetically
+
+        try (Cursor cursor = getContentResolver().query(CityContract.CONTENT_URI, projection, selection, selectionArgs, sortOrder)) {
+            if (cursor != null) {
+                int nameIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_DISPLAY_NAME);
+                int countryIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_COUNTRY_CODE);
+
+                while (cursor.moveToNext()) {
+                    String cityName = cursor.getString(nameIndex);
+                    String countryCode = cursor.getString(countryIndex);
+
+                    // Inflate the city_list_item layout
+                    LayoutInflater inflater = LayoutInflater.from(this);
+                    View cityView = inflater.inflate(R.layout.city_list_item, container, false);
+
+                    // Get the TextView and Button from the layout
+                    TextView cityNameText = cityView.findViewById(R.id.city_name_text);
+                    Button viewInfoButton = cityView.findViewById(R.id.view_city_info_button);
+
+                    // Set the city name and country code
+                    cityNameText.setText(cityName + ", " + countryCode);
+
+                    viewInfoButton.setOnClickListener(v -> {
+                        Intent intent = new Intent(this, DetailsActivity.class);
+                        intent.putExtra("city", cityName);
+                        startActivity(intent);
+                    });
+
+                    container.addView(cityView);
+                }
+            }
+        } catch (Exception e) {
+            Log.e("MainActivity", "Error populating city buttons", e);
+        }
+    }
+
     @Override
     public void onClick(View view) {
-        Intent intent;
-        switch (view.getId()) {
-            case R.id.buttonChampaign:
-                intent = new Intent(this, DetailsActivity.class);
-                intent.putExtra("city", "Champaign");
-                startActivity(intent);
-                break;
-            case R.id.buttonChicago:
-                intent = new Intent(this, DetailsActivity.class);
-                intent.putExtra("city", "Chicago");
-                startActivity(intent);
-                break;
-            case R.id.buttonLA:
-                intent = new Intent(this, DetailsActivity.class);
-                intent.putExtra("city", "Los Angeles");
-                startActivity(intent);
-                break;
-            case R.id.buttonAddLocation:
-                // Implement this action to add a new location to the list of locations
-                break;
+        if (view.getId() == R.id.buttonAddLocation) {
+            Intent intent = new Intent(this, AddCityActivity.class);
+            startActivity(intent);
         }
     }
 }

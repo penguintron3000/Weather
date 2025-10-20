@@ -59,13 +59,13 @@ public class CityContentProvider extends ContentProvider {
         Uri resultUri;
         switch (sUriMatcher.match(uri)) {
             case CITY:
-                long id = db.insert(CityContract.CityEntry.TABLE_NAME, null, values);
+                long id = db.insertWithOnConflict(CityContract.CityEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
                 if (id > 0) {
                     resultUri = ContentUris.withAppendedId(CityContract.CONTENT_URI, id);
                     getContext().getContentResolver().notifyChange(resultUri, null);
                     return resultUri;
                 }
-                throw new SQLException("Failed to insert row into " + uri);
+                return null;
             default:
                 throw new UnsupportedOperationException("Unknown URI for insert: " + uri);
         }

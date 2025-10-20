@@ -7,99 +7,53 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="CS427 Project App" />
+            android:layout_height="wrap_content"
+            android:text="CS427 Project App"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="List of Locations" />
+            android:text="List of Locations"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/textView5"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/cities_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Champaign" />
+                android:orientation="vertical" />
 
-            <Button
-                android:id="@+id/buttonChampaign"
-                android:layout_width="45dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Show Details" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Chicago" />
-
-            <Button
-                android:id="@+id/buttonChicago"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Show Details" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Los Angeles" />
-
-            <Button
-                android:id="@+id/buttonLA"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Show Details" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="match_parent"
-            android:layout_height="156dp" />
+        </ScrollView>
 
         <Button
             android:id="@+id/buttonAddLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add a location" />
+            android:text="Add a location"
+            android:layout_marginTop="16dp"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
