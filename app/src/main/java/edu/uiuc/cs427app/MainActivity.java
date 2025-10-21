@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
 import android.view.View;
 
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int userId = userIdLong.intValue();
 
         // Query the CityContentProvider for the user's saved cities
-        String[] projection = { CityContract.CityEntry.COLUMN_DISPLAY_NAME, CityContract.CityEntry.COLUMN_COUNTRY_CODE };
+        String[] projection = { CityContract.CityEntry.COLUMN_DISPLAY_NAME, CityContract.CityEntry.COLUMN_COUNTRY_CODE, CityContract.CityEntry.COLUMN_CITY_ID };
         String selection = CityContract.CityEntry.COLUMN_USER_ID + "=?";
         String[] selectionArgs = { String.valueOf(userId) };
         String sortOrder = CityContract.CityEntry.COLUMN_DISPLAY_NAME + " ASC"; // Sort cities alphabetically
@@ -118,10 +120,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (cursor != null) {
                 int nameIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_DISPLAY_NAME);
                 int countryIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_COUNTRY_CODE);
+                int idIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_CITY_ID);
 
                 while (cursor.moveToNext()) {
                     String cityName = cursor.getString(nameIndex);
                     String countryCode = cursor.getString(countryIndex);
+                    int cityId = cursor.getInt(idIndex);
 
                     // Inflate the city_list_item layout
                     LayoutInflater inflater = LayoutInflater.from(this);
@@ -130,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // Get the TextView and Button from the layout
                     TextView cityNameText = cityView.findViewById(R.id.city_name_text);
                     Button viewInfoButton = cityView.findViewById(R.id.view_city_info_button);
+
+                    Button removeButton = cityView.findViewById(R.id.remove_button);
 
                     // Set the city name and country code
                     cityNameText.setText(cityName + ", " + countryCode);
@@ -140,6 +146,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intent);
                     });
 
+                    removeButton.setOnClickListener(v -> {
+                        showRemoveCityDialog(cityId, cityView);
+                    });
+
+
                     container.addView(cityView);
                 }
             }
@@ -147,6 +158,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.e("MainActivity", "Error populating city buttons", e);
         }
     }
+
+    /**
+     * Asks user for removal confirmation of selected city
+     *
+     * @param cityId cityId of the city in question for the dialog
+     * @param cityView cityView of the city in question for the dialog
+     */
+    private void showRemoveCityDialog(int cityId, View cityView) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Really remove this city?")
+                .setTitle("Remove City")
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    Toast t;
+                    if(removeCityFromDatabase(cityId)){
+                        LinearLayout container = findViewById(R.id.cities_container);
+                        container.removeView(cityView);
+                        t = Toast.makeText(this, "City removed successfully", Toast.LENGTH_SHORT);
+                    }
+                    else{
+                        t = Toast.makeText(this, "Failed to remove city. Please try again.", Toast.LENGTH_LONG);
+                    }
+                    t.show();
+                })
+                .setNegativeButton("Cancel", (dialog, id) -> {
+                    dialog.dismiss();
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    /**
+     * Removes city from database
+     *
+     * @param cityId ID of the city to be removed
+     * @return boolean false if there was an erroneous transaction with the database (cityId does not exist)
+     */
+    private boolean removeCityFromDatabase(int cityId) {
+        String selection = CityContract.CityEntry.COLUMN_CITY_ID + "=?";
+        String[] selectionArgs = {String.valueOf(cityId)};
+        int verifyDeletedCount = getContentResolver().delete(CityContract.CONTENT_URI, selection, selectionArgs);
+        return verifyDeletedCount > 0;
+    }
+
 
     @Override
     public void onClick(View view) {
