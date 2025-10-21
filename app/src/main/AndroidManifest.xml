@@ -14,27 +14,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyFirstApp">
         <activity
+            android:name=".AddCityActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-        <activity android:name=".RegisterActivity" android:exported="true" />
-        <activity android:name=".DetailsActivity" android:exported="true"></activity>
-        <provider
-            android:name="edu.uiuc.cs427app.db.UserContentProvider"
-            android:authorities="edu.uiuc.cs427app.userprovider"
-            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DetailsActivity"
+            android:exported="true" />
 
         <provider
-            android:name="edu.uiuc.cs427app.db.CityContentProvider"
+            android:name=".db.UserContentProvider"
+            android:authorities="edu.uiuc.cs427app.userprovider"
+            android:exported="false" />
+        <provider
+            android:name=".db.CityContentProvider"
             android:authorities="edu.uiuc.cs427app.cityprovider"
             android:exported="false" />
+
     </application>
 
 </manifest>
