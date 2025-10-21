@@ -24,7 +24,7 @@ import edu.uiuc.cs427app.db.DatabaseHelper;
 import edu.uiuc.cs427app.db.CityContract;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends ThemedActivity implements View.OnClickListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // Apply the global theme to all UI components
+        applyThemeToActivity();
 
         // check if user is logged in, o.w. redirect to LoginActivity
         if (!User.getInstance().isLoggedIn()) {
@@ -133,6 +136,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     // Set the city name and country code
                     cityNameText.setText(cityName + ", " + countryCode);
+                    
+                    // Apply theme to the dynamically created city list item
+                    applyThemeToView(cityView);
 
                     viewInfoButton.setOnClickListener(v -> {
                         Intent intent = new Intent(this, DetailsActivity.class);

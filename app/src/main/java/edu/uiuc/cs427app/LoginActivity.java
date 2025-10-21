@@ -20,7 +20,7 @@ import edu.uiuc.cs427app.db.UserContract;
  * LoginActivity is the entry point shown on app launch.
  * Handles user authentication by verifying credentials against the database.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends ThemedActivity implements View.OnClickListener {
 
     private EditText usernameInput;
     private EditText passwordInput;
@@ -33,6 +33,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        
+        // Apply the global theme to all UI components
+        applyThemeToActivity();
 
         usernameInput = findViewById(R.id.inputUsername);
         passwordInput = findViewById(R.id.inputPassword);
@@ -147,6 +150,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      */
     private void showError(String message) {
         errorMessage.setText(message);
+        errorMessage.setTextColor(theme.getErrorColor());
+        errorMessage.setBackgroundColor(adjustAlpha(theme.getErrorColor(), 0.1f));
         errorMessage.setVisibility(View.VISIBLE);
     }
 
