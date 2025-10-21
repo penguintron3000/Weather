@@ -14,7 +14,9 @@ public final class CityContract {
 
         public static final String COLUMN_CITY_ID = "city_id";
         public static final String COLUMN_USER_ID = "user_id";
+        public static final String COLUMN_PLACE_ID = "place_id";
         public static final String COLUMN_DISPLAY_NAME = "display_name";
+        public static final String COLUMN_STATE = "state";
         public static final String COLUMN_COUNTRY_CODE = "country_code";
         public static final String COLUMN_LAT = "lat";
         public static final String COLUMN_LON = "lon";

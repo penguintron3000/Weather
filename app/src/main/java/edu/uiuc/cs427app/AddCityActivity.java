@@ -104,18 +104,20 @@ public class AddCityActivity extends AppCompatActivity {
             int userId = userIdLong.intValue();
 
             //Extract selected city info
+            String placeId = selectedPlace.getId();
             String name = selectedPlace.getName();
+            String state = getState(selectedPlace);
             Double lat = selectedPlace.getLatLng() != null ? selectedPlace.getLatLng().latitude : null;
             Double lon = selectedPlace.getLatLng() != null ? selectedPlace.getLatLng().longitude : null;
             String country = getCountryCode(selectedPlace);
 
-            if (name == null || lat == null || lon == null) {
+            if (placeId == null || name == null || lat == null || lon == null) {
                 Toast.makeText(this, "Missing place data. Try another city.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             //Insert selected City
-            Uri inserted = saveCityViaProvider(userId, name, country, lat, lon);
+            Uri inserted = saveCityViaProvider(userId, placeId, name, state, country, lat, lon);
             if (inserted != null) {
                 Toast.makeText(this, "Saved " + name, Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Inserted city URI: " + inserted);
@@ -147,20 +149,40 @@ public class AddCityActivity extends AppCompatActivity {
     }
 
     /**
+     * Extracts the state (administrative area level 1) from a Place object.
+     *
+     * @param place The Place object from the Google Places API.
+     * @return The name of the state, or null if not found.
+     */
+    private String getState(Place place) {
+        if (place.getAddressComponents() == null) return null;
+        for (AddressComponent c : place.getAddressComponents().asList()) {
+            if (c.getTypes().contains("administrative_area_level_1")) {
+                return c.getName();
+            }
+        }
+        return null;
+    }
+
+    /**
      * Inserts a new city into the database using the CityContentProvider.
      * It constructs a ContentValues object and uses the ContentResolver to perform the insertion.
      *
      * @param userId The ID of the user for whom the city is being saved.
+     * @param placeId The unique ID from the Google Places API.
      * @param name The name of the city.
+     * @param state The state.
      * @param country The two-letter country code.
      * @param lat The latitude of the city.
      * @param lon The longitude of the city.
      * @return The Uri of the newly inserted row, or null if the insertion fails (e.g., due to a duplicate).
      */
-    private Uri saveCityViaProvider(int userId, String name, String country, Double lat, Double lon) {
+    private Uri saveCityViaProvider(int userId, String placeId, String name, String state, String country, Double lat, Double lon) {
         android.content.ContentValues values = new android.content.ContentValues();
         values.put(CityContract.CityEntry.COLUMN_USER_ID, userId);
+        values.put(CityContract.CityEntry.COLUMN_PLACE_ID, placeId);
         values.put(CityContract.CityEntry.COLUMN_DISPLAY_NAME, name);
+        values.put(CityContract.CityEntry.COLUMN_STATE, state);
         values.put(CityContract.CityEntry.COLUMN_COUNTRY_CODE, country);
         values.put(CityContract.CityEntry.COLUMN_LAT, lat);
         values.put(CityContract.CityEntry.COLUMN_LON, lon);
