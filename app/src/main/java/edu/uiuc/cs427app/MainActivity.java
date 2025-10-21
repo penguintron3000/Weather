@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 while (cursor.moveToNext()) {
                     String cityName = cursor.getString(nameIndex);
                     String countryCode = cursor.getString(countryIndex);
-                    int cityId = cursor.getInt(idIndex);
+                    long cityId = cursor.getLong(idIndex);
 
                     // Inflate the city_list_item layout
                     LayoutInflater inflater = LayoutInflater.from(this);
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param cityId cityId of the city in question for the dialog
      * @param cityView cityView of the city in question for the dialog
      */
-    private void showRemoveCityDialog(int cityId, View cityView) {
+    private void showRemoveCityDialog(long cityId, View cityView) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Really remove this city?")
@@ -175,10 +175,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if(removeCityFromDatabase(cityId)){
                         LinearLayout container = findViewById(R.id.cities_container);
                         container.removeView(cityView);
-                        t = Toast.makeText(this, "City removed successfully", Toast.LENGTH_SHORT);
+                        t = Toast.makeText(this, "City removed successfully!", Toast.LENGTH_SHORT);
                     }
                     else{
-                        t = Toast.makeText(this, "Failed to remove city. Please try again.", Toast.LENGTH_LONG);
+                        t = Toast.makeText(this, "Failed to remove city. Please try again later.", Toast.LENGTH_LONG);
                     }
                     t.show();
                 })
@@ -196,11 +196,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param cityId ID of the city to be removed
      * @return boolean false if there was an erroneous transaction with the database (cityId does not exist)
      */
-    private boolean removeCityFromDatabase(int cityId) {
+    private boolean removeCityFromDatabase(long cityId) {
         String selection = CityContract.CityEntry.COLUMN_CITY_ID + "=?";
         String[] selectionArgs = {String.valueOf(cityId)};
         int verifyDeletedCount = getContentResolver().delete(CityContract.CONTENT_URI, selection, selectionArgs);
-        return verifyDeletedCount > 0;
+        return verifyDeletedCount == 1;
     }
 
 

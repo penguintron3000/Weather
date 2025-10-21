@@ -7,8 +7,7 @@ import edu.uiuc.cs427app.db.CityContract;
  */
 public class City {
 
-    //described as long in UML, but integer in schema. Sticking with schema definition
-    private int id;
+    private long id;
     private String userId;
     private String displayName;
     private String countryCode;
@@ -16,7 +15,7 @@ public class City {
     private double lon;
 
     // Constructor for preparsed data values
-    public City(int id, String userId, String displayName, String countryCode, double lat, double lon) {
+    public City(long id, String userId, String displayName, String countryCode, double lat, double lon) {
         this.id = id;
         this.userId = userId;
         this.displayName = displayName;
@@ -40,7 +39,7 @@ public class City {
      *
      * @return The ID of the city.
      */
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -49,7 +48,7 @@ public class City {
      *
      * @param id The unique ID to set for the city.
      */
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
