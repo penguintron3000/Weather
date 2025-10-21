@@ -22,6 +22,11 @@ import java.util.Arrays;
 
 import edu.uiuc.cs427app.db.CityContract;
 
+/**
+ * AddCityActivity provides a user interface for searching and adding new cities to the user's list.
+ * It uses the Google Places API's Autocomplete feature to allow users to easily find and select a city.
+ * Once a city is selected, its details are saved to the database via the CityContentProvider.
+ */
 public class AddCityActivity extends AppCompatActivity {
     private static final String TAG = "AddCityActivity";
 
@@ -124,7 +129,13 @@ public class AddCityActivity extends AppCompatActivity {
         buttonCancel.setOnClickListener(v -> finish());
     }
 
-    /** Extract country code (e.g., "US") from AddressComponents, if present. */
+    /**
+     * Extracts the two-letter country code from a Place object.
+     * It iterates through the address components of the place to find the one corresponding to the country.
+     *
+     * @param place The Place object from the Google Places API.
+     * @return A String representing the short name of the country, or null if not found.
+     */
     private String getCountryCode(Place place) {
         if (place.getAddressComponents() == null) return null;
         for (AddressComponent c : place.getAddressComponents().asList()) {
@@ -135,7 +146,17 @@ public class AddCityActivity extends AppCompatActivity {
         return null;
     }
 
-    /** Insert a city row via CityContentProvider. */
+    /**
+     * Inserts a new city into the database using the CityContentProvider.
+     * It constructs a ContentValues object and uses the ContentResolver to perform the insertion.
+     *
+     * @param userId The ID of the user for whom the city is being saved.
+     * @param name The name of the city.
+     * @param country The two-letter country code.
+     * @param lat The latitude of the city.
+     * @param lon The longitude of the city.
+     * @return The Uri of the newly inserted row, or null if the insertion fails (e.g., due to a duplicate).
+     */
     private Uri saveCityViaProvider(int userId, String name, String country, Double lat, Double lon) {
         android.content.ContentValues values = new android.content.ContentValues();
         values.put(CityContract.CityEntry.COLUMN_USER_ID, userId);
