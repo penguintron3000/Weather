@@ -16,7 +16,17 @@ public class City {
     private double lat;
     private double lon;
 
-    // Constructor for preparsed data values
+    /**
+     * Constructor for preparsed data values
+     * @param id cityId primary key from database
+     * @param userId user ID associated with city record
+     * @param placeId Google Map's unique place ID of city
+     * @param displayName City display name
+     * @param state City's state/province
+     * @param countryCode Country code of city
+     * @param lat city latitude
+     * @param lon city longitude
+      */
     public City(long id, String userId, String placeId, String displayName, String state, String countryCode, double lat, double lon) {
         this.id = id;
         this.userId = userId; //we may change this to long since that is how User class defines userId
@@ -28,6 +38,17 @@ public class City {
         this.lon = lon;
     }
 
+    /**
+     * Constructor for creating and inserting newly added city to database
+     * since id is assigned via autoincrement per DatabaseHelper SQL
+     * @param userId user ID associated with city record
+     * @param placeId Google Map's unique place ID of city
+     * @param displayName City display name
+     * @param state City's state/province
+     * @param countryCode Country code of city
+     * @param lat city latitude
+     * @param lon city longitude
+     */
     public City(String userId, String placeId, String displayName, String state, String countryCode, double lat, double lon) { //before inserting, we will not have id, until we replace id with places id
         this.userId = userId; //we may change this to long since that is how User class defines userId
         this.placeId = placeId;
@@ -38,7 +59,10 @@ public class City {
         this.lon = lon;
     }
 
-    // Constructor for City directly built out of Content Provider values
+    /**
+     * Constructor for City directly built out of Content Provider values
+     * @param contentValues ContentValues containing mapped key value pairs of desired column name, desired value
+      */
     public City(ContentValues contentValues) {
         this.id = contentValues.getAsInteger(CityContract.CityEntry.COLUMN_CITY_ID);
         this.userId = contentValues.getAsString(CityContract.CityEntry.COLUMN_USER_ID);

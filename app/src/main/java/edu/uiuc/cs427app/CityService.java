@@ -27,6 +27,7 @@ public class CityService extends Service {
     private int currentUserId = -1;
 
     public class CityBinder extends Binder {
+
         /**
          * Allows binding Activity class to access our CityService service
          * @return CityService access to our singleton CityService
@@ -55,6 +56,7 @@ public class CityService extends Service {
         cachedCities.clear();
         cachedCities.addAll(fetchCitiesFromDatabase(userId));
     }
+
     /**
      * Returns a list of cached cities
      * @return List of cached cities
@@ -62,6 +64,7 @@ public class CityService extends Service {
     public List<City> getCities() {
         return new ArrayList<>(cachedCities);
     }
+
     /**
      * Find city by its unique ID
      * @param id The ID of the city
@@ -73,6 +76,7 @@ public class CityService extends Service {
         }
         return fetchCityFromDatabase(id);
     }
+
     /**
      * Adds a city to the cached cities and database
      * @param city The city to be added
@@ -86,6 +90,7 @@ public class CityService extends Service {
 
         return result;
     }
+
     /**
      * Inserts a new city into the database using the CityContentProvider.
      * It constructs a ContentValues object and uses the ContentResolver to perform the insertion.
@@ -103,6 +108,7 @@ public class CityService extends Service {
         City city = new City(userId, placeId, displayName, state, countryCode, lat, lon);
         return addCity(city);
     }
+
     /**
      * Remove city from the cached cities and database. Only remove from cache if successfully removed in database
      * @param cityId The ID of the city to remove
@@ -116,6 +122,7 @@ public class CityService extends Service {
         }
         return false;
     }
+
     /**
      * Fetches a list of cities from the database for a specific user in alphabetical order of city names
      * @param userId The ID of the user whose cities are being fetched
@@ -155,6 +162,7 @@ public class CityService extends Service {
         }
         return cities;
     }
+
     /**
      * Fetches a city from the database by its city ID
      * @param cityId The ID of the city to fetch
@@ -179,6 +187,7 @@ public class CityService extends Service {
         }
         return null;
     }
+
     /**
      * Inserts a new city into the database
      * @param city The city object to insert
