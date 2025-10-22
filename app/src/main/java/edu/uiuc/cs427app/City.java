@@ -52,30 +52,12 @@ public class City {
     }
 
     /**
-     * Sets the ID of the city.
-     *
-     * @param id The unique ID to set for the city.
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    /**
      * Gets the user ID associated with the city.
      *
      * @return The user ID of the city.
      */
     public String getUserId() {
         return userId;
-    }
-
-    /**
-     * Sets the user ID associated with the city.
-     *
-     * @param userId The user ID to set for the city.
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     /**
@@ -88,30 +70,12 @@ public class City {
     }
 
     /**
-     * Sets the display name of the city.
-     *
-     * @param displayName The display name to set for the city.
-     */
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    /**
      * Gets the country code of the city.
      *
      * @return The country code of the city.
      */
     public String getCountryCode() {
         return countryCode;
-    }
-
-    /**
-     * Sets the country code of the city.
-     *
-     * @param countryCode The country code to set for the city.
-     */
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
     }
 
     /**
@@ -124,30 +88,12 @@ public class City {
     }
 
     /**
-     * Sets the latitude of the city.
-     *
-     * @param lat The latitude to set for the city.
-     */
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    /**
      * Gets the longitude of the city.
      *
      * @return The longitude of the city.
      */
     public double getLon() {
         return lon;
-    }
-
-    /**
-     * Sets the longitude of the city.
-     *
-     * @param lon The longitude to set for the city.
-     */
-    public void setLon(double lon) {
-        this.lon = lon;
     }
 }
 
