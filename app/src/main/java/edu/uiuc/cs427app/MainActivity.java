@@ -1,8 +1,12 @@
 package edu.uiuc.cs427app;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -172,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setTitle("Remove City")
                 .setPositiveButton("Yes", (dialog, id) -> {
                     Toast t;
-                    if(removeCityFromDatabase(cityId)){
+                    if(cityService.removeCity(cityId)){
                         LinearLayout container = findViewById(R.id.cities_container);
                         container.removeView(cityView);
                         t = Toast.makeText(this, "City removed successfully!", Toast.LENGTH_SHORT);
@@ -190,25 +194,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
-    /**
-     * Removes city from database
-     *
-     * @param cityId ID of the city to be removed
-     * @return boolean false if there was an erroneous transaction with the database (cityId does not exist)
-     */
-    private boolean removeCityFromDatabase(long cityId) {
-        String selection = CityContract.CityEntry.COLUMN_CITY_ID + "=?";
-        String[] selectionArgs = {String.valueOf(cityId)};
-        int verifyDeletedCount = getContentResolver().delete(CityContract.CONTENT_URI, selection, selectionArgs);
-        return verifyDeletedCount == 1;
-    }
-
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.buttonAddLocation) {
             Intent intent = new Intent(this, AddCityActivity.class);
             startActivity(intent);
+        }
+    }
+
+    private boolean bound = false;
+    private CityService cityService;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            CityService.CityBinder binder = (CityService.CityBinder) service;
+            cityService = binder.getService();
+            bound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+            cityService = null;
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, CityService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bound) {
+            unbindService(connection);
+            bound = false;
         }
     }
 }

@@ -17,7 +17,15 @@ public class City {
     // Constructor for preparsed data values
     public City(long id, String userId, String displayName, String countryCode, double lat, double lon) {
         this.id = id;
-        this.userId = userId;
+        this.userId = userId; //we may change this to long since that is how User class defines userId
+        this.displayName = displayName;
+        this.countryCode = countryCode;
+        this.lat = lat;
+        this.lon = lon;
+    }
+
+    public City(String userId, String displayName, String countryCode, double lat, double lon) { //before inserting, we will not have id, until we replace id with places id
+        this.userId = userId; //we may change this to long since that is how User class defines userId
         this.displayName = displayName;
         this.countryCode = countryCode;
         this.lat = lat;

@@ -40,6 +40,11 @@
             android:name=".DetailsActivity"
             android:exported="true" />
 
+        <service
+            android:name=".CityService"
+            android:exported="false" />
+
+
         <provider
             android:name=".db.UserContentProvider"
             android:authorities="edu.uiuc.cs427app.userprovider"

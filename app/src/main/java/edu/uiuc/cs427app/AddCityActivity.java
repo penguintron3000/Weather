@@ -1,7 +1,12 @@
 package edu.uiuc.cs427app;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +24,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.util.Arrays;
+import java.util.List;
 
 import edu.uiuc.cs427app.db.CityContract;
 
@@ -115,7 +121,7 @@ public class AddCityActivity extends AppCompatActivity {
             }
 
             //Insert selected City
-            Uri inserted = saveCityViaProvider(userId, name, country, lat, lon);
+            Uri inserted = cityService.addCity(String.valueOf(userId), name, country, lat, lon);
             if (inserted != null) {
                 Toast.makeText(this, "Saved " + name, Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Inserted city URI: " + inserted);
@@ -146,30 +152,36 @@ public class AddCityActivity extends AppCompatActivity {
         return null;
     }
 
-    /**
-     * Inserts a new city into the database using the CityContentProvider.
-     * It constructs a ContentValues object and uses the ContentResolver to perform the insertion.
-     *
-     * @param userId The ID of the user for whom the city is being saved.
-     * @param name The name of the city.
-     * @param country The two-letter country code.
-     * @param lat The latitude of the city.
-     * @param lon The longitude of the city.
-     * @return The Uri of the newly inserted row, or null if the insertion fails (e.g., due to a duplicate).
-     */
-    private Uri saveCityViaProvider(int userId, String name, String country, Double lat, Double lon) {
-        android.content.ContentValues values = new android.content.ContentValues();
-        values.put(CityContract.CityEntry.COLUMN_USER_ID, userId);
-        values.put(CityContract.CityEntry.COLUMN_DISPLAY_NAME, name);
-        values.put(CityContract.CityEntry.COLUMN_COUNTRY_CODE, country);
-        values.put(CityContract.CityEntry.COLUMN_LAT, lat);
-        values.put(CityContract.CityEntry.COLUMN_LON, lon);
+    private boolean bound = false;
+    private CityService cityService;
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            CityService.CityBinder binder = (CityService.CityBinder) service;
+            cityService = binder.getService();
+            bound = true;
+        }
 
-        try {
-            return getContentResolver().insert(CityContract.CONTENT_URI, values);
-        } catch (Exception e) {
-            Log.e(TAG, "Insert failed: " + e.getMessage(), e);
-            return null;
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+            cityService = null;
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, CityService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bound) {
+            unbindService(connection);
+            bound = false;
         }
     }
 }
