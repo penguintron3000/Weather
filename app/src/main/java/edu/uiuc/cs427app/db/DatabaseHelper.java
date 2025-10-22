@@ -44,12 +44,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sqlCity = "CREATE TABLE city (" +
                 "city_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "user_id INTEGER NOT NULL," +
+                "place_id TEXT NOT NULL," +
                 "display_name TEXT NOT NULL COLLATE NOCASE," +
+                "state TEXT," +
                 "country_code TEXT," +
                 "lat REAL," +
                 "lon REAL," +
                 "FOREIGN KEY(user_id) REFERENCES user(user_id) ON DELETE CASCADE," +
-                "UNIQUE(user_id, display_name, country_code)" +
+                "UNIQUE(user_id, place_id)" +
                 ");";
         db.execSQL(sqlUser);
         db.execSQL(sqlCity);

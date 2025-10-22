@@ -109,7 +109,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int userId = userIdLong.intValue();
 
         // Query the CityContentProvider for the user's saved cities
-        String[] projection = { CityContract.CityEntry.COLUMN_DISPLAY_NAME, CityContract.CityEntry.COLUMN_COUNTRY_CODE };
+        String[] projection = {
+                CityContract.CityEntry.COLUMN_DISPLAY_NAME,
+                CityContract.CityEntry.COLUMN_STATE,
+                CityContract.CityEntry.COLUMN_COUNTRY_CODE
+        };
         String selection = CityContract.CityEntry.COLUMN_USER_ID + "=?";
         String[] selectionArgs = { String.valueOf(userId) };
         String sortOrder = CityContract.CityEntry.COLUMN_DISPLAY_NAME + " ASC"; // Sort cities alphabetically
@@ -117,10 +121,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try (Cursor cursor = getContentResolver().query(CityContract.CONTENT_URI, projection, selection, selectionArgs, sortOrder)) {
             if (cursor != null) {
                 int nameIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_DISPLAY_NAME);
+                int stateIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_STATE);
                 int countryIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_COUNTRY_CODE);
 
                 while (cursor.moveToNext()) {
                     String cityName = cursor.getString(nameIndex);
+                    String state = cursor.getString(stateIndex);
                     String countryCode = cursor.getString(countryIndex);
 
                     // Inflate the city_list_item layout
@@ -131,8 +137,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     TextView cityNameText = cityView.findViewById(R.id.city_name_text);
                     Button viewInfoButton = cityView.findViewById(R.id.view_city_info_button);
 
-                    // Set the city name and country code
-                    cityNameText.setText(cityName + ", " + countryCode);
+                    // Build the display text, including state if available
+                    StringBuilder displayText = new StringBuilder(cityName);
+                    if (state != null && !state.isEmpty()) {
+                        displayText.append(", ").append(state);
+                    }
+                    displayText.append(", ").append(countryCode);
+
+                    cityNameText.setText(displayText.toString());
 
                     viewInfoButton.setOnClickListener(v -> {
                         Intent intent = new Intent(this, DetailsActivity.class);
