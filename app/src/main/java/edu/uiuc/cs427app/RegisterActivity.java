@@ -184,6 +184,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             values.put(UserContract.UserEntry.COLUMN_USERNAME, username);
             values.put(UserContract.UserEntry.COLUMN_PASSWORD_HASH, PasswordHasher.hash(password));
             values.put(UserContract.UserEntry.COLUMN_IS_LOCKED, 0);
+            values.put(UserContract.UserEntry.COLUMN_FAILED_ATTEMPTS, 0);
             values.put(UserContract.UserEntry.COLUMN_THEME_JSON, "{}");
 
             Uri resultUri = getContentResolver().insert(UserContract.CONTENT_URI, values);

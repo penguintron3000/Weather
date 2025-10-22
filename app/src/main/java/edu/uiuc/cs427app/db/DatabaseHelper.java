@@ -9,7 +9,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     private static final String DATABASE_NAME = "app_db.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -24,7 +24,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "is_locked INTEGER DEFAULT 0," +
                 "locked_at INTEGER," +
                 "locked_until INTEGER," +
-                "theme_json TEXT" +
+                "theme_json TEXT," +
+                "failed_attempts INTEGER DEFAULT 0" +
                 ");";
         String sqlCity = "CREATE TABLE city (" +
                 "city_id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -44,10 +45,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion +
-                ". Existing data will be dropped");
-        db.execSQL("DROP TABLE IF EXISTS city");
-        db.execSQL("DROP TABLE IF EXISTS user");
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE user ADD COLUMN failed_attempts INTEGER DEFAULT 0");
+        }
     }
 }

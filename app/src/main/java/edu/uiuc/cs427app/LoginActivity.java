@@ -1,160 +1,109 @@
 package edu.uiuc.cs427app;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import edu.uiuc.cs427app.db.UserContract;
+// import edu.uiuc.cs427app.theme.ThemeManager;
+import edu.uiuc.cs427app.model.AuthResult;
+import edu.uiuc.cs427app.services.AuthService;
+import edu.uiuc.cs427app.services.TokenManager;
+import edu.uiuc.cs427app.views.LoginFormView;
 
 /**
  * LoginActivity is the entry point shown on app launch.
  * Handles user authentication by verifying credentials against the database.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameInput;
-    private EditText passwordInput;
-    private Spinner layoutSelector;
-    private Button signInButton;
-    private Button signUpButton;
-    private TextView errorMessage;
+    private LoginFormView loginFormView;
+    private AuthService authService;
+    private TokenManager tokenManager;
 
+    /**
+     * This method is called when the activity is first created.
+     * It is used to initialize the UI components and set up the event listeners.
+     * @param savedInstanceState A bundle containing the activity's previously saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameInput = findViewById(R.id.inputUsername);
-        passwordInput = findViewById(R.id.inputPassword);
-        layoutSelector = findViewById(R.id.spinnerLayout);
-        signInButton = findViewById(R.id.buttonSignIn);
-        signUpButton = findViewById(R.id.buttonSignUp);
-        errorMessage = findViewById(R.id.errorMessage);
+        authService = new AuthService(this);
+        tokenManager = new TokenManager(this);
 
-        // basic layouts list placeholder, we can add actual options later
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.layout_options,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        layoutSelector.setAdapter(adapter);
+        loginFormView = findViewById(R.id.login_form_view);
+        loginFormView.initializeLayoutOptions(R.array.layout_options);
+        loginFormView.setActionListener(new LoginFormView.ActionListener() {
+            @Override
+            public void onSignInRequested() {
+                handleLogin();
+            }
 
-        signInButton.setOnClickListener(this);
-        signUpButton.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        if (id == R.id.buttonSignIn) {
-            handleLogin();
-        } else if (id == R.id.buttonSignUp) {
-            // navigate to RegisterActivity
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
-        }
+            @Override
+            public void onSignUpRequested() {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
-     * Handles the login process by verifying credentials against the database.
+     * Handles the login process by getting the user input and calling the AuthService.
+     * It then processes the result from the AuthService and navigates to the MainActivity on success.
      */
     private void handleLogin() {
-        String username = usernameInput.getText().toString().trim();
-        String password = passwordInput.getText().toString();
+        String username = loginFormView.getUsername();
+        String password = loginFormView.getPassword();
 
         // Clear previous error messages
-        clearError();
+        loginFormView.clearError();
 
         if (username.isEmpty()) {
-            showError("Please enter a username");
-            usernameInput.requestFocus();
+            loginFormView.showError("Please enter a username");
+            loginFormView.requestUsernameFocus();
             return;
         }
 
         if (password.isEmpty()) {
-            showError("Please enter a password");
-            passwordInput.requestFocus();
+            loginFormView.showError("Please enter a password");
+            loginFormView.requestPasswordFocus();
             return;
         }
 
-        // query database for user
-        Cursor cursor = getContentResolver().query(
-                UserContract.CONTENT_URI,
-                null,
-                UserContract.UserEntry.COLUMN_USERNAME + " = ?",
-                new String[] { username },
-                null);
+        AuthResult authResult = authService.login(username, password);
 
-        if (cursor == null) {
-            showError("Login failed. Please try again.");
-            return;
+        switch (authResult.getStatus()) {
+            case SUCCESS:
+                // password correct, initialize user session
+                String authToken = tokenManager.generateToken();
+                tokenManager.persistSession(username, authToken);
+                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+                //processLlmTheme();
+
+                // navigate to MainActivity
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case INVALID_CREDENTIALS:
+            case FAILURE:
+                loginFormView.showError(authResult.getMessage());
+                loginFormView.requestPasswordFocus();
+                break;
+            case ACCOUNT_LOCKED:
+                loginFormView.showError(authResult.getMessage());
+                break;
         }
-
-        if (cursor.moveToFirst()) {
-            // user found, now verify password
-            int idxPassword = cursor.getColumnIndex(UserContract.UserEntry.COLUMN_PASSWORD_HASH);
-            int idxUserId = cursor.getColumnIndex(UserContract.UserEntry.COLUMN_USER_ID);
-            int idxUsername = cursor.getColumnIndex(UserContract.UserEntry.COLUMN_USERNAME);
-            int idxTheme = cursor.getColumnIndex(UserContract.UserEntry.COLUMN_THEME_JSON);
-
-            if (idxPassword >= 0 && idxUserId >= 0 && idxUsername >= 0 && idxTheme >= 0) {
-                String storedHash = cursor.getString(idxPassword);
-                long userId = cursor.getLong(idxUserId);
-                String dbUsername = cursor.getString(idxUsername);
-                String themeJson = cursor.getString(idxTheme);
-
-                if (PasswordHasher.verify(password, storedHash)) {
-                    // password correct, initialize user session
-                    User.getInstance().init(userId, dbUsername, themeJson);
-
-                    // navigate to MainActivity
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-
-                } else {
-                    showError("Invalid username or password");
-                    passwordInput.requestFocus();
-                }
-
-            } else {
-                showError("Login failed. Please try again.");
-            }
-        } else {
-            // user not found
-            showError("Invalid username or password");
-            usernameInput.requestFocus();
-        }
-
-        cursor.close();
     }
 
     /**
-     * Shows an error message to the user.
-     * 
-     * @param message The error message to display
+     * Processes the LLM-generated theme by delegating to the theme manager.
      */
-    private void showError(String message) {
-        errorMessage.setText(message);
-        errorMessage.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * Clears any error messages.
-     */
-    private void clearError() {
-        errorMessage.setVisibility(View.GONE);
-        errorMessage.setText("");
-    }
+//    private void processLlmTheme() {
+//        ThemeManager.applyLlmTheme(this, User.getInstance().getThemeJson());
+//    }
 }
