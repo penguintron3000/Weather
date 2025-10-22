@@ -23,7 +23,7 @@ public class CityService extends Service {
     private final IBinder binder = new CityBinder();
     private final List<City> cachedCities = new ArrayList<>();
 
-    private int currentUserId = -1; //will use this until a global accessor to user id is available
+    private int currentUserId = -1;
 
     public class CityBinder extends Binder {
         /**
@@ -114,7 +114,7 @@ public class CityService extends Service {
         return false;
     }
     /**
-     * Fetches a list of cities from the database for a specific user
+     * Fetches a list of cities from the database for a specific user in alphabetical order of city names
      * @param userId The ID of the user whose cities are being fetched
      * @return List of cities for the given user
      */
@@ -122,9 +122,10 @@ public class CityService extends Service {
         List<City> cities = new ArrayList<>();
         String selection = CityContract.CityEntry.COLUMN_USER_ID + "=?";
         String[] selectionArgs = {String.valueOf(userId)};
+        String sortOrder = CityContract.CityEntry.COLUMN_DISPLAY_NAME + " ASC";
         try (Cursor cursor = getContentResolver().query(
                 CityContract.CONTENT_URI,
-                null, selection, selectionArgs, null)) {
+                null, selection, selectionArgs, sortOrder)) {
 
             if (cursor != null) {
                 int idIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_CITY_ID);
