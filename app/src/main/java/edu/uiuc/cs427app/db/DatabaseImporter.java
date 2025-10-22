@@ -11,9 +11,19 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * Utility class for importing initial data from CSV files placed under
+ * the app's assets folder. This is intended for local development
+ * and testing to populate the user and city tables.
+ */
 public class DatabaseImporter {
     private static final String TAG = "DatabaseImporter";
 
+    /**
+     * Imports both users and cities data from assets.
+     *
+     * @param context The application context used to access assets and database.
+     */
     public static void importFromAssets(Context context) {
         try {
             AssetManager am = context.getAssets();
@@ -24,6 +34,14 @@ public class DatabaseImporter {
         }
     }
 
+    /**
+     * Imports users data from a CSV file in assets.
+     * CSV format assumed:
+     * username,password_hash,is_locked,locked_at,locked_until,theme_json
+     *
+     * @param context  The application context.
+     * @param filename Name of the CSV file in assets to read.
+     */
     private static void importUsers(Context context, String filename) {
         SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
         try (InputStream is = context.getAssets().open(filename);
@@ -48,6 +66,14 @@ public class DatabaseImporter {
         }
     }
 
+    /**
+     * Imports cities data from a CSV file in assets.
+     * CSV format assumed:
+     * user_id,display_name,country_code,lat,lon
+     *
+     * @param context  The application context.
+     * @param filename Name of the CSV file in assets to read.
+     */
     private static void importCities(Context context, String filename) {
         SQLiteDatabase db = new DatabaseHelper(context).getWritableDatabase();
         try (InputStream is = context.getAssets().open(filename);
