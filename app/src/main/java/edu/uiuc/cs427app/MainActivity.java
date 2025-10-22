@@ -124,8 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             LayoutInflater inflater = LayoutInflater.from(this);
             View cityView = inflater.inflate(R.layout.city_list_item, container, false);
 
-            // Get the TextView and Button from the layout
-            TextView cityNameText = cityView.findViewById(R.id.city_name_text);
+            // Get the Button from the layout
             Button viewInfoButton = cityView.findViewById(R.id.view_city_info_button);
 
             Button removeButton = cityView.findViewById(R.id.remove_button);
@@ -137,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             displayText.append(", ").append(countryCode);
 
-            cityNameText.setText(displayText.toString());
+            viewInfoButton.setText(displayText.toString());
 
             viewInfoButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, DetailsActivity.class);
@@ -146,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
 
             removeButton.setOnClickListener(v -> {
-                showRemoveCityDialog(cityId, cityView);
+                showRemoveCityDialog(city, cityView);
             });
 
 
@@ -158,18 +157,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Asks user for removal confirmation of selected city
      *
-     * @param cityId cityId of the city in question for the dialog
+     * @param city city in question for the dialog
      * @param cityView cityView of the city in question for the dialog
      */
-    private void showRemoveCityDialog(long cityId, View cityView) {
+    private void showRemoveCityDialog(City city, View cityView) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Really remove this city?")
-                .setTitle("Remove City")
+        builder.setMessage("Are you sure you want to remove this city from your saved cities?")
+                .setTitle("Remove " + city.getDisplayName())
                 .setPositiveButton("Yes", (dialog, id) -> {
                     Snackbar snackbar;
                     LinearLayout container = findViewById(R.id.cities_container);
-                    if(cityService.removeCity(cityId)){
+                    if(cityService.removeCity(city.getId())){
                         container.removeView(cityView);
                         snackbar = Snackbar.make(container, "City removed successfully!", Snackbar.LENGTH_SHORT);
                     }
