@@ -1,14 +1,21 @@
 package edu.uiuc.cs427app;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
 import android.view.View;
 
@@ -19,6 +26,9 @@ import edu.uiuc.cs427app.databinding.ActivityMainBinding;
 import android.widget.Button;
 
 import com.google.android.libraries.places.api.Places;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 import edu.uiuc.cs427app.db.DatabaseHelper;
 import edu.uiuc.cs427app.db.CityContract;
@@ -74,8 +84,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh the city list when returning to this screen
-        populateCityList();
+        if (bound && cityService != null) {
+            populateCityList();
+        }
     }
 
     /**
@@ -101,70 +112,142 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout container = findViewById(R.id.cities_container);
         container.removeAllViews(); // Clear old views to prevent duplicates
 
-        Long userIdLong = User.getInstance().getUserId();
-        if (userIdLong == null) {
-            Log.e("MainActivity", "Could not find user ID for username: " + User.getInstance().getUsername());
-            return;
-        }
-        int userId = userIdLong.intValue();
+        List<City> cities = cityService.getCities();
 
-        // Query the CityContentProvider for the user's saved cities
-        String[] projection = {
-                CityContract.CityEntry.COLUMN_DISPLAY_NAME,
-                CityContract.CityEntry.COLUMN_STATE,
-                CityContract.CityEntry.COLUMN_COUNTRY_CODE
-        };
-        String selection = CityContract.CityEntry.COLUMN_USER_ID + "=?";
-        String[] selectionArgs = { String.valueOf(userId) };
-        String sortOrder = CityContract.CityEntry.COLUMN_DISPLAY_NAME + " ASC"; // Sort cities alphabetically
+        for (City city : cities) {
+            String cityName = city.getDisplayName();
+            String countryCode = city.getCountryCode();
+            String state = city.getState();
+            long cityId = city.getId();
 
-        try (Cursor cursor = getContentResolver().query(CityContract.CONTENT_URI, projection, selection, selectionArgs, sortOrder)) {
-            if (cursor != null) {
-                int nameIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_DISPLAY_NAME);
-                int stateIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_STATE);
-                int countryIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_COUNTRY_CODE);
+            // Inflate the city_list_item layout
+            LayoutInflater inflater = LayoutInflater.from(this);
+            View cityView = inflater.inflate(R.layout.city_list_item, container, false);
 
-                while (cursor.moveToNext()) {
-                    String cityName = cursor.getString(nameIndex);
-                    String state = cursor.getString(stateIndex);
-                    String countryCode = cursor.getString(countryIndex);
+            // Get the Button from the layout
+            Button viewInfoButton = cityView.findViewById(R.id.view_city_info_button);
 
-                    // Inflate the city_list_item layout
-                    LayoutInflater inflater = LayoutInflater.from(this);
-                    View cityView = inflater.inflate(R.layout.city_list_item, container, false);
+            Button removeButton = cityView.findViewById(R.id.remove_button);
 
-                    // Get the TextView and Button from the layout
-                    TextView cityNameText = cityView.findViewById(R.id.city_name_text);
-                    Button viewInfoButton = cityView.findViewById(R.id.view_city_info_button);
-
-                    // Build the display text, including state if available
-                    StringBuilder displayText = new StringBuilder(cityName);
-                    if (state != null && !state.isEmpty()) {
-                        displayText.append(", ").append(state);
-                    }
-                    displayText.append(", ").append(countryCode);
-
-                    cityNameText.setText(displayText.toString());
-
-                    viewInfoButton.setOnClickListener(v -> {
-                        Intent intent = new Intent(this, DetailsActivity.class);
-                        intent.putExtra("city", cityName);
-                        startActivity(intent);
-                    });
-
-                    container.addView(cityView);
-                }
+            // Build the display text, including state if available
+            StringBuilder displayText = new StringBuilder(cityName);
+            if (state != null && !state.isEmpty()) {
+                displayText.append(", ").append(state);
             }
-        } catch (Exception e) {
-            Log.e("MainActivity", "Error populating city buttons", e);
+            displayText.append(", ").append(countryCode);
+
+            viewInfoButton.setText(displayText.toString());
+
+            viewInfoButton.setOnClickListener(v -> {
+                Intent intent = new Intent(this, DetailsActivity.class);
+                intent.putExtra("city", cityName);
+                startActivity(intent);
+            });
+
+            removeButton.setOnClickListener(v -> {
+                showRemoveCityDialog(city, cityView);
+            });
+
+
+            container.addView(cityView);
         }
     }
+
+
+    /**
+     * Asks user for removal confirmation of selected city
+     *
+     * @param city city in question for the dialog
+     * @param cityView cityView of the city in question for the dialog
+     */
+    private void showRemoveCityDialog(City city, View cityView) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to remove this city from your saved cities?")
+                .setTitle("Remove " + city.getDisplayName())
+                .setPositiveButton("Yes", (dialog, id) -> {
+                    Snackbar snackbar;
+                    LinearLayout container = findViewById(R.id.cities_container);
+                    if(cityService.removeCity(city.getId())){
+                        container.removeView(cityView);
+                        snackbar = Snackbar.make(container, "City removed successfully!", Snackbar.LENGTH_SHORT);
+                    }
+                    else{
+                        snackbar = Snackbar.make(container, "Failed to remove city. Please try again later.", Snackbar.LENGTH_LONG);
+                    }
+                    snackbar.getView().setTranslationY(-150);
+                    snackbar.show();
+                })
+                .setNegativeButton("Cancel", (dialog, id) -> {
+                    dialog.dismiss();
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.buttonAddLocation) {
             Intent intent = new Intent(this, AddCityActivity.class);
             startActivity(intent);
+        }
+    }
+
+    private boolean bound = false;
+    private CityService cityService;
+
+    /**
+     *  Overrides onServiceConnected and onServiceDisconnected, methods that are called asynchronously upon successfully binding/unbinding to CityService service
+     */
+    private ServiceConnection connection = new ServiceConnection() {
+
+        /**
+         * Allows access to CityService via IBinder, immediately loads cities from the database for the current user
+         * @param name name of service
+         * @param service service accessible via service implemented IBinder
+         */
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            CityService.CityBinder binder = (CityService.CityBinder) service;
+            cityService = binder.getService();
+            bound = true;
+
+            try{
+                cityService.loadCitiesForUser(User.getInstance().getUserId().intValue());
+            }
+            catch(Exception e){
+                Log.e("MainActivity", "Could not find user ID for username: " + User.getInstance().getUsername());
+            }
+
+            populateCityList();
+        }
+
+        /**
+         * Ensures security upon service disconnect
+         * @param name name of service
+         */
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            bound = false;
+            cityService = null;
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, CityService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (bound) {
+            unbindService(connection);
+            bound = false;
         }
     }
 }
