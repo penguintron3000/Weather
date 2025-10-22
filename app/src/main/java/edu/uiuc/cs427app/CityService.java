@@ -26,6 +26,10 @@ public class CityService extends Service {
 
     private int currentUserId = -1;
 
+    /**
+     * Implemented Binder so that Activity classes
+     * may connect and access this service's public class methods via CityBinder getService()
+     */
     public class CityBinder extends Binder {
 
         /**

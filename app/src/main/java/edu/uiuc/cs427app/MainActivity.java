@@ -197,7 +197,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean bound = false;
     private CityService cityService;
+
+    /**
+     *  Overrides onServiceConnected and onServiceDisconnected, methods that are called asynchronously upon successfully binding/unbinding to CityService service
+     */
     private ServiceConnection connection = new ServiceConnection() {
+
+        /**
+         * Allows access to CityService via IBinder, immediately loads cities from the database for the current user
+         * @param name name of service
+         * @param service service accessible via service implemented IBinder
+         */
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             CityService.CityBinder binder = (CityService.CityBinder) service;
@@ -214,6 +224,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             populateCityList();
         }
 
+        /**
+         * Ensures security upon service disconnect
+         * @param name name of service
+         */
         @Override
         public void onServiceDisconnected(ComponentName name) {
             bound = false;
