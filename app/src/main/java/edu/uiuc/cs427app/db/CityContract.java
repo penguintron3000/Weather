@@ -3,12 +3,22 @@ package edu.uiuc.cs427app.db;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+/**
+ * Contract class for the city table in the app’s database.
+ * Defines the table name, column names, content authority and content URI
+ * that other components (ContentProviders, UI, etc.) will use to interact
+ * with the city data.
+ */
 public final class CityContract {
     private CityContract() { }
 
     public static final String AUTHORITY = "edu.uiuc.cs427app.cityprovider";
+
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/city");
 
+    /**
+     * Inner class that defines the contents of the city table.
+     */
     public static final class CityEntry implements BaseColumns {
         public static final String TABLE_NAME = "city";
 
