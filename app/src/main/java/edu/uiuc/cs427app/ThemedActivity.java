@@ -28,9 +28,16 @@ public abstract class ThemedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Initialize theme from User's themeJson
+        
+        // Get the user's theme JSON and update the singleton if user has a custom theme
         String themeJson = User.getInstance().getThemeJson();
-        theme = new AppTheme(themeJson);
+        if (themeJson != null && !themeJson.trim().isEmpty() && !themeJson.equals("{}")) {
+            // User has a custom theme, update the singleton
+            AppTheme.updateTheme(themeJson);
+        }
+        
+        // Get the singleton instance
+        theme = AppTheme.getInstance();
     }
     
     /**

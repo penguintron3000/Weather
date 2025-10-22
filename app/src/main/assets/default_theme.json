@@ -1,0 +1,18 @@
+{
+  "themeName": "Default",
+  "backgroundColor": "#FFFFFF",
+  "textColor": "#212121",
+  "primaryColor": "#6200EE",
+  "secondaryColor": "#F5F5F5",
+  "headerColor": "#000000",
+  "buttonBackgroundColor": "#6200EE",
+  "buttonTextColor": "#FFFFFF",
+  "cardBackgroundColor": "#FAFAFA",
+  "borderColor": "#E0E0E0",
+  "errorColor": "#FF0000",
+  "successColor": "#4CAF50",
+  "emoji": "🎨"
+}
+
+
+
