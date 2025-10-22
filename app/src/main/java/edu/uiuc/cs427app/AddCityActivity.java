@@ -110,18 +110,20 @@ public class AddCityActivity extends AppCompatActivity {
             int userId = userIdLong.intValue();
 
             //Extract selected city info
+            String placeId = selectedPlace.getId();
             String name = selectedPlace.getName();
+            String state = getState(selectedPlace);
             Double lat = selectedPlace.getLatLng() != null ? selectedPlace.getLatLng().latitude : null;
             Double lon = selectedPlace.getLatLng() != null ? selectedPlace.getLatLng().longitude : null;
             String country = getCountryCode(selectedPlace);
 
-            if (name == null || lat == null || lon == null) {
+            if (placeId == null || name == null || lat == null || lon == null) {
                 Toast.makeText(this, "Missing place data. Try another city.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             //Insert selected City
-            Uri inserted = cityService.addCity(String.valueOf(userId), name, country, lat, lon);
+            Uri inserted = cityService.addCity(String.valueOf(userId), placeId, name, state, country, lat, lon);
             if (inserted != null) {
                 Toast.makeText(this, "Saved " + name, Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Inserted city URI: " + inserted);
@@ -147,6 +149,22 @@ public class AddCityActivity extends AppCompatActivity {
         for (AddressComponent c : place.getAddressComponents().asList()) {
             if (c.getTypes().contains("country")) {
                 return c.getShortName();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Extracts the state (administrative area level 1) from a Place object.
+     *
+     * @param place The Place object from the Google Places API.
+     * @return The name of the state, or null if not found.
+     */
+    private String getState(Place place) {
+        if (place.getAddressComponents() == null) return null;
+        for (AddressComponent c : place.getAddressComponents().asList()) {
+            if (c.getTypes().contains("administrative_area_level_1")) {
+                return c.getName();
             }
         }
         return null;

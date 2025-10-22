@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (City city : cities) {
             String cityName = city.getDisplayName();
             String countryCode = city.getCountryCode();
+            String state = city.getState();
             long cityId = city.getId();
 
             // Inflate the city_list_item layout
@@ -129,8 +130,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Button removeButton = cityView.findViewById(R.id.remove_button);
 
-            // Set the city name and country code
-            cityNameText.setText(cityName + ", " + countryCode);
+            // Build the display text, including state if available
+            StringBuilder displayText = new StringBuilder(cityName);
+            if (state != null && !state.isEmpty()) {
+                displayText.append(", ").append(state);
+            }
+            displayText.append(", ").append(countryCode);
+
+            cityNameText.setText(displayText.toString());
 
             viewInfoButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, DetailsActivity.class);

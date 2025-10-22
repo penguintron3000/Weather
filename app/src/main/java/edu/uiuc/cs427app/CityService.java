@@ -91,14 +91,16 @@ public class CityService extends Service {
      * It constructs a ContentValues object and uses the ContentResolver to perform the insertion.
      *
      * @param userId The ID of the user for whom the city is being saved.
-     * @param name The name of the city.
-     * @param country The two-letter country code.
+     * @param placeId ID of the place of the city
+     * @param displayName The name of the city.
+     * @param state State of the city
+     * @param countryCode The two-letter country code.
      * @param lat The latitude of the city.
      * @param lon The longitude of the city.
      * @return The Uri of the newly inserted row, or null if the insertion fails (e.g., due to a duplicate).
      */
-    public Uri addCity(String userId, String name, String country, double lat, double lon) {
-        City city = new City(userId, name, country, lat, lon);
+    public Uri addCity(String userId, String placeId, String displayName, String state, String countryCode, double lat, double lon) {
+        City city = new City(userId, placeId, displayName, state, countryCode, lat, lon);
         return addCity(city);
     }
     /**
@@ -130,7 +132,9 @@ public class CityService extends Service {
 
             if (cursor != null) {
                 int idIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_CITY_ID);
+                int placeIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_PLACE_ID);
                 int nameIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_DISPLAY_NAME);
+                int stateIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_STATE);
                 int countryIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_COUNTRY_CODE);
                 int latIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_LAT);
                 int lonIndex = cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_LON);
@@ -139,7 +143,9 @@ public class CityService extends Service {
                     cities.add(new City(
                             cursor.getLong(idIndex),
                             String.valueOf(userId),
+                            cursor.getString(placeIndex),
                             cursor.getString(nameIndex),
+                            cursor.getString(stateIndex),
                             cursor.getString(countryIndex),
                             cursor.getDouble(latIndex),
                             cursor.getDouble(lonIndex)
@@ -162,7 +168,9 @@ public class CityService extends Service {
                 return new City(
                         cityId,
                         String.valueOf(currentUserId),
+                        cursor.getString(cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_PLACE_ID)),
                         cursor.getString(cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_DISPLAY_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_STATE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_COUNTRY_CODE)),
                         cursor.getDouble(cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_LAT)),
                         cursor.getDouble(cursor.getColumnIndexOrThrow(CityContract.CityEntry.COLUMN_LON))
@@ -181,7 +189,9 @@ public class CityService extends Service {
 
         ContentValues values = new ContentValues();
         values.put(CityContract.CityEntry.COLUMN_USER_ID, city.getUserId());
+        values.put(CityContract.CityEntry.COLUMN_PLACE_ID, city.getPlaceId());
         values.put(CityContract.CityEntry.COLUMN_DISPLAY_NAME, city.getDisplayName());
+        values.put(CityContract.CityEntry.COLUMN_STATE, city.getState());
         values.put(CityContract.CityEntry.COLUMN_COUNTRY_CODE, city.getCountryCode());
         values.put(CityContract.CityEntry.COLUMN_LAT, city.getLat());
         values.put(CityContract.CityEntry.COLUMN_LON, city.getLon());

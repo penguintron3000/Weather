@@ -9,9 +9,21 @@ import android.util.Log;
 import java.util.Arrays;
 
 
+/**
+ * Helper class that encapsulates sample CRUD tests for user & city tables,
+ * supporting both lookup by name and by ID.
+ * This class is intended for development/testing purposes—so you can see
+ * crud operations via
+ * the ContentProvider interfaces.
+ */
 public class DatabaseTester {
     private static final String TAG = "DbTestHelper";
 
+    /**
+     * Runs all test routines in sequence.
+     *
+     * @param context Context for ContentResolver / database operations.
+     */
     public static void runTests(Context context) {
         testInsertUser(context);
         testQueryUserByName(context);
@@ -30,6 +42,11 @@ public class DatabaseTester {
 //        testDeleteCityById(context);
     }
 
+    /**
+     * Inserts a sample user with username "testuser".
+     *
+     * @param context Context to perform insert.
+     */
     private static void testInsertUser(Context context) {
         try {
             ContentValues cvUser = new ContentValues();
@@ -45,7 +62,11 @@ public class DatabaseTester {
         }
     }
 
-    // Query user by username (name)
+    /**
+     * Queries the user by username.
+     *
+     * @param context Context to perform query.
+     */
     private static void testQueryUserByName(Context context) {
         Cursor cursor = context.getContentResolver().query(
                 UserContract.CONTENT_URI,
@@ -57,7 +78,11 @@ public class DatabaseTester {
         logUserCursor(cursor, "byName");
     }
 
-    // Query user by ID
+    /**
+     * Queries the user by its ID (assuming ID = 1 for test).
+     *
+     * @param context Context to perform query.
+     */
     private static void testQueryUserById(Context context) {
         long userId = 1;
         Uri uri = Uri.withAppendedPath(UserContract.CONTENT_URI, String.valueOf(userId));
@@ -71,6 +96,12 @@ public class DatabaseTester {
         logUserCursor(cursor, "byId (" + userId + ")");
     }
 
+    /**
+     * Internal helper that logs the user cursor content and checks essential columns.
+     *
+     * @param cursor    Cursor returned from query.
+     * @param tagSuffix Label for logging indicating context.
+     */
     private static void logUserCursor(Cursor cursor, String tagSuffix) {
         if (cursor != null) {
             String[] cols = cursor.getColumnNames();
@@ -102,6 +133,11 @@ public class DatabaseTester {
         }
     }
 
+    /**
+     * Updates a sample user identified by its username.
+     *
+     * @param context Context to perform update.
+     */
     public static void testUpdateUserByName(Context context) {
         ContentValues up = new ContentValues();
         up.put(UserContract.UserEntry.COLUMN_THEME_JSON, "{\"bgColor\":\"#000000\",\"textColor\":\"#FFFFFF\"}");
@@ -115,6 +151,11 @@ public class DatabaseTester {
         Log.d(TAG, "Updated user byName count: " + count);
     }
 
+    /**
+     * Updates a sample user identified by its ID.
+     *
+     * @param context Context to perform update.
+     */
     public static void testUpdateUserById(Context context) {
         long userId = 1;
         Uri uri = Uri.withAppendedPath(UserContract.CONTENT_URI, String.valueOf(userId));
@@ -129,6 +170,11 @@ public class DatabaseTester {
         Log.d(TAG, "Updated user byId count: " + count);
     }
 
+    /**
+     * Inserts a sample city record for user_id = 1.
+     *
+     * @param context Context to perform insert.
+     */
     private static void testInsertCity(Context context) {
         try {
             ContentValues cvCity = new ContentValues();
@@ -144,7 +190,11 @@ public class DatabaseTester {
         }
     }
 
-    // Query city by name
+    /**
+     * Queries a city by its display name.
+     *
+     * @param context Context to perform query.
+     */
     private static void testQueryCityByName(Context context) {
         Cursor c2 = context.getContentResolver().query(
                 CityContract.CONTENT_URI,
@@ -156,7 +206,11 @@ public class DatabaseTester {
         logCityCursor(c2, "byName");
     }
 
-    // Query city by ID
+    /**
+     * Queries a city by its ID (assuming ID = 1 for test).
+     *
+     * @param context Context to perform query.
+     */
     private static void testQueryCityById(Context context) {
         long cityId = 1;
         Uri uri = Uri.withAppendedPath(CityContract.CONTENT_URI, String.valueOf(cityId));
@@ -170,6 +224,12 @@ public class DatabaseTester {
         logCityCursor(c2, "byId (" + cityId + ")");
     }
 
+    /**
+     * Internal helper that logs the city cursor content and checks essential columns.
+     *
+     * @param c2        Cursor returned from query.
+     * @param tagSuffix Label for logging indicating context.
+     */
     private static void logCityCursor(Cursor c2, String tagSuffix) {
         if (c2 != null) {
             String[] cols2 = c2.getColumnNames();
@@ -209,6 +269,11 @@ public class DatabaseTester {
         }
     }
 
+    /**
+     * Updates a city record by its display name.
+     *
+     * @param context Context to perform update.
+     */
     public static void testUpdateCityByName(Context context) {
         ContentValues up = new ContentValues();
         up.put(CityContract.CityEntry.COLUMN_DISPLAY_NAME, "SampleCityUpdated");
@@ -221,6 +286,11 @@ public class DatabaseTester {
         Log.d(TAG, "Updated city byName count: " + count);
     }
 
+    /**
+     * Updates a city record by its ID.
+     *
+     * @param context Context to perform update.
+     */
     public static void testUpdateCityById(Context context) {
         long cityId = 1;
         Uri uri = Uri.withAppendedPath(CityContract.CONTENT_URI, String.valueOf(cityId));
@@ -235,7 +305,11 @@ public class DatabaseTester {
         Log.d(TAG, "Updated city byId count: " + count);
     }
 
-    // (Optional) delete examples
+    /**
+     * Deletes a user by its username.
+     *
+     * @param context Context to perform deletion.
+     */
     public static void testDeleteUserByName(Context context) {
         int del = context.getContentResolver().delete(
                 UserContract.CONTENT_URI,
@@ -245,6 +319,11 @@ public class DatabaseTester {
         Log.d(TAG, "Deleted user byName count: " + del);
     }
 
+    /**
+     * Deletes a user by its ID.
+     *
+     * @param context Context to perform deletion.
+     */
     public static void testDeleteUserById(Context context) {
         long userId = 2;
         Uri uri = Uri.withAppendedPath(UserContract.CONTENT_URI, String.valueOf(userId));
@@ -252,6 +331,11 @@ public class DatabaseTester {
         Log.d(TAG, "Deleted user byId count: " + del);
     }
 
+    /**
+     * Deletes a city by its display name.
+     *
+     * @param context Context to perform deletion.
+     */
     public static void testDeleteCityByName(Context context) {
         int del = context.getContentResolver().delete(
                 CityContract.CONTENT_URI,
@@ -261,6 +345,11 @@ public class DatabaseTester {
         Log.d(TAG, "Deleted city byName count: " + del);
     }
 
+    /**
+     * Deletes a city by its ID.
+     *
+     * @param context Context to perform deletion.
+     */
     public static void testDeleteCityById(Context context) {
         long cityId = 1;
         Uri uri = Uri.withAppendedPath(CityContract.CONTENT_URI, String.valueOf(cityId));
