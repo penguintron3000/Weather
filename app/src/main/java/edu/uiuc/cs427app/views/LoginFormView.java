@@ -42,16 +42,34 @@ public class LoginFormView extends LinearLayout {
     private TextView errorMessage;
     private ActionListener actionListener;
 
+    /**
+     * Creates the login form when instantiated directly in code.
+     *
+     * @param context host context supplying theme and resources
+     */
     public LoginFormView(Context context) {
         super(context);
         init(context);
     }
 
+    /**
+     * Creates the login form from XML inflation, applying attribute configuration.
+     *
+     * @param context host context supplying theme and resources
+     * @param attrs   attribute set inflated from XML
+     */
     public LoginFormView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
+    /**
+     * Creates the login form with an explicit default style applied.
+     *
+     * @param context      host context supplying theme and resources
+     * @param attrs        attribute set inflated from XML
+     * @param defStyleAttr default style resource to apply
+     */
     public LoginFormView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);

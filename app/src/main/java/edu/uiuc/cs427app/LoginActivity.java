@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-// import edu.uiuc.cs427app.theme.ThemeManager;
 import edu.uiuc.cs427app.model.AuthResult;
 import edu.uiuc.cs427app.services.AuthService;
 import edu.uiuc.cs427app.services.TokenManager;
@@ -82,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                 String authToken = tokenManager.generateToken();
                 tokenManager.persistSession(username, authToken);
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
-                //processLlmTheme();
 
                 // navigate to MainActivity
                 Intent intent = new Intent(this, MainActivity.class);
@@ -99,11 +96,4 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
     }
-
-    /**
-     * Processes the LLM-generated theme by delegating to the theme manager.
-     */
-//    private void processLlmTheme() {
-//        ThemeManager.applyLlmTheme(this, User.getInstance().getThemeJson());
-//    }
 }

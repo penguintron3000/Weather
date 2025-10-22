@@ -35,7 +35,7 @@ import edu.uiuc.cs427app.db.UserContract;
 public class LoginActivityTest {
 
     private static final String USERNAME = "testuser";
-    private static final String PASSWORD = "password";
+    private static final String PASSWORD = "SecurePass1!";
     private Context context;
 
     @Rule
@@ -94,7 +94,7 @@ public class LoginActivityTest {
     public void testLoginInvalidPassword() {
         createTestUser();
         onView(withId(R.id.inputUsername)).perform(replaceText(USERNAME));
-        onView(withId(R.id.inputPassword)).perform(replaceText("invalidpassword"), closeSoftKeyboard());
+        onView(withId(R.id.inputPassword)).perform(replaceText("WrongPass1!"), closeSoftKeyboard());
         onView(withId(R.id.buttonSignIn)).perform(click());
         onView(withId(R.id.errorMessage)).check(matches(withText("Your username and/or password was incorrect.")));
     }
@@ -107,7 +107,7 @@ public class LoginActivityTest {
         createTestUser();
         for (int i = 0; i < 3; i++) {
             onView(withId(R.id.inputUsername)).perform(replaceText(USERNAME));
-            onView(withId(R.id.inputPassword)).perform(replaceText("wrongpassword"), closeSoftKeyboard());
+            onView(withId(R.id.inputPassword)).perform(replaceText("WrongPass1!"), closeSoftKeyboard());
             onView(withId(R.id.buttonSignIn)).perform(click());
         }
         onView(withId(R.id.errorMessage)).check(matches(withText("Account is temporarily locked due to too many failed attempts.")));
