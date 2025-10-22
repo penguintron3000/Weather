@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import edu.uiuc.cs427app.databinding.ActivityMainBinding;
 import android.widget.Button;
 
 import com.google.android.libraries.places.api.Places;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -158,16 +160,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setMessage("Really remove this city?")
                 .setTitle("Remove City")
                 .setPositiveButton("Yes", (dialog, id) -> {
-                    Toast t;
+                    Snackbar snackbar;
+                    LinearLayout container = findViewById(R.id.cities_container);
                     if(cityService.removeCity(cityId)){
-                        LinearLayout container = findViewById(R.id.cities_container);
                         container.removeView(cityView);
-                        t = Toast.makeText(this, "City removed successfully!", Toast.LENGTH_SHORT);
+                        snackbar = Snackbar.make(container, "City removed successfully!", Snackbar.LENGTH_SHORT);
                     }
                     else{
-                        t = Toast.makeText(this, "Failed to remove city. Please try again later.", Toast.LENGTH_LONG);
+                        snackbar = Snackbar.make(container, "Failed to remove city. Please try again later.", Snackbar.LENGTH_LONG);
                     }
-                    t.show();
+                    snackbar.getView().setTranslationY(-150);
+                    snackbar.show();
                 })
                 .setNegativeButton("Cancel", (dialog, id) -> {
                     dialog.dismiss();

@@ -1,6 +1,7 @@
 package edu.uiuc.cs427app;
 
 import android.app.Service;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -176,18 +177,46 @@ public class CityService extends Service {
      * @return Uri of the newly inserted city, null if the insertion error
      */
     private Uri insertCity(City city) {
+        int beforeCount = getCityCountFromDatabase();
+
         ContentValues values = new ContentValues();
         values.put(CityContract.CityEntry.COLUMN_USER_ID, city.getUserId());
         values.put(CityContract.CityEntry.COLUMN_DISPLAY_NAME, city.getDisplayName());
         values.put(CityContract.CityEntry.COLUMN_COUNTRY_CODE, city.getCountryCode());
         values.put(CityContract.CityEntry.COLUMN_LAT, city.getLat());
         values.put(CityContract.CityEntry.COLUMN_LON, city.getLon());
+
+        Uri result = null;
         try {
-            return getContentResolver().insert(CityContract.CONTENT_URI, values);
+            result =  getContentResolver().insert(CityContract.CONTENT_URI, values);
         } catch (Exception e) {
             Log.e("CityServices", "Insert failed: " + e.getMessage(), e);
             return null;
         }
+
+
+        //verify that count increased by 1, and record exists in db
+        int afterCount = getCityCountFromDatabase();
+        boolean countIncreased = afterCount == beforeCount + 1;
+
+        boolean recordExists = false;
+        if (result != null) {
+            long newId = ContentUris.parseId(result);
+            City insertedCity = fetchCityFromDatabase(newId);
+            if(insertedCity != null){
+                recordExists = true;
+            }
+        }
+
+        if (!countIncreased || !recordExists) {
+            Log.w("CityService", "Insert verification failed. Count increased?=" +
+                    countIncreased + ", recordExists?=" + recordExists);
+            return null;
+        }
+
+        Log.i("CityService", "Verified insert: " + city.getDisplayName() +
+                " Records size count from " + beforeCount + " to " + afterCount);
+        return result;
     }
 
     /**
@@ -196,8 +225,50 @@ public class CityService extends Service {
      * @return Number of successful deletions. Since these cities are supposedly unique, 1 for successful deletion, 0 for fail.
      */
     private int deleteCityFromDatabase(long cityId) {
+        int beforeCount = getCityCountFromDatabase();
+
         String selection = CityContract.CityEntry.COLUMN_CITY_ID + "=?";
         String[] args = {String.valueOf(cityId)};
-        return getContentResolver().delete(CityContract.CONTENT_URI, selection, args);
+        int deletedAmount =  getContentResolver().delete(CityContract.CONTENT_URI, selection, args);
+
+        //verify only record removed, and that the city is no longer in the table
+        int afterCount = getCityCountFromDatabase();
+        boolean countDecreased = afterCount == beforeCount - 1;
+        boolean recordRemoved = false;
+        if(fetchCityFromDatabase(cityId) == null){
+            recordRemoved = true;
+        }
+
+        if (deletedAmount == 1 && countDecreased && recordRemoved) {
+            Log.i("CityService", "Verified deletion of city ID=" + cityId +
+                    " Records Size Count " + beforeCount + " to " + afterCount);
+            return 1;
+        } else {
+            Log.w("CityService", "Deletion verification failed for city ID=" + cityId +
+                    " deleted?=" + deletedAmount + ", countDecreased?=" + countDecreased +
+                    ", recordRemoved?=" + recordRemoved);
+            return 0;
+        }
+    }
+
+    /**
+     * Counts # of records in the city db table. Primarily for testing purposes
+     *
+     * @return the total number of city records currently in the database
+     */
+    private int getCityCountFromDatabase() {
+        int count = 0;
+        try (Cursor cursor = getContentResolver().query(
+                CityContract.CONTENT_URI,
+                new String[]{"COUNT(*) AS count"},
+                null,
+                null,
+                null
+        )) {
+            if (cursor != null && cursor.moveToFirst()) {
+                count = cursor.getInt(cursor.getColumnIndexOrThrow("count"));
+            }
+        }
+        return count;
     }
 }
