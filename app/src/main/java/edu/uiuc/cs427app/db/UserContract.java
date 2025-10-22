@@ -28,5 +28,6 @@ public final class UserContract {
         public static final String COLUMN_LOCKED_AT = "locked_at";
         public static final String COLUMN_LOCKED_UNTIL = "locked_until";
         public static final String COLUMN_THEME_JSON = "theme_json";
+        public static final String COLUMN_FAILED_ATTEMPTS = "failed_attempts";
     }
 }
