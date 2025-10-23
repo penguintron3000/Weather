@@ -104,20 +104,20 @@ Meeting notes: We discussed what Iteration 3 entailed. We then divided up the ma
 
 <b>Project Week 5</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, bcli3, yuhaoc7, ashmitg2, ericnl2, ramvelu2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We're on track to completing Iteration 3 early which is very good because we have a progress update for the 4 credit project soon. Most of the team members had started on or completed their tasking for Iteration 3. In the meeting we discussed the current state of the project, discussed things about the project that everyone should be aware of (such as wiping the stored data each time the database schema is modified), and further clarified the work that needed to be done for the remaining tasking. We discussed the 4 credit project with the remaining time.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          | Added detail and clarification to each task. Reviewed every submitted pull request and gave feedback (pointed out problems, made suggestions, ran all code in PR's to test functionality, etc). | Review future pull requests. Clarify tasking further if needed. Create Iteration 3 video once all tasking is completed. |
+| ppc2           | Completed all assigned Iteration 3 tasking: (4) Add New Cities/Locations and (4) Search for City to Add with Google Maps API. | All assigned tasking for Iteration 3 has been completed. |
+| bcli3          | Completed all assigned Iteration 3 tasking: (1) Make Authentication the First Screen, (1) Show Username on the Main Screen, and (4) New Users Sign Up. | All assigned tasking for Iteration 3 has been completed. |
+| yuhaoc7        | Nothing completed. These tasks were started but were still in progress: (1) Create Backup/Default Theme JSON, (2) Make app theme customizable. | All assigned Iteration 3 tasking is due by next meeting: (1) Create Backup/Default Theme JSON, (2) Make app theme customizable, and (4) Central UI Theme Class. |
+| ashmitg2       | Went above and beyong for 4 story point goal: (4) User Sign In. | (2) Implement Log Off Button is due by next meeting. |
+| ericnl2        | Completed all assigned Iteration 3 tasking: (2) City Class, (2) Remove Cities/Locations, and (2) Cities List UI. | All assigned tasking for Iteration 3 has been completed. |
+| ramvelu2       | None.                           | All assigned Iteration 3 tasks are due by next meeting: (1) Add Theme Description to Authentication Page, (2) Set Up LLM (for LLM-generated Themes), and (4) Integrate LLM Theme Generator with App Theme. |
+| wli200         | Completed all assigned Iteration 3 tasking: (2) Design Database Schema and (4) Integrate Database Into Codebase. | All assigned tasking for Iteration 3 has been completed. |
 </br>
 
 
