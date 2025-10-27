@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
+    /**
+     * Initializes the main screen, ensures the user is authenticated, and wires up UI listeners.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // initialize ONLY the "Add Location" button
         Button buttonNew = findViewById(R.id.buttonAddLocation);
         buttonNew.setOnClickListener(this);
+
+        Button logOutButton = findViewById(R.id.buttonLogOut);
+        logOutButton.setOnClickListener(this);
     }
 
     /**
@@ -187,12 +193,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    /**
+     * Handles onClick callbacks for actions initiated from the main screen buttons.
+     *
+     * @param view View that was activated
+     */
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.buttonAddLocation) {
             Intent intent = new Intent(this, AddCityActivity.class);
             startActivity(intent);
+            return;
         }
+
+        if (view.getId() == R.id.buttonLogOut) {
+            handleLogOut();
+        }
+    }
+
+    /**
+     * Performs the log out workflow by clearing session state and returning to LoginActivity.
+     */
+    private void handleLogOut() {
+        User.getInstance().clear();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private boolean bound = false;
