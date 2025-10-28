@@ -33,7 +33,7 @@ import edu.uiuc.cs427app.db.CityContract;
  * It uses the Google Places API's Autocomplete feature to allow users to easily find and select a city.
  * Once a city is selected, its details are saved to the database via the CityContentProvider.
  */
-public class AddCityActivity extends AppCompatActivity {
+public class AddCityActivity extends ThemedActivity {
     private static final String TAG = "AddCityActivity";
 
     //UI
@@ -46,6 +46,9 @@ public class AddCityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_city);
+        
+        // Apply the global theme to all UI components
+        applyThemeToActivity();
 
         selectedCityText = findViewById(R.id.selected_city_text);
         buttonSave = findViewById(R.id.button_save);

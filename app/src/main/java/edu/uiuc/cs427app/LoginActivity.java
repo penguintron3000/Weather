@@ -14,7 +14,7 @@ import edu.uiuc.cs427app.views.LoginFormView;
  * LoginActivity is the entry point shown on app launch.
  * Handles user authentication by verifying credentials against the database.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends ThemedActivity {
 
     private LoginFormView loginFormView;
     private AuthService authService;
@@ -29,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        
+        // Apply the global theme to all UI components
+        applyThemeToActivity();
 
         authService = new AuthService(this);
         tokenManager = new TokenManager(this);
