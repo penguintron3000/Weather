@@ -46,9 +46,6 @@ public class AddCityActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_city);
-        
-        // Apply the global theme to all UI components
-        applyThemeToActivity();
 
         selectedCityText = findViewById(R.id.selected_city_text);
         buttonSave = findViewById(R.id.button_save);

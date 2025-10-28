@@ -46,9 +46,6 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        // Apply the global theme to all UI components
-        applyThemeToActivity();
 
         // check if user is logged in, o.w. redirect to LoginActivity
         if (!User.getInstance().isLoggedIn()) {

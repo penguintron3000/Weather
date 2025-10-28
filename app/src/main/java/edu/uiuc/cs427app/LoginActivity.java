@@ -29,9 +29,6 @@ public class LoginActivity extends ThemedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        
-        // Apply the global theme to all UI components
-        applyThemeToActivity();
 
         authService = new AuthService(this);
         tokenManager = new TokenManager(this);

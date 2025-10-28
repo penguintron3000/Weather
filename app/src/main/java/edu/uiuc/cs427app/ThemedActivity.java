@@ -19,7 +19,7 @@ import android.widget.ScrollView;
 /**
  * ThemedActivity is a base class for all activities that need to apply the global theme.
  * It automatically applies theme colors to common UI elements based on the user's theme preferences.
- * Activities should extend this class and call applyThemeToActivity() after setContentView().
+ * Activities should extend this class. The theme is applied automatically after setContentView() is called.
  */
 public abstract class ThemedActivity extends AppCompatActivity {
     
@@ -41,8 +41,38 @@ public abstract class ThemedActivity extends AppCompatActivity {
     }
     
     /**
+     * Override setContentView to automatically apply the theme after the content is set.
+     * This eliminates the need for each activity to manually call applyThemeToActivity().
+     */
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        applyThemeToActivity();
+    }
+    
+    /**
+     * Override setContentView to automatically apply the theme after the content is set.
+     * This eliminates the need for each activity to manually call applyThemeToActivity().
+     */
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        applyThemeToActivity();
+    }
+    
+    /**
+     * Override setContentView to automatically apply the theme after the content is set.
+     * This eliminates the need for each activity to manually call applyThemeToActivity().
+     */
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        super.setContentView(view, params);
+        applyThemeToActivity();
+    }
+    
+    /**
      * Applies the global theme to the activity's root view and all its children.
-     * Call this method after setContentView() in your activity's onCreate().
+     * This is now called automatically by setContentView(), but can still be called manually if needed.
      */
     protected void applyThemeToActivity() {
         View rootView = findViewById(android.R.id.content);

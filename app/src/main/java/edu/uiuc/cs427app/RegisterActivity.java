@@ -34,9 +34,6 @@ public class RegisterActivity extends ThemedActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        
-        // Apply the global theme to all UI components
-        applyThemeToActivity();
 
         usernameInput = findViewById(R.id.inputUsername);
         passwordInput = findViewById(R.id.inputPassword);
