@@ -34,7 +34,7 @@ import edu.uiuc.cs427app.db.DatabaseHelper;
 import edu.uiuc.cs427app.db.CityContract;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends ThemedActivity implements View.OnClickListener {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -143,6 +143,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             displayText.append(", ").append(countryCode);
 
             viewInfoButton.setText(displayText.toString());
+            
+            // Apply theme to the dynamically created city list item
+            applyThemeToView(cityView);
 
             viewInfoButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, DetailsActivity.class);

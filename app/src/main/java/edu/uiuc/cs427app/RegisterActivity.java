@@ -21,7 +21,7 @@ import edu.uiuc.cs427app.db.UserContract;
  * accounts.
  * Redirects to LoginActivity on successful registration with success message.
  */
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends ThemedActivity implements View.OnClickListener {
 
     private EditText usernameInput;
     private EditText passwordInput;
@@ -202,8 +202,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     private void showError(String message) {
         errorMessage.setText(message);
-        errorMessage.setTextColor(0xFFFF0000); // Red color
-        errorMessage.setBackgroundColor(0xFFFFEBEE); // Light red background
+        errorMessage.setTextColor(theme.getErrorColor());
+        errorMessage.setBackgroundColor(adjustAlpha(theme.getErrorColor(), 0.1f));
         errorMessage.setVisibility(View.VISIBLE);
     }
 
@@ -214,8 +214,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     private void showSuccess(String message) {
         errorMessage.setText(message);
-        errorMessage.setTextColor(0xFF4CAF50); // Green color
-        errorMessage.setBackgroundColor(0xFFE8F5E8); // Light green background
+        errorMessage.setTextColor(theme.getSuccessColor());
+        errorMessage.setBackgroundColor(adjustAlpha(theme.getSuccessColor(), 0.1f));
         errorMessage.setVisibility(View.VISIBLE);
     }
 

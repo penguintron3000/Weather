@@ -33,7 +33,7 @@ import edu.uiuc.cs427app.db.CityContract;
  * It uses the Google Places API's Autocomplete feature to allow users to easily find and select a city.
  * Once a city is selected, its details are saved to the database via the CityContentProvider.
  */
-public class AddCityActivity extends AppCompatActivity {
+public class AddCityActivity extends ThemedActivity {
     private static final String TAG = "AddCityActivity";
 
     //UI
