@@ -2,14 +2,17 @@ package edu.uiuc.cs427app;
 
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
@@ -75,6 +78,19 @@ public abstract class ThemedActivity extends AppCompatActivity {
      * This is now called automatically by setContentView(), but can still be called manually if needed.
      */
     protected void applyThemeToActivity() {
+        // Apply theme to status bar (Android 5.0+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setStatusBarColor(theme.getPrimaryColor());
+        }
+        
+        // Apply theme to ActionBar
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(theme.getPrimaryColor()));
+        }
+        
+        // Apply theme to root view and all its children
         View rootView = findViewById(android.R.id.content);
         if (rootView != null) {
             applyThemeToView(rootView);
