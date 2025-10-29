@@ -48,19 +48,13 @@
         android:hint="Password"
         android:inputType="textPassword" />
 
-    <Spinner
-        android:id="@+id/spinner_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
-
     <EditText
         android:id="@+id/inputThemeDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Theme description (optional)"
-        android:minLines="2"
+        android:minLines="1"
         android:maxLines="4"
         android:gravity="top|start"
         android:inputType="textCapSentences|textMultiLine" />

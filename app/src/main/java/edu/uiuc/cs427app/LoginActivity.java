@@ -43,7 +43,6 @@ public class LoginActivity extends ThemedActivity {
         tokenManager = new TokenManager(this);
 
         loginFormView = findViewById(R.id.login_form_view);
-        loginFormView.initializeLayoutOptions(R.array.layout_options);
         loginFormView.setActionListener(new LoginFormView.ActionListener() {
             @Override
             public void onSignInRequested() {
