@@ -20,8 +20,9 @@ import edu.uiuc.cs427app.views.LoginFormView;
 /**
  * LoginActivity is the entry point shown on app launch.
  * Handles user authentication by verifying credentials against the database.
+ * This activity always uses the default theme - custom themes are applied after login.
  */
-public class LoginActivity extends ThemedActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private LoginFormView loginFormView;
     private AuthService authService;
