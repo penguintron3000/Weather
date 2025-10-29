@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.ArrayRes;
@@ -38,7 +37,7 @@ public class LoginFormView extends LinearLayout {
 
     private EditText usernameInput;
     private EditText passwordInput;
-    private Spinner layoutSelector;
+    private EditText themeDescriptionInput;
     private TextView errorMessage;
     private ActionListener actionListener;
 
@@ -86,7 +85,7 @@ public class LoginFormView extends LinearLayout {
 
         usernameInput = findViewById(R.id.inputUsername);
         passwordInput = findViewById(R.id.inputPassword);
-        layoutSelector = findViewById(R.id.spinner_layout);
+        themeDescriptionInput = findViewById(R.id.inputThemeDescription);
         Button signInButton = findViewById(R.id.buttonSignIn);
         Button signUpButton = findViewById(R.id.buttonSignUp);
         errorMessage = findViewById(R.id.errorMessage);
@@ -104,20 +103,6 @@ public class LoginFormView extends LinearLayout {
         });
 
         passwordInput.setImeOptions(EditorInfo.IME_ACTION_DONE);
-    }
-
-    /**
-     * Initializes the layout selector spinner with the provided string array resource.
-     *
-     * @param arrayResId resource id for the entries to display in the spinner
-     */
-    public void initializeLayoutOptions(@ArrayRes int arrayResId) {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                getContext(),
-                arrayResId,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        layoutSelector.setAdapter(adapter);
     }
 
     /**
@@ -145,6 +130,15 @@ public class LoginFormView extends LinearLayout {
      */
     public String getPassword() {
         return passwordInput.getText().toString();
+    }
+
+    /**
+     * Returns the text entered in the theme description field.
+     *
+     * @return trimmed theme description text
+     */
+    public String getThemeDescription() {
+        return themeDescriptionInput.getText().toString().trim();
     }
 
     /**
