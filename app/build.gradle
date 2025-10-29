@@ -12,6 +12,7 @@ if (localPropertiesFile.exists()) {
 
 // This gets the API key from the properties.
 def mapsApiKey = localProperties.getProperty('MAPS_API_KEY')
+def geminiApiKey = localProperties.getProperty('GEMINI_API_KEY')
 
 android {
     compileSdk 32
@@ -25,7 +26,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [ MAPS_API_KEY : mapsApiKey ]
-        buildConfigField("String", "MAPS_API_KEY", "${mapsApiKey}")
+        buildConfigField('String', 'MAPS_API_KEY', '"' + (mapsApiKey ?: '') + '"')
+        buildConfigField('String', 'GEMINI_API_KEY', '"' + (geminiApiKey ?: '') + '"')
 
     }
 
@@ -41,6 +43,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 }
 
@@ -59,6 +62,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
     implementation 'com.google.android.libraries.places:places:3.1.0'
+
+    // OkHttp for REST calls to Gemini API
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     
     // Testing dependencies for AppTheme tests
     testImplementation 'org.robolectric:robolectric:4.9'
