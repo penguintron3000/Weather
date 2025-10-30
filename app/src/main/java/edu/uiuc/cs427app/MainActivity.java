@@ -193,6 +193,17 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
 
         AlertDialog dialog = builder.create();
         dialog.show();
+        
+        // Apply theme colors to dialog buttons
+        android.widget.Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        android.widget.Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        
+        if (positiveButton != null) {
+            positiveButton.setTextColor(theme.getPrimaryColor());
+        }
+        if (negativeButton != null) {
+            negativeButton.setTextColor(theme.getPrimaryColor());
+        }
     }
 
 
