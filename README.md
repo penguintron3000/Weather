@@ -123,20 +123,20 @@ Meeting notes: We're on track to completing Iteration 3 early which is very good
 
 <b>Project Week 6</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, bcli3, yuhaoc7, ashmitg2, ericnl2, ramvelu2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We mostly discussed bugs that Lucas found when he was testing the code base. The bugs mostly revolved around LLM/app theme issues, they weren't noticed until all aspects of the code were integrated. The bugs were split up and assigned. Finally, we discussed a small change in requirements for the application: the Iteration 3 pdf specified that they wanted an LLM theme text input in the sign in page while in another area specified sign up page. A recent campuswire post clarified that the LLM theme text input feature was actually required on the sign up page, however. So we discussed refactoring the code to accomodate the new requirement and tasking was assigned accordingly.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          | Helped a developer fix gradle build issues, library version issues (refactored code to help downgrade for our gradle version), and cleaned up some code that wasn't needed on front-end of login page. Found multiple bugs and created new tickets for the bug fixes and assigned them. | Review, test code, and give feedback to final pull requests. Create submission video. Submit Iteration 3 deliverables. |
+| ppc2           | All assigned tasking for Iteration 3 has been completed. | All assigned tasking for Iteration 3 has been completed. |
+| bcli3          | All assigned tasking for Iteration 3 has been completed. | All assigned tasking for Iteration 3 has been completed. |
+| yuhaoc7        | Finished all assigned Iteration 3 tasking: (1) Create Backup/Default Theme JSON, (2) Make app theme customizable, and (4) Central UI Theme Class. | Assigned to fix some bugs that were found after the final component was integrated: After a user logged out, their theme would be applied to the sign in and sign up pages, so they were tasked with applying the default theme upon user log out instead, the top 2 bars on top of the screen were not integrated with the app theme, the City Removal "are you sure?" message did not use app theme for "cancel" and "yes" text, and they volunteered to move the LLM theme input to the sign up page instead of the sign in page (and to store theme data for each user) due to a recent clarification in a campuswire post which stated this needed to be done in sign up page not the sign in page. |
+| ashmitg2       | Completed final task: (2) Implement Log Off Button. | All assigned tasking for Iteration 3 has been completed. |
+| ericnl2        | All assigned tasking for Iteration 3 has been completed. | All assigned tasking for Iteration 3 has been completed. |
+| ramvelu2       | With the exception of some missing documentation, complated all assigned Iteration 3 tasks: (1) Add Theme Description to Authentication Page, (2) Set Up LLM (for LLM-generated Themes), and (4) Integrate LLM Theme Generator with App Theme. | Assigned to finish documenting previous work. Assigned to fix 2 bugs: the default theme was not applied if a user did not input a theme (it simply applied the theme for the last user even if that was theme was LLM generated). Remove LLM text input from sign in page due to recent campuswire post which clarified it needed to be on sign up page instead. |
+| wli200         | All assigned tasking for Iteration 3 has been completed. | All assigned tasking for Iteration 3 has been completed. |
 </br>
 
 
@@ -148,14 +148,14 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          | Reviewed, tested code, and gave feedback to final pull requests. Created submission video. Submitted Iteration 3 deliverables. |                       |
+| ppc2           | Completed Iteration 3. |                       |
+| bcli3          | Completed Iteration 3. |                       |
+| yuhaoc7        | Fixed all assigned bugs: default theme is now applied after signing out, the top 2 bars on top of the screen are now integrated with the app theme, "cancel" and "yes" text in City Removal "are you sure?" message uses app theme, and they volunteered to move the LLM theme input to the sign up page instead of the sign in page. |                       |
+| ashmitg2       | Completed Iteration 3. |                       |
+| ericnl2        | Completed Iteration 3. |                       |
+| ramvelu2       | Documented previous work. Fixed the two assigned bugs: the default theme was not applied if a user did not input a theme and removed LLM text input from sign in page. |                       |
+| wli200         | Completed Iteration 3. |                       |
 </br>
 
 
@@ -167,14 +167,14 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          |                                 |                       |
+| ppc2           |                                 |                       |
+| bcli3          |                                 |                       |
+| yuhaoc7        |                                 |                       |
+| ashmitg2       |                                 |                       |
+| ericnl2        |                                 |                       |
+| ramvelu2       |                                 |                       |
+| wli200         |                                 |                       |
 </br>
 
 
@@ -186,14 +186,14 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          |                                 |                       |
+| ppc2           |                                 |                       |
+| bcli3          |                                 |                       |
+| yuhaoc7        |                                 |                       |
+| ashmitg2       |                                 |                       |
+| ericnl2        |                                 |                       |
+| ramvelu2       |                                 |                       |
+| wli200         |                                 |                       |
 </br>
 
 
@@ -205,14 +205,14 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          |                                 |                       |
+| ppc2           |                                 |                       |
+| bcli3          |                                 |                       |
+| yuhaoc7        |                                 |                       |
+| ashmitg2       |                                 |                       |
+| ericnl2        |                                 |                       |
+| ramvelu2       |                                 |                       |
+| wli200         |                                 |                       |
 </br>
 
 
@@ -224,14 +224,14 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          |                                 |                       |
+| ppc2           |                                 |                       |
+| bcli3          |                                 |                       |
+| yuhaoc7        |                                 |                       |
+| ashmitg2       |                                 |                       |
+| ericnl2        |                                 |                       |
+| ramvelu2       |                                 |                       |
+| wli200         |                                 |                       |
 </br>
 
 
@@ -243,12 +243,12 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
-|                |                                 |                       |
+| leby2          |                                 |                       |
+| ppc2           |                                 |                       |
+| bcli3          |                                 |                       |
+| yuhaoc7        |                                 |                       |
+| ashmitg2       |                                 |                       |
+| ericnl2        |                                 |                       |
+| ramvelu2       |                                 |                       |
+| wli200         |                                 |                       |
 </br>
