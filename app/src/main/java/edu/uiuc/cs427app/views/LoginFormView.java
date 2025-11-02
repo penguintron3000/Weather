@@ -37,7 +37,6 @@ public class LoginFormView extends LinearLayout {
 
     private EditText usernameInput;
     private EditText passwordInput;
-    private EditText themeDescriptionInput;
     private TextView errorMessage;
     private ActionListener actionListener;
 
@@ -85,7 +84,6 @@ public class LoginFormView extends LinearLayout {
 
         usernameInput = findViewById(R.id.inputUsername);
         passwordInput = findViewById(R.id.inputPassword);
-        themeDescriptionInput = findViewById(R.id.inputThemeDescription);
         Button signInButton = findViewById(R.id.buttonSignIn);
         Button signUpButton = findViewById(R.id.buttonSignUp);
         errorMessage = findViewById(R.id.errorMessage);
@@ -130,15 +128,6 @@ public class LoginFormView extends LinearLayout {
      */
     public String getPassword() {
         return passwordInput.getText().toString();
-    }
-
-    /**
-     * Returns the text entered in the theme description field.
-     *
-     * @return trimmed theme description text
-     */
-    public String getThemeDescription() {
-        return themeDescriptionInput.getText().toString().trim();
     }
 
     /**
