@@ -26,8 +26,24 @@ import okhttp3.Response;
 public class GeminiThemeService {
     private static final String TAG = "GeminiThemeService";
 
+    /**
+     * Callback interface for handling theme generation results.
+     * Methods are invoked on a background thread; UI updates must be done on the UI thread.
+     */
     public interface ThemeCallback {
+        /**
+         * Invoked when theme generation succeeds.
+         * The theme JSON object is guaranteed to have all required fields and is ready for use.
+         *
+         * @param themeJson The generated theme JSON object with all required fields
+         */
         void onSuccess(JSONObject themeJson);
+
+        /**
+         * Invoked when theme generation fails.
+         *
+         * @param error The exception that occurred during theme generation
+         */
         void onError(Exception error);
     }
 
@@ -36,6 +52,15 @@ public class GeminiThemeService {
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
+    /**
+     * Generates a theme configuration based on the user's natural language description.
+     * This method sends the description to Google's Gemini LLM via HTTP API asynchronously
+     * and processes the response to produce a valid AppTheme JSON object.
+     *
+     * @param context The Android context for logging and resource access
+     * @param description The user's natural language description of the desired theme
+     * @param callback The callback to handle success or error results (invoked on background thread)
+     */
     public void generateThemeFromDescription(Context context, String description, ThemeCallback callback) {
         final String apiKey = BuildConfig.GEMINI_API_KEY;
         if (apiKey == null || apiKey.isEmpty()) {
@@ -45,6 +70,7 @@ public class GeminiThemeService {
 
         final String prompt = buildPrompt(description);
 
+        // Execute theme generation asynchronously on background thread
         executor.execute(() -> {
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
@@ -125,6 +151,13 @@ public class GeminiThemeService {
         });
     }
 
+    /**
+     * Builds the prompt string sent to Gemini LLM for theme generation.
+     * The prompt instructs the model to return a JSON object with specific required fields.
+     *
+     * @param description The user's natural language theme description
+     * @return The formatted prompt string for Gemini API
+     */
     private String buildPrompt(String description) {
         // Prompt aligned with DEVELOPER_GUIDE_APPTHEME.md → LLM Integration requirements
         return "Create a theme for a weather app based on: '" + description + "'.\n" +
@@ -137,6 +170,13 @@ public class GeminiThemeService {
                 "Output JSON only.";
     }
 
+    /**
+     * Extracts a JSON string from text that may contain markdown code fences or extra content.
+     * Handles cases where the LLM wraps JSON in ```json``` blocks or includes extra text.
+     *
+     * @param text The raw text response from the LLM that may contain JSON
+     * @return The extracted JSON string, or the original text if no JSON structure is found
+     */
     private String extractJson(String text) {
         String trimmed = text.trim();
         if (trimmed.startsWith("```") && trimmed.endsWith("```")) {
@@ -153,6 +193,13 @@ public class GeminiThemeService {
         return trimmed;
     }
 
+    /**
+     * Validates that a JSON object contains all required theme fields.
+     * Throws JSONException if any required field is missing.
+     *
+     * @param obj The JSON object to validate
+     * @throws JSONException If any required field is missing
+     */
     private void validateRequiredFields(JSONObject obj) throws JSONException {
         String[] required = new String[] {
                 "themeName",
@@ -176,6 +223,14 @@ public class GeminiThemeService {
         }
     }
 
+    /**
+     * Normalizes a theme JSON object by mapping common alias keys to required schema keys.
+     * Also generates a default themeName if missing by using the description.
+     * This handles variations in LLM output format to match the expected schema.
+     *
+     * @param obj The JSON object to normalize (modified in place)
+     * @param description The original theme description, used to generate themeName if missing
+     */
     private void normalizeThemeSchema(JSONObject obj, String description) {
         // Map common alias keys from LLM outputs to required schema keys
         renameKey(obj, "name", "themeName");
@@ -215,6 +270,14 @@ public class GeminiThemeService {
         }
     }
 
+    /**
+     * Renames a key in a JSON object if the source key exists and the target key doesn't.
+     * This is used to map common LLM output variations to the required schema keys.
+     *
+     * @param obj The JSON object to modify
+     * @param from The source key name to rename from
+     * @param to The target key name to rename to
+     */
     private void renameKey(JSONObject obj, String from, String to) {
         if (obj.has(to)) return;
         if (obj.has(from)) {
@@ -227,6 +290,13 @@ public class GeminiThemeService {
         }
     }
 
+    /**
+     * Maps color values from a nested "colors" object to the top-level theme JSON object.
+     * This handles LLM responses that nest colors in a "colors" sub-object instead of at the root level.
+     * Uses fallback logic for button colors when explicit values are not present.
+     *
+     * @param obj The theme JSON object that may contain a "colors" sub-object (modified in place)
+     */
     private void mapFromColorsObject(JSONObject obj) {
         JSONObject colors = obj.optJSONObject("colors");
         if (colors == null) return;
@@ -266,6 +336,15 @@ public class GeminiThemeService {
         copyIfPresent(colors, obj, "success", "successColor");
     }
 
+    /**
+     * Copies a value from one JSON object to another if the source key exists and target key doesn't.
+     * This is a helper method for mapping color values between JSON structures.
+     *
+     * @param from The source JSON object to read from
+     * @param to The target JSON object to write to (modified in place)
+     * @param fromKey The source key name
+     * @param toKey The target key name
+     */
     private void copyIfPresent(JSONObject from, JSONObject to, String fromKey, String toKey) {
         if (!to.has(toKey) && from.has(fromKey)) {
             try {
