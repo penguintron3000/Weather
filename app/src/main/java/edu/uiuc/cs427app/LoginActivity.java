@@ -45,11 +45,19 @@ public class LoginActivity extends AppCompatActivity {
 
         loginFormView = findViewById(R.id.login_form_view);
         loginFormView.setActionListener(new LoginFormView.ActionListener() {
+            /**
+             * Callback invoked when the user requests to sign in.
+             * Initiates the login process by calling handleLogin().
+             */
             @Override
             public void onSignInRequested() {
                 handleLogin();
             }
 
+            /**
+             * Callback invoked when the user requests to sign up.
+             * Navigates to the RegisterActivity to allow new user registration.
+             */
             @Override
             public void onSignUpRequested() {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -100,6 +108,13 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "Generating theme...", Toast.LENGTH_SHORT).show();
                     // Generate theme asynchronously, then proceed to main
                     geminiThemeService.generateThemeFromDescription(this, themeDescription, new GeminiThemeService.ThemeCallback() {
+                        /**
+                         * Callback invoked when theme generation succeeds.
+                         * Applies the generated theme JSON to the app and navigates to MainActivity.
+                         * If theme application fails, logs the error and proceeds to MainActivity anyway.
+                         *
+                         * @param themeJson The JSON object containing the generated theme data
+                         */
                         @Override
                         public void onSuccess(JSONObject themeJson) {
                             runOnUiThread(() -> {
@@ -114,6 +129,12 @@ public class LoginActivity extends AppCompatActivity {
                             });
                         }
 
+                        /**
+                         * Callback invoked when theme generation fails.
+                         * Displays an error toast message and navigates to MainActivity using the current theme.
+                         *
+                         * @param error The exception that occurred during theme generation
+                         */
                         @Override
                         public void onError(Exception error) {
                             runOnUiThread(() -> {
@@ -139,12 +160,22 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Navigates to the MainActivity and finishes this login activity.
+     * This is called after successful login, whether or not theme generation occurs.
+     */
     private void navigateToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Checks if the device has an active network connection available.
+     * Verifies that the network has internet capability and uses WiFi, cellular, or ethernet transport.
+     *
+     * @return true if a valid network connection with internet capability is available, false otherwise
+     */
     private boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         if (cm == null) return false;
