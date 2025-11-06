@@ -142,20 +142,20 @@ Meeting notes: We mostly discussed bugs that Lucas found when he was testing the
 
 <b>Project Week 7</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, yuhaoc7, ashmitg2, ericnl2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We discussed how we will be assigning reviews for pull requests going forward to spread the workload better. Next, we discussed what Iteration 4 entails and quickly went through the Iteration 4 document. Next, team members chose what area(s) they wanted to work on for this iteration. Some questions were asked about the 4 credit project so we discussed that project in more detail as well. Since the meeting the tasking has been finalized with additional added detail and assigned.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-| leby2          | Reviewed, tested code, and gave feedback to final pull requests. Created submission video. Submitted Iteration 3 deliverables. |                       |
-| ppc2           | Completed Iteration 3. |                       |
-| bcli3          | Completed Iteration 3. |                       |
-| yuhaoc7        | Fixed all assigned bugs: default theme is now applied after signing out, the top 2 bars on top of the screen are now integrated with the app theme, "cancel" and "yes" text in City Removal "are you sure?" message uses app theme, and they volunteered to move the LLM theme input to the sign up page instead of the sign in page. |                       |
-| ashmitg2       | Completed Iteration 3. |                       |
-| ericnl2        | Completed Iteration 3. |                       |
-| ramvelu2       | Documented previous work. Fixed the two assigned bugs: the default theme was not applied if a user did not input a theme and removed LLM text input from sign in page. |                       |
-| wli200         | Completed Iteration 3. |                       |
+| leby2          | Reviewed, tested code, and gave feedback to final pull requests. Created submission video. Submitted Iteration 3 deliverables. Divided up Iteration 4 into 7 different areas for developers to choose from prior to weekly meeting. | Finalize and assign individual tasking. |
+| ppc2           | Completed Iteration 3. | Assigned Interactive Map. |
+| bcli3          | Completed Iteration 3. | Assigned Weather Insights LLM. |
+| yuhaoc7        | Fixed all assigned bugs: default theme is now applied after signing out, the top 2 bars on top of the screen are now integrated with the app theme, "cancel" and "yes" text in City Removal "are you sure?" message uses app theme, and they volunteered to move the LLM theme input to the sign up page instead of the sign in page. | Assigned to work on Weather Retrieval Class. |
+| ashmitg2       | Completed Iteration 3. | Assigned Front-end for Weather Insights. |
+| ericnl2        | Completed Iteration 3. | Assigned to create basic weather page layout and to display current date and time on the page. |
+| ramvelu2       | Documented previous work. Fixed the two assigned bugs: the default theme was not applied if a user did not input a theme and removed LLM text input from sign in page. | Assigned Interactive Map Page Front-end. |
+| wli200         | Completed Iteration 3. | Assigned LLM-Generated Weather-Aware City View. |
 </br>
 
 
