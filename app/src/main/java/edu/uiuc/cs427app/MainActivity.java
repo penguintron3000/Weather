@@ -142,6 +142,7 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
                 startActivity(intent);
             });
 
+            // Launches the MapActivity with the city's location details
             mapButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MapActivity.class);
                 intent.putExtra("lat", lat);
