@@ -42,6 +42,8 @@
             android:name=".DetailsActivity"
             android:exported="true" />
 
+        <activity android:name=".MapActivity" />
+
         <service
             android:name=".CityService"
             android:exported="false" />

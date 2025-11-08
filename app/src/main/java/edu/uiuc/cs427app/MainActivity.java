@@ -55,17 +55,6 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
             return;
         }
 
-        // create db without imported csv
-        // DatabaseHelper dbHelper = new DatabaseHelper(this);
-        // dbHelper.getWritableDatabase();
-
-        // create db with imported csv
-        //edu.uiuc.cs427app.db.DatabaseImporter.importFromAssets(this);
-
-        // Run the test /example code
-        //edu.uiuc.cs427app.db.DatabaseTester.runTests(this);
-
-
         // initialize the Places SDK
         if (!Places.isInitialized()) {
             // Read the API key from the build configuration
@@ -124,15 +113,15 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
             String cityName = city.getDisplayName();
             String countryCode = city.getCountryCode();
             String state = city.getState();
-            long cityId = city.getId();
+            double lat = city.getLat();
+            double lon = city.getLon();
 
             // Inflate the city_list_item layout
             LayoutInflater inflater = LayoutInflater.from(this);
             View cityView = inflater.inflate(R.layout.city_list_item, container, false);
 
-            // Get the Button from the layout
             Button viewInfoButton = cityView.findViewById(R.id.view_city_info_button);
-
+            Button mapButton = cityView.findViewById(R.id.map_button);
             Button removeButton = cityView.findViewById(R.id.remove_button);
 
             // Build the display text, including state if available
@@ -143,7 +132,7 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
             displayText.append(", ").append(countryCode);
 
             viewInfoButton.setText(displayText.toString());
-            
+
             // Apply theme to the dynamically created city list item
             applyThemeToView(cityView);
 
@@ -153,10 +142,18 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
                 startActivity(intent);
             });
 
+            // Launches the MapActivity with the city's location details
+            mapButton.setOnClickListener(v -> {
+                Intent intent = new Intent(this, MapActivity.class);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lon", lon);
+                intent.putExtra("city", cityName);
+                startActivity(intent);
+            });
+
             removeButton.setOnClickListener(v -> {
                 showRemoveCityDialog(city, cityView);
             });
-
 
             container.addView(cityView);
         }
@@ -193,11 +190,11 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
 
         AlertDialog dialog = builder.create();
         dialog.show();
-        
+
         // Apply theme colors to dialog buttons
         android.widget.Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         android.widget.Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-        
+
         if (positiveButton != null) {
             positiveButton.setTextColor(theme.getPrimaryColor());
         }
@@ -226,7 +223,7 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
     }
 
     /**
-     * Performs the log out workflow by clearing session state and returning to LoginActivity.
+     * Performs the log out workflow by clearing session state and and returning to LoginActivity.
      */
     private void handleLogOut() {
         User.getInstance().clear();
