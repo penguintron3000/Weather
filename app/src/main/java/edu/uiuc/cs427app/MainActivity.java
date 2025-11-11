@@ -138,7 +138,7 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
 
             viewInfoButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, DetailsActivity.class);
-                intent.putExtra("city", cityName);
+                intent.putExtra("city", city);
                 startActivity(intent);
             });
 
