@@ -155,11 +155,11 @@ public abstract class ThemedActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks if xml override_background tag exists on view object. Leave it as is (as specified in the xml) if it exists. Returns true if exists
+     * Checks if xml override_background tag exists on view object. Leave it as is (as specified in the xml) if it exists. Returns true if no background tag
      * @param view View object to check tag with
-     * @return True if the specific tag exists, and do not override xml specified background
+     * @return True if no background tag, false if otherwise
      */
-    private boolean backgroundTagExists(View view){
+    private boolean noBackgroundTag(View view){
         return view.getTag() == null || !view.getTag().equals("override_background");
     }
 
@@ -170,7 +170,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
      */
     protected void applyThemeToView(View view) {
         // Apply background color to container views
-        if ((view instanceof ConstraintLayout || view instanceof LinearLayout) && backgroundTagExists(view)) {
+        if ((view instanceof ConstraintLayout || view instanceof LinearLayout) && noBackgroundTag(view)) {
             view.setBackgroundColor(theme.getBackgroundColor());
         }
 
@@ -201,7 +201,7 @@ public abstract class ThemedActivity extends AppCompatActivity {
         }
 
         // Apply theme to ScrollView backgrounds
-        if ((view instanceof ScrollView || view instanceof NestedScrollView) && backgroundTagExists(view)) {
+        if ((view instanceof ScrollView || view instanceof NestedScrollView) && noBackgroundTag(view)) {
             view.setBackgroundColor(theme.getBackgroundColor());
         }
 
