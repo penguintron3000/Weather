@@ -60,19 +60,26 @@
                     android:background="@android:color/transparent"
                     android:tag="override_background">
 
-                    <TextView
-                        android:id="@+id/weatherStatus"
+                    <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="4dp"
                         android:layout_weight="3"
-                        android:background="@drawable/rounded_background"
-                        android:gravity="center"
                         android:padding="8dp"
-                        android:text="Sunny"
-                        android:textAlignment="center"
-                        android:textSize="50sp" />
+                        android:tag="corners"
+                        android:background="@drawable/rounded_background">
+
+                        <TextView
+                            android:id="@+id/weatherStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Sunny"
+                            android:textAlignment="center"
+                            android:textSize="50sp" />
+
+                    </FrameLayout>
 
                     <FrameLayout
                         android:layout_width="0dp"
@@ -80,6 +87,7 @@
                         android:layout_marginStart="4dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="2"
+                        android:tag="corners"
                         android:background="@drawable/rounded_background">
 
                         <TextView
@@ -126,6 +134,7 @@
                         android:layout_marginEnd="4dp"
                         android:layout_weight="2"
                         android:background="@drawable/rounded_background"
+                        android:tag="corners"
                         android:padding="8dp">
 
                         <TextView
@@ -156,6 +165,7 @@
                         android:layout_marginStart="4dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="3"
+                        android:tag="corners"
                         android:background="@drawable/rounded_background">
 
                         <TextView
@@ -201,7 +211,9 @@
             app:layout_constraintHeight_percent="0.2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailsDisplayName"
-            app:layout_constraintWidth_percent="0.66">
+            app:layout_constraintWidth_percent="0.66"
+            android:background="@android:color/transparent"
+            android:tag="override_background">
 
             <TextView
                 android:id="@+id/detailsTime"

@@ -6,11 +6,13 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -155,12 +157,53 @@ public abstract class ThemedActivity extends AppCompatActivity {
     }
 
     /**
+     * Allows the use of android:tags="tag1,tag2, ..." by checking all possible tags in a View
+     * @param view View object to check tags
+     * @param tagToCheck the desired tag to check for
+     * @return true if desired tag is found, false if not
+     */
+    private boolean checkTags(View view, String tagToCheck){
+        String tags[] = ((String)view.getTag()).split(",");
+        for(int i = 0; i < tags.length; i ++){
+            if(tags[i].equals(tagToCheck)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Checks if xml override_background tag exists on view object. Leave it as is (as specified in the xml) if it exists. Returns true if no background tag
      * @param view View object to check tag with
      * @return True if no background tag, false if otherwise
      */
     private boolean noBackgroundTag(View view){
-        return view.getTag() == null || !view.getTag().equals("override_background");
+        return view.getTag() == null || !checkTags(view, "override_background");
+    }
+
+    /**
+     * Apply rounded corners to xml objects with android:tag="corners"
+     * Currently only works on AppThemes with a background color, could probably be made more robust
+     * @param view View object to create corners with
+     */
+    private void roundedCorners(View view){
+        if(view.getTag() == null || !checkTags(view, "corners")){
+            return;
+        }
+
+        GradientDrawable backgroundDrawable = new GradientDrawable();
+        backgroundDrawable.setShape(GradientDrawable.RECTANGLE);
+        backgroundDrawable.setColor(theme.getBackgroundColor());
+
+        float cornerRadiusDp = 12f;
+        float cornerRadiusPx = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                cornerRadiusDp,
+                view.getResources().getDisplayMetrics()
+        );
+        backgroundDrawable.setCornerRadius(cornerRadiusPx);
+
+        view.setBackground(backgroundDrawable);
     }
 
     /**
@@ -170,8 +213,9 @@ public abstract class ThemedActivity extends AppCompatActivity {
      */
     protected void applyThemeToView(View view) {
         // Apply background color to container views
-        if ((view instanceof ConstraintLayout || view instanceof LinearLayout) && noBackgroundTag(view)) {
+        if ((view instanceof ConstraintLayout || view instanceof LinearLayout || view instanceof FrameLayout) && noBackgroundTag(view)) {
             view.setBackgroundColor(theme.getBackgroundColor());
+            roundedCorners(view);
         }
 
         // Apply theme to TextViews
