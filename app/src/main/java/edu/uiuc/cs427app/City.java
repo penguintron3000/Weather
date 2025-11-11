@@ -1,11 +1,14 @@
 package edu.uiuc.cs427app;
 import android.content.ContentValues;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import edu.uiuc.cs427app.db.CityContract;
 
 /**
  * A well defined City object to translate to and from the database
  */
-public class City {
+public class City implements Parcelable {
 
     private long id;
     private String userId;
@@ -70,6 +73,18 @@ public class City {
         this.countryCode = contentValues.getAsString(CityContract.CityEntry.COLUMN_COUNTRY_CODE);
         this.lat = contentValues.getAsDouble(CityContract.CityEntry.COLUMN_LAT);
         this.lon = contentValues.getAsDouble(CityContract.CityEntry.COLUMN_LON);
+    }
+
+    // Parcelable constructor
+    public City(Parcel in) {
+        id = in.readLong();
+        userId = in.readString();
+        placeId = in.readString();
+        displayName = in.readString();
+        state = in.readString();
+        countryCode = in.readString();
+        lat = in.readDouble();
+        lon = in.readDouble();
     }
 
     /**
@@ -140,5 +155,37 @@ public class City {
     public double getLon() {
         return lon;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(userId);
+        parcel.writeString(placeId);
+        parcel.writeString(displayName);
+        parcel.writeString(state);
+        parcel.writeString(countryCode);
+        parcel.writeDouble(lat);
+        parcel.writeDouble(lon);
+    }
+
+    //Allow Parcel to create a new city object using Parcel payload data
+    public static final Creator<City> CREATOR = new Creator<City>() {
+
+        @Override
+        public City createFromParcel(Parcel in) {
+            return new City(in);
+        }
+
+        @Override
+        public City[] newArray(int size) {
+            return new City[size];
+        }
+
+    };
 }
 
