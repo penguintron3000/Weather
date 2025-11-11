@@ -25,6 +25,62 @@
             android:gravity="center"
             android:text="City Name \n State/Province + Country Code" />
 
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detailsDisplayName"
+            app:layout_constraintWidth_percent="0.66"
+            android:background="@android:color/transparent"
+            android:tag="override_background">
+
+            <TextView
+                android:id="@+id/detailsTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textSize="40sp"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/detailsDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                android:text="November 10, 2025"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:paddingBottom="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailsTime" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/detailsWeatherInsightsButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:text="Weather Insights"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".10"
+            app:layout_constraintTop_toBottomOf="@id/detailsDisplayName"
+            app:layout_constraintWidth_percent="0.33" />
+
+        <Button
+            android:id="@+id/detailsMapButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:text="Show Map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.10"
+            app:layout_constraintTop_toBottomOf="@id/detailsWeatherInsightsButton"
+            app:layout_constraintWidth_percent="0.33" />
+
         <ScrollView
             android:id="@+id/detailsCityInfo"
             android:layout_width="0dp"
@@ -204,62 +260,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
-
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailsDisplayName"
-            app:layout_constraintWidth_percent="0.66"
-            android:background="@android:color/transparent"
-            android:tag="override_background">
-
-            <TextView
-                android:id="@+id/detailsTime"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="00:00"
-                android:textAlignment="center"
-                android:textSize="40sp"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/detailsDate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                android:text="November 10, 2025"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:paddingBottom="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detailsTime" />
-
-        </FrameLayout>
-
-        <Button
-            android:id="@+id/detailsWeatherInsightsButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:text="Weather Insights"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".10"
-            app:layout_constraintTop_toBottomOf="@id/detailsDisplayName"
-            app:layout_constraintWidth_percent="0.33" />
-
-        <Button
-            android:id="@+id/detailsMapButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:text="Show Map"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.10"
-            app:layout_constraintTop_toBottomOf="@id/detailsWeatherInsightsButton"
-            app:layout_constraintWidth_percent="0.33" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
