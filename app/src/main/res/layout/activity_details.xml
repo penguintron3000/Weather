@@ -10,7 +10,8 @@
         android:id="@+id/cityViewBackgroundImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2196F3">
+        android:background="#FFFFFF"
+        android:tag="override_background">
 
         <TextView
             android:id="@+id/detailsDisplayName"
@@ -31,67 +32,74 @@
             android:layout_marginTop="8dp"
             android:fadeScrollbars="false"
             android:scrollbars="vertical"
+            android:background="@android:color/transparent"
+            android:tag="override_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.65"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailsMapButton">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@android:color/transparent"
+                android:tag="override_background">
 
                 <LinearLayout
                     android:id="@+id/weatherStatusContainer"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:orientation="horizontal"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintHeight_percent="0.5">
+                    android:background="@android:color/transparent"
+                    android:tag="override_background">
 
                     <TextView
                         android:id="@+id/weatherStatus"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_weight="3"
+                        android:background="@drawable/rounded_background"
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="Sunny"
                         android:textAlignment="center"
-                        android:textSize="50sp"
-                        android:background="@drawable/rounded_background"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginStart="8dp"/>
+                        android:textSize="50sp" />
 
                     <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/rounded_background"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="4dp"
-                        android:layout_weight="2">
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="2"
+                        android:background="@drawable/rounded_background">
 
                         <TextView
                             android:id="@+id/temperatureTitle"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="top"
-                            android:text="Temparature"
-                            android:textSize="20dp"
                             android:paddingTop="8dp"
-                            android:textAlignment="center"/>
+                            android:text="Temparature"
+                            android:textAlignment="center"
+                            android:textSize="20dp" />
 
                         <TextView
                             android:id="@+id/temperature"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:textSize="40sp"
                             android:text="32°F"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center"
+                            android:textSize="40sp" />
 
                     </FrameLayout>
 
@@ -101,21 +109,23 @@
                     android:id="@+id/humidityWindsContainer"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:orientation="horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.45"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/weatherStatusContainer"
-                    app:layout_constraintHeight_percent="0.45">
+                    android:background="@android:color/transparent"
+                    android:tag="override_background">
 
                     <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/rounded_background"
-                        android:layout_marginEnd="4dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_weight="2"
+                        android:background="@drawable/rounded_background"
                         android:padding="8dp">
 
                         <TextView
@@ -143,10 +153,10 @@
                     <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:background="@drawable/rounded_background"
-                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="4dp"
-                        android:layout_weight="3">
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="3"
+                        android:background="@drawable/rounded_background">
 
                         <TextView
                             android:id="@+id/windsTitle"
@@ -183,7 +193,7 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+        </ScrollView>
 
         <FrameLayout
             android:layout_width="0dp"
