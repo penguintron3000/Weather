@@ -3,6 +3,8 @@ package edu.uiuc.cs427app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import edu.uiuc.cs427app.services.WeatherService;
+
 public class DetailsActivity extends ThemedActivity implements View.OnClickListener{
 
     private TextView timeText;
@@ -26,7 +30,9 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
     private TextView windsSpeedText;
     private TextView windsDirectionText;
     private TextView humidityText;
-    private Handler handler = new Handler();
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private WeatherService weatherService;
+    private City currentCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +48,10 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         humidityText = findViewById(R.id.humidity);
 
         // Process the Intent payload that has opened this Activity and show the information accordingly
-        City city = getIntent().getParcelableExtra("city");
-        String title = city.getDisplayName() + "\n" + city.getState() + ", " + city.getCountryCode();
+        currentCity = getIntent().getParcelableExtra("city");
+        String title = currentCity.getDisplayName() + "\n" + currentCity.getState() + ", " + currentCity.getCountryCode();
 
-        int cityNameLength = city.getDisplayName().length();
+        int cityNameLength = currentCity.getDisplayName().length();
 
         // Initializing the GUI elements
         TextView displayName = findViewById(R.id.detailsDisplayName);
@@ -56,14 +62,18 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         spannableString.setSpan(new AbsoluteSizeSpan(20, true), cityNameLength + 1, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         displayName.setText(spannableString);
-        // Get the weather information from a Service that connects to a weather server and show the results
+        
+        // Initialize WeatherService for the city
+        weatherService = new WeatherService(currentCity.getDisplayName());
+        // Fetch initial weather data
+        fetchWeatherData();
 
         Button buttonMap = findViewById(R.id.detailsMapButton);
         buttonMap.setOnClickListener(v ->{
             Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra("lat", city.getLat());
-            intent.putExtra("lon", city.getLon());
-            intent.putExtra("city", city.getDisplayName());
+            intent.putExtra("lat", currentCity.getLat());
+            intent.putExtra("lon", currentCity.getLon());
+            intent.putExtra("city", currentCity.getDisplayName());
             startActivity(intent);
         });
 
@@ -89,11 +99,7 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
      */
     private void startRunnables(){
         updateTimeAndDate();
-        updateWeatherStatus();
-        updateTemperature();
-        updateWinds();
-        updateHumidity();
-        updateDummyAPI();
+        updateWeatherData(); // Single runnable to update all weather data
     }
 
     /**
@@ -116,104 +122,98 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         handler.post(runnable);
     }
 
-    //DUMMY VALUES FOR TESTING. TO BE REPLACED WITH API CALLS
-    private int count = 0;
-    private int[] values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
     /**
-     * Placeholder API method caller. Gives us placeholder values that update every x ms
-     * @return placeholder value to be displayed on the phone
+     * Fetches weather data from the WeatherService API.
+     * This method is called initially and can be called to refresh the data.
      */
-    public int getValue(){
-        return values[count];
-    }
-
-    /**
-     * Live updates to weather text, checking every minute
-     */
-    private void updateWeatherStatus() {
-        Runnable runnable = new Runnable() {
+    private void fetchWeatherData() {
+        if (weatherService == null) {
+            Log.e("DetailsActivity", "WeatherService is null");
+            return;
+        }
+        
+        weatherService.fetchWeatherData(new WeatherService.WeatherCallback() {
             @Override
-            public void run() {
-                String weatherStatus = "Snowy"; //TODO: api call here
-
-                weatherText.setText(weatherStatus);
-
-                handler.postDelayed(this, 60000);
+            public void onSuccess() {
+                // Update UI on main thread
+                handler.post(() -> {
+                    updateWeatherUI();
+                });
             }
-        };
-        handler.post(runnable);
+            
+            @Override
+            public void onError(Exception error) {
+                Log.e("DetailsActivity", "Failed to fetch weather data: " + error.getMessage());
+                // Update UI with error message on main thread
+                handler.post(() -> {
+                    weatherText.setText("N/A");
+                    temperatureText.setText("N/A");
+                    windsSpeedText.setText("N/A");
+                    windsDirectionText.setText("N/A");
+                    humidityText.setText("N/A");
+                });
+            }
+        });
+    }
+    
+    /**
+     * Updates the weather UI elements with data from WeatherService.
+     * This should be called on the main thread.
+     */
+    private void updateWeatherUI() {
+        try {
+            if (weatherService.isDataAvailable()) {
+                // Update weather condition
+                String condition = weatherService.getWeatherCondition();
+                weatherText.setText(condition);
+                
+                // Update temperature
+                double temp = weatherService.getTemperature();
+                temperatureText.setText(String.format("%.0f°F", temp));
+                
+                // Update wind speed and direction
+                double windSpeed = weatherService.getWindSpeed();
+                String windDir = weatherService.getWindDirection();
+                windsSpeedText.setText(String.format("%.1f mph", windSpeed));
+                windsDirectionText.setText(windDir);
+                
+                // Update humidity
+                int humidity = weatherService.getHumidity();
+                humidityText.setText(humidity + "%");
+            }
+        } catch (IllegalStateException e) {
+            Log.e("DetailsActivity", "Weather data not available: " + e.getMessage());
+        }
     }
 
     /**
-     * Live updates to our count value to change our placeholder values every minute
+     * Live updates to all weather data, checking every minute.
+     * This method refreshes the weather data from the API and updates all weather-related UI elements.
      */
-    private void updateDummyAPI() {
+    private void updateWeatherData() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                count++;
-                if(count > 9){
-                    count = 0;
+                // Refresh weather data from API (only one API call per minute)
+                if (weatherService != null) {
+                    weatherService.refreshWeatherData(new WeatherService.WeatherCallback() {
+                        @Override
+                        public void onSuccess() {
+                            // Update all weather UI elements on main thread
+                            handler.post(() -> {
+                                updateWeatherUI();
+                            });
+                        }
+                        
+                        @Override
+                        public void onError(Exception error) {
+                            Log.e("DetailsActivity", "Failed to refresh weather data: " + error.getMessage());
+                            // Optionally show error state in UI
+                        }
+                    });
                 }
 
-                handler.postDelayed(this, 60000);
-            }
-        };
-        handler.post(runnable);
-    }
-
-    /**
-     * Live updates to temperature, checking every minute
-     * Text font size is also formatted here
-     */
-    private void updateTemperature() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                String temp = getValue() + "°F"; //TODO: api call here
-
-                temperatureText.setText(temp);
-
-                handler.postDelayed(this, 60000);
-            }
-        };
-        handler.post(runnable);
-    }
-
-    /**
-     * Live updates to wind information, checking every minute
-     * Text font size is also formatted here
-     */
-    private void updateWinds() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                String windsSpeed = getValue() + " mph"; //TODO: api call here
-                String direction = "NW";
-
-                windsSpeedText.setText(windsSpeed);
-                windsDirectionText.setText(direction);
-
-                handler.postDelayed(this, 60000);
-            }
-        };
-        handler.post(runnable);
-    }
-
-    /**
-     * Live updates to humidity, checking every minute
-     * Text font size is also formatted here
-     */
-    private void updateHumidity() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                String temp = getValue() + "%"; //TODO: api call here
-
-                humidityText.setText(temp);
-
-                handler.postDelayed(this, 60000);
+                handler.postDelayed(this, 60000); // Update every minute
             }
         };
         handler.post(runnable);
@@ -222,6 +222,15 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         //Implement this (create an Intent that goes to a new Activity, which shows the map)
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Clean up WeatherService resources
+        if (weatherService != null) {
+            weatherService.shutdown();
+        }
     }
 }
 
