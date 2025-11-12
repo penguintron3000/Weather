@@ -161,20 +161,20 @@ Meeting notes: We discussed how we will be assigning reviews for pull requests g
 
 <b>Project Week 8</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, yuhaoc7, ashmitg2, ericnl2, ramvelu2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: I gave an overview of what Iteration 4 entails to make sure everyone was aware of what each person was doing. We discussed the progress that had been made so far. I reminded the developers of the upcoming deadlines. No one had any questions about their assigned tasking. About half of the group members have completed their tasking so far so we are in decent shape to meet the Iteration 4 deadline on Sunday.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-| leby2          |                                 |                       |
-| ppc2           |                                 |                       |
-| bcli3          |                                 |                       |
-| yuhaoc7        |                                 |                       |
-| ashmitg2       |                                 |                       |
-| ericnl2        |                                 |                       |
-| ramvelu2       |                                 |                       |
-| wli200         |                                 |                       |
+| leby2          | Finalized and assigned individual tasking. Verified documentation requirement was met for all submitted pull requests. | Test completed Iteration 4 code and create Iteration 4 video. |
+| ppc2           | Finished Interactive Map. | All assigned Iteration 4 tasking has been completed. |
+| bcli3          | None. | All assigned Iteration 4 tasking: Weather Insights LLM. |
+| yuhaoc7        | Finished Weather Retrieval Class. Additionally simplified some other code to more fully abstract out the weather retrieval code. | All assigned Iteration 4 tasking has been completed. |
+| ashmitg2       | None. | All assigned Iteration 4 tasking: Front-end for Weather Insights |
+| ericnl2        | Created basic weather page layout and displayed current date and time on the page. Additionally did some layout work that should make it easier to integrate LLM-Generated Weather-Aware City View. | All assigned Iteration 4 tasking has been completed. |
+| ramvelu2       | None. | All assigned Iteration 4 tasking: Interactive Map Page Front-end. |
+| wli200         | None. | All assigned Iteration 4 tasking: LLM-Generated Weather-Aware City View. |
 </br>
 
 
