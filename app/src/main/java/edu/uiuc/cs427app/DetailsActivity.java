@@ -68,20 +68,22 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         });
 
         Button insightsButton = findViewById(R.id.detailsWeatherInsightsButton);
-        /**
-         * TODO: redirect to the weather insights activity with necessary values into intent payload
-        buttonMap.setOnClickListener(v ->{
-            Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra(city);
-            startActivity(intent);
-        });
-         **/
+        insightsButton.setOnClickListener(v -> openWeatherInsights(city));
 
         ConstraintLayout background =  findViewById(R.id.cityViewBackgroundImage);
         //TODO: use LLM to set background here, however you may even create your own runnable if you want to update the image as the weather updates, can use weatherservice api calls
 
         startRunnables();
 
+    }
+
+    /**
+     * Routes the details screen Weather Insights button to the new activity.
+     */
+    private void openWeatherInsights(City city) {
+        Intent intent = new Intent(this, WeatherInsightsActivity.class);
+        intent.putExtra("city", city);
+        startActivity(intent);
     }
 
     /**
@@ -224,4 +226,3 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         //Implement this (create an Intent that goes to a new Activity, which shows the map)
     }
 }
-

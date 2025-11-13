@@ -123,6 +123,7 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
             Button viewInfoButton = cityView.findViewById(R.id.view_city_info_button);
             Button mapButton = cityView.findViewById(R.id.map_button);
             Button removeButton = cityView.findViewById(R.id.remove_button);
+            Button insightsButton = cityView.findViewById(R.id.weather_insights_button);
 
             // Build the display text, including state if available
             StringBuilder displayText = new StringBuilder(cityName);
@@ -142,6 +143,8 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
                 startActivity(intent);
             });
 
+            insightsButton.setOnClickListener(v -> openWeatherInsights(city));
+
             // Launches the MapActivity with the city's location details
             mapButton.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MapActivity.class);
@@ -157,6 +160,15 @@ public class MainActivity extends ThemedActivity implements View.OnClickListener
 
             container.addView(cityView);
         }
+    }
+
+    /**
+     * Opens the Weather Insights screen for the tapped city from the list view.
+     */
+    private void openWeatherInsights(City city) {
+        Intent intent = new Intent(this, WeatherInsightsActivity.class);
+        intent.putExtra("city", city);
+        startActivity(intent);
     }
 
 

@@ -41,6 +41,9 @@
         <activity
             android:name=".DetailsActivity"
             android:exported="true" />
+        <activity
+            android:name=".WeatherInsightsActivity"
+            android:exported="false" />
 
         <activity android:name=".MapActivity" />
 
