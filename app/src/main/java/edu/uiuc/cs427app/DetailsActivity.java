@@ -68,6 +68,7 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         });
 
         Button insightsButton = findViewById(R.id.detailsWeatherInsightsButton);
+        // Provide a quick jump from the detail page into the Weather Insights flow.
         insightsButton.setOnClickListener(v -> openWeatherInsights(city));
 
         ConstraintLayout background =  findViewById(R.id.cityViewBackgroundImage);

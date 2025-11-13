@@ -7,6 +7,9 @@ public final class WeatherInsightsRepositoryProvider {
 
     private static WeatherInsightsRepository repository;
 
+    /**
+     * Hidden constructor because this utility should never be instantiated.
+     */
     private WeatherInsightsRepositoryProvider() {
         // Utility holder
     }

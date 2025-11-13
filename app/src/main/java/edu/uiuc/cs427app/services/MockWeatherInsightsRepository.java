@@ -19,6 +19,7 @@ public class MockWeatherInsightsRepository implements WeatherInsightsRepository 
     private static final long SIMULATED_DELAY_MS = 600L;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
+    // Randomizer keeps follow-up question order feeling organic between clicks.
     private final Random random = new Random();
 
     /**
