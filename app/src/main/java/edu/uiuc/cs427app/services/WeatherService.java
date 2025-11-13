@@ -86,32 +86,62 @@ public class WeatherService {
      * The data is cached after a successful fetch, so subsequent calls to getter
      * methods will return the cached data without making additional API calls.
      * 
+     * <p>This method uses a background executor thread to perform the network request
+     * asynchronously. The callback methods (onSuccess/onError) are invoked on the
+     * background thread, so any UI updates must be posted to the UI thread.
+     * 
+     * <p>If weather data has already been successfully fetched and cached, the callback
+     * is invoked immediately without making another API call. If a previous fetch failed,
+     * a new fetch attempt will be made.
+     * 
      * @param callback The callback to handle success or error results (invoked on background thread)
+     * 
+     * @see WeatherCallback#onSuccess() Called when weather data is successfully fetched
+     * @see WeatherCallback#onError(Exception) Called when an error occurs during fetch
      */
     public void fetchWeatherData(WeatherCallback callback) {
+        // Early return optimization: If data was already successfully fetched and cached,
+        // invoke the success callback immediately on the executor thread to maintain
+        // consistent threading behavior, avoiding unnecessary API calls.
         if (dataFetched && fetchError == null) {
             // Data already fetched successfully, invoke callback immediately
             executor.execute(() -> callback.onSuccess());
             return;
         }
         
+        // Validate that the API key is configured before attempting the network request.
+        // The API key should be defined in local.properties and will be available via BuildConfig.
         final String apiKey = BuildConfig.WEATHER_API_KEY;
         if (apiKey == null || apiKey.isEmpty()) {
+            // Create an IllegalStateException with a clear error message indicating
+            // that the API key needs to be configured in local.properties.
             Exception error = new IllegalStateException(
                 "Weather API key missing. Define WEATHER_API_KEY in local.properties.");
+            // Store the error so it can be retrieved later via getLastError()
             fetchError = error;
+            // Execute the error callback on the background thread to maintain
+            // consistent threading behavior with the success path.
             executor.execute(() -> callback.onError(error));
             return;
         }
         
+        // Execute the actual network request on a background thread to avoid blocking
+        // the calling thread. This lambda runs asynchronously and handles both success
+        // and error cases, updating the internal state accordingly.
         executor.execute(() -> {
             try {
+                // Fetch weather data synchronously (this is safe because we're already
+                // on a background thread). This will parse and cache the weather data.
                 fetchWeatherDataSync();
+                // Clear any previous error state since the fetch succeeded
                 fetchError = null;
+                // Notify the callback that the data is now available
                 callback.onSuccess();
             } catch (Exception e) {
+                // Store the exception for later retrieval and logging
                 fetchError = e;
                 Log.e(TAG, "Weather fetch error: " + e.getMessage(), e);
+                // Notify the callback about the error
                 callback.onError(e);
             }
         });
@@ -121,18 +151,33 @@ public class WeatherService {
      * Fetches weather data synchronously. This method should be called from a background thread.
      * The data is cached after a successful fetch.
      * 
-     * @throws IOException If the network request fails
-     * @throws JSONException If the response cannot be parsed
-     * @throws IllegalStateException If the API key is missing or the response is invalid
+     * <p>This method performs the actual HTTP request to the OpenWeatherMap API and parses
+     * the JSON response. It should only be called from a background thread as it performs
+     * blocking network I/O operations.
+     * 
+     * <p>If weather data has already been successfully fetched, this method returns immediately
+     * without making another API call, using the cached data.
+     * 
+     * @throws IOException If the network request fails or the API returns a non-successful response
+     * @throws JSONException If the response cannot be parsed or required fields are missing
+     * @throws IllegalStateException If the API key is missing or the response is invalid/empty
      */
     public void fetchWeatherDataSync() throws IOException, JSONException {
+        // Early return optimization: If data was already successfully fetched and cached,
+        // skip the network request and return immediately. This prevents redundant API calls
+        // and reduces unnecessary network traffic and API quota usage.
         if (dataFetched && fetchError == null) {
             // Data already fetched successfully, return immediately
             return;
         }
         
+        // Validate that the API key is configured. The API key is required for all
+        // OpenWeatherMap API requests. It should be defined in local.properties as
+        // WEATHER_API_KEY and will be available via BuildConfig at build time.
         final String apiKey = BuildConfig.WEATHER_API_KEY;
         if (apiKey == null || apiKey.isEmpty()) {
+            // Throw an IllegalStateException with a descriptive error message that
+            // guides developers to configure the API key in local.properties.
             throw new IllegalStateException(
                 "Weather API key missing. Define WEATHER_API_KEY in local.properties.");
         }

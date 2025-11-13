@@ -125,26 +125,60 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
     /**
      * Fetches weather data from the WeatherService API.
      * This method is called initially and can be called to refresh the data.
+     * 
+     * <p>This method initiates an asynchronous weather data fetch for the current city.
+     * The WeatherService will make an API call to OpenWeatherMap and cache the results.
+     * The callback methods (onSuccess/onError) are invoked on a background thread,
+     * so UI updates must be posted to the main thread using the Handler.
+     * 
+     * <p>If the WeatherService is not initialized, this method logs an error and returns
+     * early to prevent a NullPointerException.
      */
     private void fetchWeatherData() {
+        // Early return: Validate that WeatherService is initialized before attempting
+        // to fetch weather data. This prevents NullPointerException if the service
+        // was not properly set up in onCreate().
         if (weatherService == null) {
             Log.e("DetailsActivity", "WeatherService is null");
             return;
         }
         
+        // Initiate asynchronous weather data fetch. The WeatherService.fetchWeatherData()
+        // method will handle the network request on a background thread and invoke
+        // the appropriate callback method when complete.
         weatherService.fetchWeatherData(new WeatherService.WeatherCallback() {
+            /**
+             * Called when weather data is successfully fetched and cached by WeatherService.
+             * This callback is invoked on a background thread, so UI updates must be
+             * posted to the main thread using the Handler to avoid threading violations.
+             */
             @Override
             public void onSuccess() {
-                // Update UI on main thread
+                // Post UI update to the main thread. The WeatherCallback.onSuccess() is
+                // invoked on a background thread, but Android requires all UI operations
+                // to be performed on the main/UI thread. The Handler ensures thread safety.
                 handler.post(() -> {
                     updateWeatherUI();
                 });
             }
             
+            /**
+             * Called when an error occurs during the weather data fetch.
+             * This callback is invoked on a background thread, so UI updates must be
+             * posted to the main thread using the Handler.
+             * 
+             * @param error The exception that occurred during the fetch operation.
+             *              Common causes include network failures, API key issues, or
+             *              invalid city names.
+             */
             @Override
             public void onError(Exception error) {
+                // Log the error for debugging purposes. The error message will help
+                // identify issues such as missing API keys, network problems, or invalid responses.
                 Log.e("DetailsActivity", "Failed to fetch weather data: " + error.getMessage());
-                // Update UI with error message on main thread
+                // Update UI with error state on main thread. Display "N/A" for all
+                // weather fields to indicate that data is unavailable, providing clear
+                // feedback to the user that the weather information could not be loaded.
                 handler.post(() -> {
                     weatherText.setText("N/A");
                     temperatureText.setText("N/A");
