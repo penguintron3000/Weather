@@ -69,6 +69,8 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         fetchWeatherData();
 
         Button buttonMap = findViewById(R.id.detailsMapButton);
+
+        // Sets an onClickListener to launch the MapActivity with the city's location details passed via Intent
         buttonMap.setOnClickListener(v ->{
             Intent intent = new Intent(this, MapActivity.class);
             intent.putExtra("lat", currentCity.getLat());
@@ -78,6 +80,7 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         });
 
         Button insightsButton = findViewById(R.id.detailsWeatherInsightsButton);
+        // Sets an onClickListener to launch the WeatherInsightsActivity with the city's details passed via Intent
         /**
          * TODO: redirect to the weather insights activity with necessary values into intent payload
         buttonMap.setOnClickListener(v ->{
