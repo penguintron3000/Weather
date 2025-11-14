@@ -4,4 +4,10 @@
     <string-array name="layout_options">
         <item>@string/layout_option_default</item>
     </string-array>
+    <string name="weather_insights_title">Weather Insights</string>
+    <string name="weather_insights_instructions">Pick a suggested question to get tailored guidance for today\'s weather.</string>
+    <string name="weather_insights_response_label">Latest Insight</string>
+    <string name="weather_insights_loading_error">Unable to load Weather Insights. Please try again.</string>
+    <string name="weather_insights_missing_city">We couldn\'t determine which city to analyze.</string>
+    <string name="weather_insights_button_label">Weather Insights</string>
 </resources>

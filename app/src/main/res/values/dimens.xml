@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="weather_insights_button_margin_vertical">12dp</dimen>
+</resources>

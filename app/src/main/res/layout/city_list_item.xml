@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="8dp">
 
     <Button
         android:id="@+id/view_city_info_button"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="City, State, Country" />
 
-    <Button
-        android:id="@+id/map_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:minWidth="64dp"
-        android:text="Map" />
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/remove_button"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:backgroundTint="#FD0000"
-        android:text="X"
-        android:textColor="@android:color/white"/>
+        <Button
+            android:id="@+id/weather_insights_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weather_insights_button_label" />
+
+        <Button
+            android:id="@+id/map_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:minWidth="64dp"
+            android:text="Map" />
+
+        <Button
+            android:id="@+id/remove_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#FD0000"
+            android:text="X"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
 </LinearLayout>
