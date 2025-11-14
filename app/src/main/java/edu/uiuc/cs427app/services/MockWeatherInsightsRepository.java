@@ -27,6 +27,7 @@ public class MockWeatherInsightsRepository implements WeatherInsightsRepository 
      */
     @Override
     public void fetchInitialQuestions(City city, QuestionsCallback callback) {
+        // Post with delay to mimic network latency before delivering initial questions.
         handler.postDelayed(() -> callback.onSuccess(buildInitialQuestions(city)), SIMULATED_DELAY_MS);
     }
 
@@ -35,6 +36,7 @@ public class MockWeatherInsightsRepository implements WeatherInsightsRepository 
      */
     @Override
     public void askQuestion(City city, String prompt, ResponseCallback callback) {
+        // Post with delay to mimic round-trip time for the LLM response.
         handler.postDelayed(() -> callback.onSuccess(
                 new WeatherInsightsResponse(
                         buildResponse(city, prompt),
