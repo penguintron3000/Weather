@@ -36,7 +36,7 @@ public class WeatherService {
     private static final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
     
     private final String city;
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
     
     // Cached weather data
     private Double temperature = null;
@@ -82,6 +82,17 @@ public class WeatherService {
     }
     
     /**
+     * Ensures the executor service is available. If it has been shut down,
+     * creates a new executor instance. This allows the service to be reused
+     * even after shutdown() has been called.
+     */
+    private void ensureExecutor() {
+        if (executor == null || executor.isShutdown()) {
+            executor = Executors.newSingleThreadExecutor();
+        }
+    }
+    
+    /**
      * Fetches weather data from the OpenWeatherMap API asynchronously.
      * The data is cached after a successful fetch, so subsequent calls to getter
      * methods will return the cached data without making additional API calls.
@@ -100,6 +111,9 @@ public class WeatherService {
      * @see WeatherCallback#onError(Exception) Called when an error occurs during fetch
      */
     public void fetchWeatherData(WeatherCallback callback) {
+        // Ensure executor is available (recreate if it was shut down)
+        ensureExecutor();
+        
         // Early return optimization: If data was already successfully fetched and cached,
         // invoke the success callback immediately on the executor thread to maintain
         // consistent threading behavior, avoiding unnecessary API calls.
@@ -121,6 +135,7 @@ public class WeatherService {
             fetchError = error;
             // Execute the error callback on the background thread to maintain
             // consistent threading behavior with the success path.
+            // Note: ensureExecutor() was already called above, so executor is available
             executor.execute(() -> callback.onError(error));
             return;
         }
@@ -428,10 +443,13 @@ public class WeatherService {
     
     /**
      * Shuts down the executor service. Call this when the service is no longer needed
-     * to free up resources.
+     * to free up resources. Note that the executor will be automatically recreated
+     * if fetchWeatherData() or refreshWeatherData() is called after shutdown.
      */
     public void shutdown() {
-        executor.shutdown();
+        if (executor != null && !executor.isShutdown()) {
+            executor.shutdown();
+        }
     }
 }
 
