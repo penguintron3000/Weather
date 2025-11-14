@@ -38,10 +38,22 @@ public class GeminiWeatherInsightsRepository implements WeatherInsightsRepositor
     private final ExecutorService executor;
     private final String apiKey;
 
+    /**
+     * Constructs a new GeminiWeatherInsightsRepository with default HTTP client and executor.
+     * 
+     * @throws IllegalStateException if the Gemini API key is missing or empty
+     */
     public GeminiWeatherInsightsRepository() {
         this(buildDefaultClient(), Executors.newSingleThreadExecutor());
     }
 
+    /**
+     * Constructs a new GeminiWeatherInsightsRepository with the specified HTTP client and executor.
+     * 
+     * @param httpClient The OkHttpClient instance to use for making API requests
+     * @param executor The ExecutorService to use for executing asynchronous operations
+     * @throws IllegalStateException if the Gemini API key is missing or empty
+     */
     GeminiWeatherInsightsRepository(OkHttpClient httpClient, ExecutorService executor) {
         this.httpClient = httpClient;
         this.executor = executor;
@@ -65,6 +77,13 @@ public class GeminiWeatherInsightsRepository implements WeatherInsightsRepositor
                 .build();
     }
 
+    /**
+     * Fetches current weather data, generates a prompt for Gemini, and returns
+     * at least two context-relevant questions based on the weather conditions.
+     * 
+     * @param city The city for which to generate questions
+     * @param callback The callback to receive the results (invoked on a background thread)
+     */
     @Override
     public void fetchInitialQuestions(City city, QuestionsCallback callback) {
         executor.execute(() -> {
@@ -81,6 +100,13 @@ public class GeminiWeatherInsightsRepository implements WeatherInsightsRepositor
         });
     }
 
+    /**
+     * Sends a user's question to Gemini and returns an answer plus follow-up questions.
+     * 
+     * @param city The city for which the question is being asked
+     * @param prompt The user's selected question
+     * @param callback The callback to receive the results (invoked on a background thread)
+     */
     @Override
     public void askQuestion(City city, String prompt, ResponseCallback callback) {
         executor.execute(() -> {
@@ -272,8 +298,12 @@ public class GeminiWeatherInsightsRepository implements WeatherInsightsRepositor
     }
 
     /**
-     * Extracts a error message from Gemini API error response JSON.
+     * Extracts a user-friendly error message from Gemini API error response JSON.
+     * Parses the error response structure to find the message field.
      * Returns null if the error body cannot be parsed.
+     * 
+     * @param errorBody The raw error response body from Gemini
+     * @return A user-friendly error message, or null if not found/parsed
      */
     private String extractErrorMessage(String errorBody) {
         if (errorBody == null || errorBody.trim().isEmpty()) {
