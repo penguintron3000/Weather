@@ -396,6 +396,8 @@ public class GeminiWeatherInsightsRepository implements WeatherInsightsRepositor
             builder.append(" (").append(city.getCountryCode()).append(")");
         }
         builder.append(" might ask based on the current conditions.\n");
+        builder.append("IMPORTANT: Each question must be written from the USER'S FIRST-PERSON perspective (e.g., \"Should I...\", \"What should I...\", \"Is it safe for me to...\", \"Can I...\").\n");
+        builder.append("Do NOT use second-person phrasing like \"Would you...\" or \"If you...\" - the user is asking the question, not being asked.\n");
         builder.append("Each question should be unique, under 120 characters, and helpful for planning daily activities.\n");
         builder.append("Use this weather summary:\n");
         builder.append(formatWeatherSummary(snapshot));
@@ -430,6 +432,8 @@ public class GeminiWeatherInsightsRepository implements WeatherInsightsRepositor
         builder.append(formatWeatherSummary(snapshot));
         builder.append("\nThe user asked: \"").append(userPrompt).append("\".\n");
         builder.append("Provide a clear, practical answer and suggest at least two follow-up questions that keep the conversation going.\n");
+        builder.append("IMPORTANT: Follow-up questions must be written from the USER'S FIRST-PERSON perspective (e.g., \"Should I...\", \"What should I...\", \"Is it safe for me to...\", \"Can I...\").\n");
+        builder.append("Do NOT use second-person phrasing like \"Would you...\" or \"If you...\" - the user is asking the question, not being asked.\n");
         builder.append("Respond ONLY with JSON shaped like this:\n");
         builder.append("{\"reply\": \"Your answer...\", \"followUpQuestions\": [\"Next question 1\", \"Next question 2\"]}\n");
         builder.append("Follow-up questions must be specific to the current conditions and under 120 characters.");
