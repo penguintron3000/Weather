@@ -13,6 +13,7 @@ if (localPropertiesFile.exists()) {
 // This gets the API key from the properties.
 def mapsApiKey = localProperties.getProperty('MAPS_API_KEY')
 def geminiApiKey = localProperties.getProperty('GEMINI_API_KEY')
+def weatherApiKey = localProperties.getProperty('WEATHER_API_KEY')
 
 android {
     compileSdk 32
@@ -28,6 +29,7 @@ android {
         manifestPlaceholders = [ MAPS_API_KEY : mapsApiKey ]
         buildConfigField('String', 'MAPS_API_KEY', '"' + (mapsApiKey ?: '') + '"')
         buildConfigField('String', 'GEMINI_API_KEY', '"' + (geminiApiKey ?: '') + '"')
+        buildConfigField('String', 'WEATHER_API_KEY', '"' + (weatherApiKey ?: '') + '"')
 
     }
 
