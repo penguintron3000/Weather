@@ -72,6 +72,15 @@ public class GeminiThemeService {
 
         // Execute theme generation asynchronously on background thread
         executor.execute(() -> {
+            try {
+                // Enforce rate limiting (shared across all Gemini services using the same API key)
+                GeminiRateLimiter.enforceRateLimit();
+            } catch (IOException rateLimitError) {
+                Log.e(TAG, "Rate limit exceeded for theme generation", rateLimitError);
+                callback.onError(rateLimitError);
+                return;
+            }
+            
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                     .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
