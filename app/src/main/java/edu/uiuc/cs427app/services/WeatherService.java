@@ -45,6 +45,10 @@ public class WeatherService {
     private String windCondition = null; // Combined format for backward compatibility
     private Double windSpeed = null; // Wind speed in mph
     private String windDirection = null; // Wind direction (e.g., "NW", "SW")
+    // Timezone offset from UTC in seconds for the city's location (per OpenWeatherMap "timezone" field)
+    private Integer timezoneOffsetSeconds = null;
+    // Observation timestamp in seconds since epoch (UTC) for the current data (per OpenWeatherMap "dt" field)
+    private Long dataTimestampUnix = null;
     private boolean dataFetched = false;
     private Exception fetchError = null;
     
@@ -298,6 +302,34 @@ public class WeatherService {
             this.windSpeed = 0.0;
             this.windDirection = "N/A";
         }
+
+        // Parse timezone offset (seconds from UTC) and data timestamp (UTC epoch seconds)
+        // These are used to compute the city's local time for downstream consumers.
+        if (root.has("timezone")) {
+            this.timezoneOffsetSeconds = root.getInt("timezone");
+        }
+        if (root.has("dt")) {
+            this.dataTimestampUnix = root.getLong("dt");
+        }
+    }
+
+    /**
+     * Returns the hour of day (0-23) in the city's local time based on
+     * the OpenWeatherMap "dt" (UTC) and "timezone" (offset seconds) fields.
+     *
+     * @return Hour of day in the city's local time (0-23)
+     * @throws IllegalStateException If weather data or time fields are not available
+     */
+    public int getLocalHourOfDay() {
+        if (!dataFetched || timezoneOffsetSeconds == null || dataTimestampUnix == null) {
+            throw new IllegalStateException(
+                "Weather data not available. Call fetchWeatherData() first.");
+        }
+
+        long localSeconds = dataTimestampUnix + timezoneOffsetSeconds;
+        // Normalize into a single day range [0, 86400)
+        long normalized = ((localSeconds % 86400) + 86400) % 86400;
+        return (int) (normalized / 3600);
     }
     
     /**
@@ -437,6 +469,8 @@ public class WeatherService {
         windCondition = null;
         windSpeed = null;
         windDirection = null;
+        timezoneOffsetSeconds = null;
+        dataTimestampUnix = null;
         fetchError = null;
         fetchWeatherData(callback);
     }
