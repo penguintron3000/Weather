@@ -186,14 +186,14 @@ Meeting notes: Explain the overall team progress and a summary of discussion
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-| leby2          |                                 |                       |
-| ppc2           |                                 |                       |
-| bcli3          |                                 |                       |
-| yuhaoc7        |                                 |                       |
-| ashmitg2       |                                 |                       |
-| ericnl2        |                                 |                       |
-| ramvelu2       |                                 |                       |
-| wli200         |                                 |                       |
+| leby2          | Verified documentation requirement was met for all pull requests. Tested completed Iteration 4 code and created submission video. |                       |
+| ppc2           | Completed Iteration 4. |                       |
+| bcli3          | Finished assigned Iteration 4 tasking: Weather Insights LLM. |                       |
+| yuhaoc7        | Completed Iteration 4. |                       |
+| ashmitg2       | Finished assigned Iteration 4 tasking: Front-end for Weather Insights. |                       |
+| ericnl2        | Helped someone fix some Weather API connection bugs. |                       |
+| ramvelu2       | Finished assigned Iteration 4 tasking: Interactive Map Page Front-end. |                       |
+| wli200         | Finished assigned Iteration 4 tasking: LLM-Generated Weather-Aware City View. |                       |
 </br>
 
 

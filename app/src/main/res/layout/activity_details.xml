@@ -152,7 +152,7 @@
                             android:layout_height="match_parent"
                             android:gravity="top"
                             android:paddingTop="8dp"
-                            android:text="Temparature"
+                            android:text="Temperature"
                             android:textAlignment="center"
                             android:textSize="20dp" />
 
