@@ -1,6 +1,8 @@
 package edu.uiuc.cs427app;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import edu.uiuc.cs427app.services.WeatherAwareCityViewService;
 import edu.uiuc.cs427app.services.WeatherService;
 
 public class DetailsActivity extends ThemedActivity implements View.OnClickListener{
@@ -83,8 +86,33 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         // Provide a quick jump from the detail page into the Weather Insights flow.
         insightsButton.setOnClickListener(v -> openWeatherInsights(currentCity));
 
-        ConstraintLayout background =  findViewById(R.id.cityViewBackgroundImage);
-        //TODO: use LLM to set background here, however you may even create your own runnable if you want to update the image as the weather updates, can use weatherservice api calls
+        ConstraintLayout background = findViewById(R.id.cityViewBackgroundImage);
+        // Use Gemini to generate a weather-aware city background image and replace the placeholder.
+        // The WeatherAwareCityViewService performs network and image-generation work on a background
+        // thread so that this Activity remains responsive; its callback is invoked off the main
+        // thread. Because Android requires that all view mutations happen on the main thread,
+        // the callback body uses the Handler tied to the main Looper to safely update the layout.
+        try {
+            WeatherAwareCityViewService cityViewService = new WeatherAwareCityViewService();
+            cityViewService.generateCityViewImage(currentCity.getDisplayName(), new WeatherAwareCityViewService.Callback() {
+                @Override
+                public void onSuccess(Bitmap bitmap) {
+                    handler.post(() -> {
+                        if (!isFinishing() && bitmap != null) {
+                            BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
+                            background.setBackground(drawable);
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception error) {
+                    Log.e("DetailsActivity", "Failed to generate weather-aware city image", error);
+                }
+            });
+        } catch (IllegalStateException ex) {
+            Log.w("DetailsActivity", "Gemini API key missing; skipping city view background image.", ex);
+        }
 
         startRunnables();
 
