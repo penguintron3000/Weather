@@ -60,25 +60,14 @@
         </FrameLayout>
 
         <Button
-            android:id="@+id/detailsWeatherInsightsButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            android:text="Weather Insights"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent=".10"
-            app:layout_constraintTop_toBottomOf="@id/detailsDisplayName"
-            app:layout_constraintWidth_percent="0.33" />
-
-        <Button
             android:id="@+id/detailsMapButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="16dp"
             android:text="Show Map"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.10"
-            app:layout_constraintTop_toBottomOf="@id/detailsWeatherInsightsButton"
+            app:layout_constraintHeight_percent="0.20"
+            app:layout_constraintTop_toBottomOf="@id/detailsDisplayName"
             app:layout_constraintWidth_percent="0.33" />
 
         <ScrollView
@@ -91,7 +80,7 @@
             android:background="@android:color/transparent"
             android:tag="override_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.65"
+            app:layout_constraintHeight_percent="0.45"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/detailsMapButton">
@@ -260,6 +249,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
+
+        <Button
+            android:id="@+id/detailsWeatherInsightsButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:text="Weather Insights"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".10"
+            app:layout_constraintTop_toBottomOf="@id/detailsCityInfo"
+            app:layout_constraintWidth_percent="0.33" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
