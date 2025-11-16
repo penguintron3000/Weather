@@ -117,6 +117,21 @@ public class WeatherAwareCityViewService {
             return;
         }
 
+        /*
+         * Execute the potentially long‑running work (weather fetch + Gemini image generation)
+         * on this service's ExecutorService to avoid blocking the caller's thread.
+         *
+         * The flow inside the task is:
+         *  1. Try to fetch live weather data via WeatherService for the requested city.
+         *  2. If live data is unavailable, log and surface the error via the callback without
+         *     attempting to generate an image so that the caller can choose to display nothing.
+         *  3. Build a detailed prompt that incorporates the weather snapshot and time‑of‑day label.
+         *  4. Call the Gemini image model and decode the first inline image candidate.
+         *  5. Invoke the callback with either the generated Bitmap or an error.
+         *
+         * Callers must marshal the callback result back to the main/UI thread before touching
+         * any Android views.
+         */
         executor.execute(() -> {
             String trimmedName = cityName.trim();
             try {
@@ -145,25 +160,11 @@ public class WeatherAwareCityViewService {
                     int localHour = weatherService.getLocalHourOfDay();
                     timeOfDayLabel = deriveTimeOfDayForHour(localHour);
                 } catch (Exception e) {
-                    Log.w(TAG, "Weather API unavailable for " + trimmedName + ", using fallback data. Error: " + e.getMessage());
-
-                    String summary = String.format(
-                            Locale.US,
-                            "Using fallback weather data for %s (API may not be activated yet)",
-                            trimmedName
-                    );
-
-                    snapshot = new WeatherSnapshot(
-                            72.0,
-                            "Partly Cloudy",
-                            55,
-                            6.0,
-                            "NW",
-                            summary
-                    );
-
-                    // Fallback: derive time-of-day from the device clock if API time fields are unavailable.
-                    timeOfDayLabel = deriveTimeOfDayFromDeviceClock();
+                    Log.w(TAG, "Weather API unavailable for " + trimmedName + ", skipping city view image. Error: " + e.getMessage());
+                    // Propagate the error to the caller; no image will be generated when
+                    // weather data cannot be fetched.
+                    callback.onError(e);
+                    return;
                 } finally {
                     weatherService.shutdown();
                 }

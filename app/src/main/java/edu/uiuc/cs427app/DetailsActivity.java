@@ -87,7 +87,11 @@ public class DetailsActivity extends ThemedActivity implements View.OnClickListe
         insightsButton.setOnClickListener(v -> openWeatherInsights(currentCity));
 
         ConstraintLayout background = findViewById(R.id.cityViewBackgroundImage);
-        // Use Gemini LLM to generate a weather-aware city background image and replace the placeholder.
+        // Use Gemini to generate a weather-aware city background image and replace the placeholder.
+        // The WeatherAwareCityViewService performs network and image-generation work on a background
+        // thread so that this Activity remains responsive; its callback is invoked off the main
+        // thread. Because Android requires that all view mutations happen on the main thread,
+        // the callback body uses the Handler tied to the main Looper to safely update the layout.
         try {
             WeatherAwareCityViewService cityViewService = new WeatherAwareCityViewService();
             cityViewService.generateCityViewImage(currentCity.getDisplayName(), new WeatherAwareCityViewService.Callback() {
