@@ -217,12 +217,15 @@ public class WeatherAwareCityViewService {
                         + "- Wind: %.1f mph %s\n"
                         + "- Time of day: %s.\n\n"
                         + "Show a recognizable but generic city view (street-level or skyline) for %s. "
+                        + "The image must be a vertical portrait phone wallpaper with a 9:16 aspect ratio, "
+                        + "filling the entire screen on a modern smartphone without letterboxing. Center the "
+                        + "main visual interest so that the top and bottom of the frame are fully occupied. "
                         + "Emphasize lighting, sky, and atmosphere that fit the time of day and weather "
                         + "(for example, wet sidewalks and reflections for rain, bright clear skies for "
                         + "sunny noon, long warm shadows at sunset, or hazy air for humid conditions). "
                         + "The image must look like a high-quality photograph, suitable as a background "
-                        + "for a mobile weather app. Use a widescreen 16:9 aspect ratio, avoid any text, "
-                        + "logos, or watermarks, and focus on the overall mood described above.\n\n"
+                        + "for a mobile weather app. Avoid any text, logos, or watermarks, and focus on the "
+                        + "overall mood described above.\n\n"
                         + "Additional context: %s",
                 cityName,
                 snapshot.getConditionDescription(),
