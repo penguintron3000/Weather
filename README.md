@@ -180,20 +180,20 @@ Meeting notes: I gave an overview of what Iteration 4 entails to make sure every
 
 <b>Project Week 9</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, yuhaoc7, ashmitg2, ericnl2, ramvelu2
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We went over the Iteration 5 assignment. I discussed an overview of how I divided up the work into individual tasks and how I think they should be grouped together. Next, we discussed each task in detail so each developer was aware of the tasks. We discussed the story points for each task. Finally, I gave some tips on testing and allowed each developer to choose what task(s) they wanted to work on (number of tasks was determined by amount of story points of each task). 
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-| leby2          | Verified documentation requirement was met for all pull requests. Tested completed Iteration 4 code and created submission video. |                       |
-| ppc2           | Completed Iteration 4. |                       |
-| bcli3          | Finished assigned Iteration 4 tasking: Weather Insights LLM. |                       |
-| yuhaoc7        | Completed Iteration 4. |                       |
-| ashmitg2       | Finished assigned Iteration 4 tasking: Front-end for Weather Insights. |                       |
-| ericnl2        | Helped someone fix some Weather API connection bugs. |                       |
-| ramvelu2       | Finished assigned Iteration 4 tasking: Interactive Map Page Front-end. |                       |
-| wli200         | Finished assigned Iteration 4 tasking: LLM-Generated Weather-Aware City View. |                       |
+| leby2          | Verified documentation requirement was met for all pull requests. Tested completed Iteration 4 code and submitted it. | Divide up Iteration 5 into individualized tasking. Make detailed explanations of each task and requirements for each. Assign tasking. |
+| ppc2           | Completed Iteration 4. | Assigned to Test Adding a New City and Removing an Existing City. |
+| bcli3          | Finished assigned Iteration 4 tasking: Weather Insights LLM. | Assigned to Test Weather Feture for 2 Cities. |
+| yuhaoc7        | Completed Iteration 4. | Assigned Generate User Login and Sign Up Tests with LLM and to create the LLM Usage Report. |
+| ashmitg2       | Finished assigned Iteration 4 tasking: Front-end for Weather Insights. | Assigned Mocking Location Test. |
+| ericnl2        | Helped someone fix some Weather API connection bugs. | Assigned to Test "Weather Insight" Feature. |
+| ramvelu2       | Finished assigned Iteration 4 tasking: Interactive Map Page Front-end. | Assigned Testing User Log Off and Code Coverage Report Generation. |
+| wli200         | Finished assigned Iteration 4 tasking: LLM-Generated Weather-Aware City View. Volunteered to create submission video since recommended Gemini model is no longer supported.  | Assigned to Test Location Feature for 2 Cities. |
 </br>
 
 
