@@ -271,6 +271,10 @@ public class WeatherInsightsTest {
     public static List<String> getTextsFromContainer(ActivityScenario<?> scenario, int containerId) {
         List<String> texts = new ArrayList<>();
 
+        /**
+         * Extracts text from element
+         * @param activity Activity to find parent element with corresponding containerId
+         */
         scenario.onActivity(activity -> {
             View root = activity.findViewById(containerId);
             if (root instanceof ViewGroup) {
@@ -308,6 +312,10 @@ public class WeatherInsightsTest {
     public static String getText(ActivityScenario<?> scenario, int viewId) {
         final String[] text = {null}; //awkward but has to be instantiated this way as text has to be declared final
 
+        /**
+         * Extracts text from element
+         * @param activity Activity to extract text from
+         */
         scenario.onActivity(activity -> {
             View view = activity.findViewById(viewId);
             if (view instanceof TextView) {
