@@ -38,28 +38,23 @@ import java.util.HashSet;
 import java.util.List;
 
 import edu.uiuc.cs427app.db.CityContract;
-import edu.uiuc.cs427app.services.MockWeatherInsightsRepository;
-import edu.uiuc.cs427app.services.WeatherInsightsRepositoryProvider;
 
 /**
  * Tests for complete WeatherInsightsActivity navigation and functionality.
- * Does not test real API, only uses mock repository, separately tests API as
- * the API seems to be rate-limited by these tests.
- *
- * WeatherInsightsAPITest will also cover activity-bound functionality but will not cover
- * navigational as APi is irrelevant to navigational functionality.
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class WeatherInsightsTest {
 
-    public final int EXPECTED_QUESTION_COUNT = 3;
+    public final int EXPECTED_INITIAL_QUESTION_COUNT = 3; //according to prompt "at least 3" from GeminiWeatherInsightsRepository
+    public final int EXPECTED_QUESTION_COUNT = 2;//according to prompt "at least 2"
     //random user id, make sure to change it along with USER_ID_STR or just dynamically do it
     public static final long USER_ID = 57364L;
     public static final String USER_ID_STR = "57364";
     public static final City EXAMPLE_CITY = new City(USER_ID,USER_ID_STR, "ChIJOwg_06VPwokRYv534QaPC8g", "New York City", "New York",
             "USA", 40.7128, -74.0060);
-    public static final int timeToWait = 2000;
+    public static final int timeToWait = 10000; // api waiting time, recommend minimum 10 seconds unless you got fast internet
+    public static final int transitionTime = 2000; //transition time between tests
 
     /**
      * Creates weatherInsightsActivity intent
@@ -82,7 +77,7 @@ public class WeatherInsightsTest {
         User.getInstance().init(USER_ID, "testuser", null);
         Intents.init();
 
-        WeatherInsightsRepositoryProvider.setRepository(new MockWeatherInsightsRepository());
+        //WeatherInsightsRepositoryProvider.setRepository(new MockWeatherInsightsRepository());
     }
 
     @After
@@ -106,11 +101,11 @@ public class WeatherInsightsTest {
             }
             List<String> questions = getTextsFromContainer(scenario, R.id.weatherInsightsQuestionsContainer);
 
-            assertTrue(EXPECTED_QUESTION_COUNT <= questions.size()); //at least 3 according to prompt
+            assertTrue(EXPECTED_INITIAL_QUESTION_COUNT <= questions.size()); //at least 3 according to prompt
             assertEquals(questions.size(), new HashSet<>(questions).size());
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(transitionTime);
             } catch (InterruptedException ie) {
                 // ignore
             }
@@ -119,10 +114,8 @@ public class WeatherInsightsTest {
 
     /**
      * Tests for initial 3+ questions.
-     * Tests for additional 2+ questions and a response whenever a question button is pressed.
-     * Question button is pressed twice
-     * Uniqueness is not covered in mock repository as responses and questions are limited, will
-     * be covered in the API test
+     * Tests for uniqueness between all questions and responses
+     * Tests for 2+ questions and a response whenever a question button is pressed.
      */
     @Test
     public void testClickingQuestionGeneratesNewQuestions() {
@@ -135,7 +128,7 @@ public class WeatherInsightsTest {
             }
             List<String> initialQuestions = getTextsFromContainer(scenario, R.id.weatherInsightsQuestionsContainer);
 
-            assertEquals(EXPECTED_QUESTION_COUNT, initialQuestions.size());
+            assertEquals(EXPECTED_INITIAL_QUESTION_COUNT, initialQuestions.size());
 
             String questionToClick = initialQuestions.get(0);
 
@@ -148,10 +141,18 @@ public class WeatherInsightsTest {
             }
 
             List<String> newQuestions = getTextsFromContainer(scenario, R.id.weatherInsightsQuestionsContainer);
+
+            //checks for response and that it's not the sample response
             String response = getText(scenario, R.id.weatherInsightsResponse);
             assertNotEquals(sampleResponse, response);
 
-            assertTrue(EXPECTED_QUESTION_COUNT - 1 <= newQuestions.size()); //at least 2 according to prompt
+            assertTrue(EXPECTED_QUESTION_COUNT <= newQuestions.size()); //at least 2 according to prompt
+
+            HashSet<String> combinedSet = new HashSet<>(initialQuestions);
+            combinedSet.addAll(newQuestions);
+
+            //checks for dupes by checking dynamic sizes between sets and arrays
+            assertEquals(combinedSet.size(), initialQuestions.size() + newQuestions.size());
 
             //repeating the test once more by clicking the "question button" and applying assertions again
             String anotherQuestionToClick = newQuestions.get(0);
@@ -165,13 +166,17 @@ public class WeatherInsightsTest {
             }
 
             List<String> moreNewQuestions = getTextsFromContainer(scenario, R.id.weatherInsightsQuestionsContainer);
+
             response = getText(scenario, R.id.weatherInsightsResponse);
             assertNotEquals(sampleResponse, response);
 
-            assertTrue(EXPECTED_QUESTION_COUNT - 1 <= moreNewQuestions.size());
+            assertTrue(EXPECTED_QUESTION_COUNT <= moreNewQuestions.size());
+
+            combinedSet.addAll(moreNewQuestions);
+            assertEquals(combinedSet.size(), initialQuestions.size() + newQuestions.size() + moreNewQuestions.size());
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(transitionTime);
             } catch (InterruptedException ie) {
                 // ignore
             }
@@ -220,7 +225,7 @@ public class WeatherInsightsTest {
         resolver.delete(uri, null, null);
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(transitionTime);
         } catch (InterruptedException ie) {
             // ignore
         }
@@ -251,7 +256,7 @@ public class WeatherInsightsTest {
         }
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(transitionTime);
         } catch (InterruptedException ie) {
             // ignore
         }

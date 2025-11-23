@@ -15,9 +15,8 @@ import java.util.concurrent.TimeUnit;
  */
 public final class GeminiRateLimiter {
     private static final String TAG = "GeminiRateLimiter";
-    
-    // Rate limiting: allow 10 requests per minute (1 request every 6 seconds).
-    private static final int REQUESTS_PER_MINUTE = 10;
+
+    private static final int REQUESTS_PER_MINUTE = 30;
     private static final long MIN_REQUEST_INTERVAL_MS = TimeUnit.SECONDS.toMillis(60) / REQUESTS_PER_MINUTE;
     
     private static volatile long lastRequestTimeMs = 0L;
