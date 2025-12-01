@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.model.AddressComponent;
@@ -22,11 +21,9 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import androidx.annotation.VisibleForTesting;
 
 import java.util.Arrays;
-import java.util.List;
-
-import edu.uiuc.cs427app.db.CityContract;
 
 /**
  * AddCityActivity provides a user interface for searching and adding new cities to the user's list.
@@ -79,13 +76,8 @@ public class AddCityActivity extends ThemedActivity {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                selectedPlace = place;
-                String display = place.getName() != null ? place.getName() : "(unknown)";
-                selectedCityText.setText("Selected City: " + display);
-                buttonSave.setVisibility(View.VISIBLE);
-                Log.i(TAG, "Place selected: name=" + place.getName()
-                        + ", id=" + place.getId()
-                        + ", latLng=" + (place.getLatLng() != null ? place.getLatLng().toString() : "null"));
+                // This is the logic we want to simulate in our test
+                updateUiWithSelectedPlace(place);
             }
 
             @Override
@@ -135,6 +127,32 @@ public class AddCityActivity extends ThemedActivity {
         });
 
         buttonCancel.setOnClickListener(v -> finish());
+    }
+
+    /**
+     * Helper method to update the UI and internal state with a selected Place.
+     * This is called from the testing code.
+     * @param place The selected Place object.
+     */
+    private void updateUiWithSelectedPlace(@NonNull Place place) {
+        this.selectedPlace = place;
+        String display = place.getName() != null ? place.getName() : "(unknown)";
+        selectedCityText.setText("Selected City: " + display);
+        buttonSave.setVisibility(View.VISIBLE);
+        Log.i(TAG, "UI updated with place: name=" + place.getName());
+    }
+
+    /**
+     * Injects a mock {@link Place} object to simulate the selection of a city, bypassing the Google Places UI.
+     * This method is annotated with {@link VisibleForTesting} to indicate it should only be used in tests.
+     * It directly calls the same UI update logic that is triggered when a user selects a place from the
+     * autocomplete dropdown in the production application.
+     *
+     * @param place The mock Place object to be used for the test.
+     */
+    @VisibleForTesting
+    public void setFakePlaceForTesting(@NonNull Place place) {
+        updateUiWithSelectedPlace(place);
     }
 
     /**
