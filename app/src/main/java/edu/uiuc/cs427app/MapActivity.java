@@ -9,6 +9,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import androidx.annotation.VisibleForTesting;
 
 /**
  * MapActivity displays a Google Map focused on a specific city.
@@ -22,6 +23,8 @@ public class MapActivity extends ThemedActivity implements OnMapReadyCallback {
     private double lat;
     private double lon;
     private String cityName;
+    private TextView cityNameView;
+    private TextView coordinatesView;
 
     /**
      * Called when the activity is first created.
@@ -34,22 +37,15 @@ public class MapActivity extends ThemedActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        cityNameView = findViewById(R.id.city_name);
+        coordinatesView = findViewById(R.id.coordinates);
+
         // Get the location data and city name from the intent
         lat = getIntent().getDoubleExtra("lat", 0);
         lon = getIntent().getDoubleExtra("lon", 0);
         cityName = getIntent().getStringExtra("city");
 
-        // Display the city name
-        TextView cityNameView = findViewById(R.id.city_name);
-        if (cityName != null && !cityName.isEmpty()) {
-            cityNameView.setText(cityName);
-        } else {
-            cityNameView.setText("Unknown City");
-        }
-
-        // Display the latitude and longitude
-        TextView coordinatesView = findViewById(R.id.coordinates);
-        coordinatesView.setText(String.format("Latitude: %.6f, Longitude: %.6f", lat, lon));
+        updateLocationDisplay(lat, lon, cityName);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -69,9 +65,41 @@ public class MapActivity extends ThemedActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        renderMapLocation();
+    }
+
+    /**
+     * Allows instrumentation tests to swap the shown location without recreating the activity.
+     */
+    @VisibleForTesting
+    public void updateLocationForTesting(double lat, double lon, String cityName) {
+        updateLocationDisplay(lat, lon, cityName);
+    }
+
+    private void updateLocationDisplay(double lat, double lon, String cityName) {
+        this.lat = lat;
+        this.lon = lon;
+        this.cityName = cityName;
+
+        if (cityName != null && !cityName.isEmpty()) {
+            cityNameView.setText(cityName);
+        } else {
+            cityNameView.setText("Unknown City");
+        }
+
+        coordinatesView.setText(String.format("Latitude: %.6f, Longitude: %.6f", lat, lon));
+        renderMapLocation();
+    }
+
+    private void renderMapLocation() {
+        if (mMap == null) {
+            return;
+        }
+
         // Create a LatLng object for the city's location
         LatLng cityLocation = new LatLng(lat, lon);
 
+        mMap.clear();
         // Add a marker at the city's location with the city name as the title
         mMap.addMarker(new MarkerOptions().position(cityLocation).title(cityName));
 
