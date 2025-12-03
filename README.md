@@ -199,39 +199,39 @@ Meeting notes: We went over the Iteration 5 assignment. I discussed an overview 
 
 <b>Project Week 10</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, bcli3, yuhaoc7, ashmitg2, ericnl2, ramvelu2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We didn't have to meet because it was Fall Break but we still discussed the project some over messages.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-| leby2          |                                 |                       |
-| ppc2           |                                 |                       |
-| bcli3          |                                 |                       |
-| yuhaoc7        |                                 |                       |
-| ashmitg2       |                                 |                       |
-| ericnl2        |                                 |                       |
-| ramvelu2       |                                 |                       |
-| wli200         |                                 |                       |
+| leby2          | Divided up Iteration 5 into individualized tasking. Made detailed explanations of each task and requirements for each. Assigned all tasking. Reviewed all submitted PR's. | Review all submitted PR's and provide assistance as needed. |
+| ppc2           | None (it was Fall Break). | Assigned to Test Adding a New City and Removing an Existing City. |
+| bcli3          | Finished assigned Iteration 5 tasking: Testing Weather Feature for 2 Cities. | All assigned tasking for Iteration 5 has been completed. |
+| yuhaoc7        | None (it was Fall Break). | Assigned Generate User Login Tests and Sign Up Tests with LLM and LLM Usage Report. |
+| ashmitg2       | None (it was Fall Break). | Assigned Mocking Location Test. |
+| ericnl2        | Finished assigned Iteration 5 tasking: Testing "Weather Insight" Feature. | All assigned tasking for Iteration 5 has been completed. |
+| ramvelu2       | None (it was Fall Break). | Assigned Testing User Log Off and Coverage Report Generation. |
+| wli200         | None (it was Fall Break). | Assigned Testing Location Feature for 2 Cities. |
 </br>
 
 
 <b>Project Week 11</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, bcli3, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We discussed the tasks that remained as well as the upcoming deadlines for both projects. We mainly just wanted to make sure everyone was aware of what state both projects are currently in and what remained.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-| leby2          |                                 |                       |
-| ppc2           |                                 |                       |
-| bcli3          |                                 |                       |
-| yuhaoc7        |                                 |                       |
-| ashmitg2       |                                 |                       |
-| ericnl2        |                                 |                       |
-| ramvelu2       |                                 |                       |
-| wli200         |                                 |                       |
+| leby2          | Reviewed all submitted PR's and provided assistance as needed. | Review future pull requests, create video, and submit project. |
+| ppc2           | Finished all assigned Iteration 5 tasking: Test Adding a New City and Removing an Existing City. | Already finished all assigned Iteration 5 tasking. |
+| bcli3          | Already finished all assigned Iteration 5 tasking. | Already finished all assigned Iteration 5 tasking. |
+| yuhaoc7        | None. |Assigned Generate User Login Tests and Sign Up Tests with LLM and LLM Usage Report. |
+| ashmitg2       | Finished all assigned Iteration 5 tasking: Mocking Location Test. | Already finished all assigned Iteration 5 tasking. |
+| ericnl2        | Already finished all assigned Iteration 5 tasking. | Already finished all assigned Iteration 5 tasking. |
+| ramvelu2       | None. | Assigned Testing User Log Off and Coverage Report Generation. |
+| wli200         | Finished assigned Iteration 5 tasking: Testing Location Feature for 2 Cities. | Already finished all assigned Iteration 5 tasking. |
 </br>
 
 
