@@ -7,6 +7,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -130,8 +131,8 @@ public class MapLocationFeatureTest {
     private void assertMapCenteredOnCity(ActivityScenario<MapActivity> scenario, GoogleMap map, TestCity city) throws InterruptedException {
         CameraPosition camera = getCameraPositionOnUiThread(scenario, map);
         LatLng target = camera.target;
-        assertTrue(Math.abs(target.latitude - city.lat) < COORD_TOLERANCE);
-        assertTrue(Math.abs(target.longitude - city.lon) < COORD_TOLERANCE);
+        assertEquals("Camera latitude should match city", city.lat, target.latitude, COORD_TOLERANCE);
+        assertEquals("Camera longitude should match city", city.lon, target.longitude, COORD_TOLERANCE);
     }
 
     /**
@@ -158,6 +159,7 @@ public class MapLocationFeatureTest {
             GoogleMap map = waitForMap(scenario);
 
             onView(withId(R.id.map)).perform(click());
+            Thread.sleep(1000);
             onView(withId(R.id.map)).check(matches(isDisplayed()));
 
             assertMapCenteredOnCity(scenario, map, city);
@@ -165,12 +167,12 @@ public class MapLocationFeatureTest {
 
             CameraPosition initialCamera = getCameraPositionOnUiThread(scenario, map);
             scenario.onActivity(activity -> map.moveCamera(CameraUpdateFactory.zoomIn()));
-            Thread.sleep(500);
+            Thread.sleep(1000);
             float zoomedIn = getCameraPositionOnUiThread(scenario, map).zoom;
             assertTrue("Zoom in should increase zoom level", zoomedIn - initialCamera.zoom >= ZOOM_DELTA_MIN);
 
             scenario.onActivity(activity -> map.moveCamera(CameraUpdateFactory.zoomOut()));
-            Thread.sleep(500);
+            Thread.sleep(1000);
             float zoomedOut = getCameraPositionOnUiThread(scenario, map).zoom;
             assertTrue("Zoom out should decrease zoom level", zoomedIn - zoomedOut >= ZOOM_DELTA_MIN);
         }
