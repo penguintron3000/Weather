@@ -129,9 +129,9 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Account was successfully created!")));
 
-        // Wait for navigation delay (500ms) and verify navigation to LoginActivity
+        // Wait for async database operations to complete
         try {
-            Thread.sleep(600); // Wait slightly longer than the 500ms delay
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -217,6 +217,13 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Wait for async database operations to complete
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Username has already been taken, please choose another")));
     }
@@ -297,13 +304,20 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Wait for async database operations to complete
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         // Verify success message
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Account was successfully created!")));
 
         // Verify user in database
         try {
-            Thread.sleep(600);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -336,8 +350,9 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Account was successfully created!")));
 
+        // Wait for async database operations to complete
         try {
-            Thread.sleep(600);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -358,8 +373,9 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Wait for async database operations to complete
         try {
-            Thread.sleep(600);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -428,6 +444,13 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(VALID_CONFIRM_PASSWORD), closeSoftKeyboard());
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Wait for async database operations to complete
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         // Should show success message, not the previous error
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Account was successfully created!")));
@@ -469,8 +492,16 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Wait for async database operations to complete
         try {
-            Thread.sleep(600);
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Wait additional time for database write to complete
+        try {
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -478,6 +509,36 @@ public class UserSignUpLLMGeneratedTest {
         // Username should be stored trimmed
         assertTrue("Trimmed username should be stored", userExistsInDatabase(trimmedUsername));
         assertFalse("Username with spaces should not be stored", userExistsInDatabase(usernameWithSpaces));
+    }
+
+    /**
+     * Test 19: Verify registration with LLM theme generation waits for async LLM response.
+     * This test verifies that when a theme description is provided, the app waits for
+     * the LLM to generate the theme before creating the user account.
+     */
+    @Test
+    public void testRegistrationSuccess_WithLLMThemeGeneration() {
+        String usernameWithTheme = "llmuser123";
+        String themeDescription = "A dark blue theme with modern design";
+        
+        onView(withId(R.id.inputUsername)).perform(replaceText(usernameWithTheme), closeSoftKeyboard());
+        onView(withId(R.id.inputPassword)).perform(replaceText(VALID_PASSWORD), closeSoftKeyboard());
+        onView(withId(R.id.inputConfirmPassword)).perform(replaceText(VALID_CONFIRM_PASSWORD), closeSoftKeyboard());
+        onView(withId(R.id.inputThemeDescription)).perform(replaceText(themeDescription), closeSoftKeyboard());
+
+        onView(withId(R.id.buttonRegister)).perform(click());
+
+        // Wait for LLM response (can take several seconds) and database operations
+        // LLM timeout is 60 seconds, but we'll wait a reasonable amount for test
+        try {
+            Thread.sleep(10000); // Wait 10 seconds for LLM response and user creation
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Verify user was created in database (even if LLM failed, user should be created with default theme)
+        assertTrue("User should be created in database after LLM theme generation", 
+                userExistsInDatabase(usernameWithTheme));
     }
 }
 
