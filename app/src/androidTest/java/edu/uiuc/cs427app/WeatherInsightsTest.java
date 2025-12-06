@@ -53,8 +53,8 @@ public class WeatherInsightsTest extends BaseAndroidTest {
     public static final String USER_ID_STR = "57364";
     public static final City EXAMPLE_CITY = new City(USER_ID,USER_ID_STR, "ChIJOwg_06VPwokRYv534QaPC8g", "New York City", "New York",
             "USA", 40.7128, -74.0060);
-    public static final int timeToWait = 15000; // api waiting time, recommend minimum 10 seconds unless you got fast internet
-    public static final int transitionTime = 4000; //transition time between tests
+    public static final int timeToWait = 10000; // api waiting time, recommend minimum 10 seconds unless you got fast internet
+    public static final int transitionTime = 2000; //transition time between tests
 
     /**
      * Creates weatherInsightsActivity intent

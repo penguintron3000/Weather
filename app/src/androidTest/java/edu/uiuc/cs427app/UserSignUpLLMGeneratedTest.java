@@ -65,7 +65,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
     private static final String VALID_USERNAME = "newuser123";
     private static final String VALID_PASSWORD = "SecurePass1!";
     private static final String VALID_CONFIRM_PASSWORD = "SecurePass1!";
-    private static final int ui_delay_only_ms = 300;
+    private static final int ui_delay_only_ms = 150;
     private static final int database_delay_ms = 500;
     private Context context;
 
@@ -81,7 +81,6 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         context.getContentResolver().delete(UserContract.CONTENT_URI, null, null);
         Intents.init();
-        sleep(50);
     }
 
     /**
@@ -91,7 +90,6 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
     @After
     public void tearDown() {
         Intents.release();
-        sleep(50);
     }
 
     /**
@@ -319,7 +317,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
 
         // Small delay to ensure UI has updated (success message is shown synchronously)
         // We check before the 500ms navigation delay in RegisterActivity
-        sleep(500);
+        sleep(200);
 
         // Verify success message is displayed (before navigation happens after 500ms)
         onView(withId(R.id.errorMessage))
@@ -445,7 +443,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
 
         // Small delay to ensure UI has updated (success message is shown synchronously)
         // We check before the 500ms navigation delay in RegisterActivity
-        sleep(500);
+        sleep(200);
 
         // Verify success message is displayed (before navigation happens after 500ms)
         // Should show success message, not the previous error
@@ -467,7 +465,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(VALID_CONFIRM_PASSWORD), closeSoftKeyboard());
 
         onView(withId(R.id.buttonRegister)).perform(click());
-        sleep(500);
+        sleep(200);
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Account was successfully created!")));
