@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MainActivityTest {
+public class MainActivityTest extends BaseAndroidTest {
 
     private static final String CUSTOM_THEME_JSON = "{\"themeName\":\"TestTheme\",\"backgroundColor\":\"#000000\",\"textColor\":\"#FFFFFF\",\"primaryColor\":\"#FF0000\",\"secondaryColor\":\"#00FF00\",\"headerColor\":\"#0000FF\",\"buttonBackgroundColor\":\"#FFFF00\",\"buttonTextColor\":\"#FF00FF\",\"cardBackgroundColor\":\"#00FFFF\",\"borderColor\":\"#808080\",\"errorColor\":\"#FF0000\",\"successColor\":\"#00FF00\",\"emoji\":\"🎨\"}";
 
