@@ -317,7 +317,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
 
         // Small delay to ensure UI has updated (success message is shown synchronously)
         // We check before the 500ms navigation delay in RegisterActivity
-        sleep(200);
+        sleep(ui_delay_only_ms);
 
         // Verify success message is displayed (before navigation happens after 500ms)
         onView(withId(R.id.errorMessage))
@@ -359,7 +359,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
                 .check(matches(withText("Account was successfully created!")));
 
         // Wait for async database operations to complete
-        sleep();
+        sleep(database_delay_ms);
         assertTrue("User should be created in database", userExistsInDatabase(VALID_USERNAME));
     }
 
@@ -443,7 +443,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
 
         // Small delay to ensure UI has updated (success message is shown synchronously)
         // We check before the 500ms navigation delay in RegisterActivity
-        sleep(200);
+        sleep(ui_delay_only_ms);
 
         // Verify success message is displayed (before navigation happens after 500ms)
         // Should show success message, not the previous error
@@ -465,7 +465,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(VALID_CONFIRM_PASSWORD), closeSoftKeyboard());
 
         onView(withId(R.id.buttonRegister)).perform(click());
-        sleep(200);
+        sleep(ui_delay_only_ms);
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Account was successfully created!")));
