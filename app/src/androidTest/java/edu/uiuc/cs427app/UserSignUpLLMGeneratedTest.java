@@ -66,7 +66,7 @@ public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
     private static final String VALID_PASSWORD = "SecurePass1!";
     private static final String VALID_CONFIRM_PASSWORD = "SecurePass1!";
     private static final int ui_delay_only_ms = 150;
-    private static final int database_delay_ms = 500;
+    private static final int database_delay_ms = 400;
     private Context context;
 
     @Rule
