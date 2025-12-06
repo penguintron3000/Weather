@@ -240,6 +240,13 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
     }
@@ -255,6 +262,13 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(passwordNoUpper), closeSoftKeyboard());
 
         onView(withId(R.id.buttonRegister)).perform(click());
+
+        // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
@@ -272,6 +286,13 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
     }
@@ -287,6 +308,13 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(passwordNoSpecial), closeSoftKeyboard());
 
         onView(withId(R.id.buttonRegister)).perform(click());
+
+        // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
@@ -304,23 +332,26 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Small delay to ensure UI has updated (success message is shown synchronously)
+        // We check before the 500ms navigation delay in RegisterActivity
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Verify success message is displayed (before navigation happens after 500ms)
+        onView(withId(R.id.errorMessage))
+                .check(matches(withText("Account was successfully created!")));
+
         // Wait for async database operations to complete
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-        // Verify success message
-        onView(withId(R.id.errorMessage))
-                .check(matches(withText("Account was successfully created!")));
-
+        
         // Verify user in database
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
         assertTrue("User should be created in database", userExistsInDatabase(VALID_USERNAME));
     }
 
@@ -444,16 +475,25 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(VALID_CONFIRM_PASSWORD), closeSoftKeyboard());
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Small delay to ensure UI has updated (success message is shown synchronously)
+        // We check before the 500ms navigation delay in RegisterActivity
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Verify success message is displayed (before navigation happens after 500ms)
+        // Should show success message, not the previous error
+        onView(withId(R.id.errorMessage))
+                .check(matches(withText("Account was successfully created!")));
+
         // Wait for async database operations to complete
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-        // Should show success message, not the previous error
-        onView(withId(R.id.errorMessage))
-                .check(matches(withText("Account was successfully created!")));
     }
 
     /**
@@ -530,8 +570,18 @@ public class UserSignUpLLMGeneratedTest {
 
         // Wait for LLM response (can take several seconds) and database operations
         // LLM timeout is 60 seconds, but we'll wait a reasonable amount for test
+        // The flow is: LLM call (async) -> callback -> createUser (sync DB insert) -> showSuccess -> navigate
+        // We need sufficient time for all these steps to complete
         try {
-            Thread.sleep(10000); // Wait 10 seconds for LLM response and user creation
+            Thread.sleep(15000); // Wait 15 seconds for LLM response and user creation
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Additional delay to ensure database write has fully completed
+        // This helps with flakiness when database operations take longer than expected
+        try {
+            Thread.sleep(2000); // Additional 2 seconds for database write to complete
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
