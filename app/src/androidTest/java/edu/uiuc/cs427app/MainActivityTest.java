@@ -26,6 +26,8 @@ import org.junit.runner.RunWith;
 public class MainActivityTest extends BaseAndroidTest {
 
     private static final String CUSTOM_THEME_JSON = "{\"themeName\":\"TestTheme\",\"backgroundColor\":\"#000000\",\"textColor\":\"#FFFFFF\",\"primaryColor\":\"#FF0000\",\"secondaryColor\":\"#00FF00\",\"headerColor\":\"#0000FF\",\"buttonBackgroundColor\":\"#FFFF00\",\"buttonTextColor\":\"#FF00FF\",\"cardBackgroundColor\":\"#00FFFF\",\"borderColor\":\"#808080\",\"errorColor\":\"#FF0000\",\"successColor\":\"#00FF00\",\"emoji\":\"🎨\"}";
+    private final int ui_wait_ms = 200;
+    private final int activity_transition_ms = 500;
 
     @Before
     public void setUp() {
@@ -60,20 +62,6 @@ public class MainActivityTest extends BaseAndroidTest {
     }
 
     /**
-     * Helper method to pause test execution for demonstration purposes.
-     * This allows TAs to follow the test execution more easily in videos.
-     *
-     * @param millis The duration to sleep in milliseconds.
-     */
-    private void sleepForDemo(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    /**
      * Verifies that clicking the Log Out button triggers the logout process.
      * This test ensures the logout button is functional and responds to clicks.
      */
@@ -81,14 +69,14 @@ public class MainActivityTest extends BaseAndroidTest {
     public void checkLogoutButtonTriggersLogout() {
         // Setup: Launch MainActivity with a logged-in user
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivity()) {
-            sleepForDemo(1000); // Wait for UI to load
+            sleep(ui_wait_ms); // Wait for UI to load
 
             // Action: Verify logout button is displayed and click it
             onView(withId(R.id.buttonLogOut))
                     .check(matches(isDisplayed()))
                     .perform(click());
 
-            sleepForDemo(500); // Wait for logout action to complete
+            sleep(activity_transition_ms); // Wait for logout action to complete
 
             // Assert: Verify user is no longer logged in
             InstrumentationRegistry.getInstrumentation().waitForIdleSync();
@@ -104,12 +92,12 @@ public class MainActivityTest extends BaseAndroidTest {
     public void checkLogoutRedirectsToLoginScreen() {
         // Setup: Launch MainActivity with a logged-in user
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivity()) {
-            sleepForDemo(1000); // Wait for UI to load
+            sleep(ui_wait_ms); // Wait for UI to load
 
             // Action: Click the logout button
             onView(withId(R.id.buttonLogOut)).perform(click());
 
-            sleepForDemo(1000); // Wait for activity transition
+            sleep(activity_transition_ms); // Wait for activity transition
 
             // Assert: Verify LoginActivity is started and login form is displayed
             Intents.intended(IntentMatchers.hasComponent(LoginActivity.class.getName()));
@@ -125,7 +113,7 @@ public class MainActivityTest extends BaseAndroidTest {
     public void checkLogoutClearsUserSession() {
         // Setup: Launch MainActivity with a logged-in user
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivity()) {
-            sleepForDemo(1000); // Wait for UI to load
+            sleep(ui_wait_ms); // Wait for UI to load
 
             // Verify user is logged in before logout
             assertTrue("User should be logged in before logout", User.getInstance().isLoggedIn());
@@ -133,7 +121,7 @@ public class MainActivityTest extends BaseAndroidTest {
             // Action: Click the logout button
             onView(withId(R.id.buttonLogOut)).perform(click());
 
-            sleepForDemo(500); // Wait for logout action to complete
+            sleep(activity_transition_ms); // Wait for logout action to complete
 
             // Assert: Verify user session is cleared
             InstrumentationRegistry.getInstrumentation().waitForIdleSync();
@@ -151,7 +139,7 @@ public class MainActivityTest extends BaseAndroidTest {
     public void checkLogoutResetsThemeToDefault() {
         // Setup: Launch MainActivity with a logged-in user that has a custom theme
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivityWithCustomTheme()) {
-            sleepForDemo(1000); // Wait for UI to load
+            sleep(ui_wait_ms); // Wait for UI to load
 
             // Verify user has a custom theme before logout
             String themeBeforeLogout = User.getInstance().getThemeJson();
@@ -161,7 +149,7 @@ public class MainActivityTest extends BaseAndroidTest {
             // Action: Click the logout button
             onView(withId(R.id.buttonLogOut)).perform(click());
 
-            sleepForDemo(500); // Wait for logout action to complete
+            sleep(activity_transition_ms); // Wait for logout action to complete
 
             // Assert: Verify theme is reset to default (themeJson should be null)
             InstrumentationRegistry.getInstrumentation().waitForIdleSync();
@@ -180,7 +168,7 @@ public class MainActivityTest extends BaseAndroidTest {
     public void checkCompleteLogoutFlow() {
         // Setup: Launch MainActivity with a logged-in user that has a custom theme
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivityWithCustomTheme()) {
-            sleepForDemo(1000); // Wait for UI to load
+            sleep(ui_wait_ms); // Wait for UI to load
 
             // Verify initial state: user is logged in with custom theme
             assertTrue("User should be logged in initially", User.getInstance().isLoggedIn());
@@ -193,13 +181,13 @@ public class MainActivityTest extends BaseAndroidTest {
                     .check(matches(isDisplayed()))
                     .perform(click());
 
-            sleepForDemo(1000); // Wait for activity transition and logout processing
+            sleep(activity_transition_ms); // Wait for activity transition and logout processing
 
             // Assert: Verify user is redirected to LoginActivity
             Intents.intended(IntentMatchers.hasComponent(LoginActivity.class.getName()));
             onView(withId(R.id.login_form_view)).check(matches(isDisplayed()));
 
-            sleepForDemo(500); // Additional pause for clarity
+            sleep(activity_transition_ms); // Additional pause for clarity
 
             // Assert: Verify user session is completely cleared
             InstrumentationRegistry.getInstrumentation().waitForIdleSync();
