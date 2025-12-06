@@ -10,7 +10,7 @@ done
 PATTERN=' > .* FAILED$|Tests on .* failed|FAILURE: Build failed with an exception'
 if rg -n "$PATTERN" "$LOGFILE"; then
     echo "" | tee -a "$LOGFILE"
-    echo "!!! FAILURES FOUND !!!"
+    echo "FAILURES FOUND!"
 else
     echo "No failures found"
 fi
