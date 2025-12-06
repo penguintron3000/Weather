@@ -237,18 +237,18 @@ Meeting notes: We discussed the tasks that remained as well as the upcoming dead
 
 <b>Project Week 12</b>
 </br>
-Members present: List the NetID of the people who attended the meeting
+Members present: leby2, ppc2, bcli3, yuhaoc7, ashmitg2, ericnl2, ramvelu2, wli200
 </br>
-Meeting notes: Explain the overall team progress and a summary of discussion
+Meeting notes: We met on Saturday since the project would finish before our next regularly scheduled weekly meeting. We discussed the tasks that remained. We also discussed the flaky tests that had been found, how the identified flaky tests should be fixed, and how to try to identify more flaky tests. In general we wanted to make sure everyone understood the basics of how to fix the flaky tests that are found so the tests hopefully don't fail when the TA runs them. The rest of the time we spent discussing the other group proiject.
 </br>
 | NetID          | Progress from last week         | Tasks for next week   |
 | ---------------| --------------------------------| ----------------------|
-| leby2          |                                 |                       |
-| ppc2           |                                 |                       |
-| bcli3          |                                 |                       |
-| yuhaoc7        |                                 |                       |
-| ashmitg2       |                                 |                       |
-| ericnl2        |                                 |                       |
-| ramvelu2       |                                 |                       |
-| wli200         |                                 |                       |
+| leby2          | Reviewed all submitted PR's and provided assistance as needed. Wrote and shared code to identify flaky tests. Identified and helped fix failing flaky tests. | Fixed more flaky tests. Created and submitted video. |
+| ppc2           | Already finished all assigned Iteration 5 tasking. | Already finished all assigned Iteration 5 tasking. |
+| bcli3          | Already finished all assigned Iteration 5 tasking. | Already finished all assigned Iteration 5 tasking. |
+| yuhaoc7        | Finished all Iteration 5 tasking: Generate User Login Tests and Sign Up Tests with LLM and LLM Usage Report. Gave report to Lucas to submit with final deliverables on campuswire. | Already finished all assigned Iteration 5 tasking. |
+| ashmitg2       | Already finished all assigned Iteration 5 tasking. | Already finished all assigned Iteration 5 tasking. |
+| ericnl2        | Already finished all assigned Iteration 5 tasking. | Already finished all assigned Iteration 5 tasking. |
+| ramvelu2       | Finished all assigned Iteration 5 tasking: Testing User Log Off and Coverage Report Generation. | Already finished all assigned Iteration 5 tasking. |
+| wli200         | Already finished all assigned Iteration 5 tasking. | Already finished all assigned Iteration 5 tasking. |
 </br>
