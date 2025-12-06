@@ -240,6 +240,13 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
     }
@@ -255,6 +262,13 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(passwordNoUpper), closeSoftKeyboard());
 
         onView(withId(R.id.buttonRegister)).perform(click());
+
+        // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
@@ -272,6 +286,13 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
     }
@@ -287,6 +308,13 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(passwordNoSpecial), closeSoftKeyboard());
 
         onView(withId(R.id.buttonRegister)).perform(click());
+
+        // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
