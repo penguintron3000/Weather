@@ -542,8 +542,18 @@ public class UserSignUpLLMGeneratedTest {
 
         // Wait for LLM response (can take several seconds) and database operations
         // LLM timeout is 60 seconds, but we'll wait a reasonable amount for test
+        // The flow is: LLM call (async) -> callback -> createUser (sync DB insert) -> showSuccess -> navigate
+        // We need sufficient time for all these steps to complete
         try {
-            Thread.sleep(10000); // Wait 10 seconds for LLM response and user creation
+            Thread.sleep(15000); // Wait 15 seconds for LLM response and user creation
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Additional delay to ensure database write has fully completed
+        // This helps with flakiness when database operations take longer than expected
+        try {
+            Thread.sleep(2000); // Additional 2 seconds for database write to complete
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
