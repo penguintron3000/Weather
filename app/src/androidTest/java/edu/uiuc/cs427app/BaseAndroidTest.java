@@ -6,7 +6,7 @@ package edu.uiuc.cs427app;
  */
 public abstract class BaseAndroidTest {
 
-    public static final int uiThreadWaitMs = 750;
+    public static final int uiThreadWaitMs = 500;
 
     /**
      * Sends the current thread to sleep for the specified duration.
