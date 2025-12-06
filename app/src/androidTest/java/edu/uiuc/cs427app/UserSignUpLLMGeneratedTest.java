@@ -60,7 +60,7 @@ import edu.uiuc.cs427app.db.UserContract;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class UserSignUpLLMGeneratedTest {
+public class UserSignUpLLMGeneratedTest extends BaseAndroidTest {
 
     private static final String VALID_USERNAME = "newuser123";
     private static final String VALID_PASSWORD = "SecurePass1!";
@@ -79,6 +79,7 @@ public class UserSignUpLLMGeneratedTest {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         context.getContentResolver().delete(UserContract.CONTENT_URI, null, null);
         Intents.init();
+        sleep();
     }
 
     /**
@@ -88,6 +89,7 @@ public class UserSignUpLLMGeneratedTest {
     @After
     public void tearDown() {
         Intents.release();
+        sleep();
     }
 
     /**
@@ -130,11 +132,7 @@ public class UserSignUpLLMGeneratedTest {
                 .check(matches(withText("Account was successfully created!")));
 
         // Wait for async database operations to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep();
 
         // Verify user was written to database
         assertTrue("User should be created in database", userExistsInDatabase(VALID_USERNAME));
@@ -218,11 +216,7 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.buttonRegister)).perform(click());
 
         // Wait for async database operations to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep();
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Username has already been taken, please choose another")));
@@ -241,11 +235,7 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.buttonRegister)).perform(click());
 
         // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(500);
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
@@ -264,11 +254,7 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.buttonRegister)).perform(click());
 
         // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(500);
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
@@ -287,11 +273,7 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.buttonRegister)).perform(click());
 
         // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(500);
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
@@ -310,11 +292,7 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.buttonRegister)).perform(click());
 
         // Small delay to ensure UI has updated (error message is shown synchronously but UI needs time to render)
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(500);
 
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Password must be at least 8 characters with at least one uppercase letter, one lowercase letter, and one special character")));
@@ -334,22 +312,14 @@ public class UserSignUpLLMGeneratedTest {
 
         // Small delay to ensure UI has updated (success message is shown synchronously)
         // We check before the 500ms navigation delay in RegisterActivity
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(500);
 
         // Verify success message is displayed (before navigation happens after 500ms)
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Account was successfully created!")));
 
         // Wait for async database operations to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep();
         
         // Verify user in database
         assertTrue("User should be created in database", userExistsInDatabase(VALID_USERNAME));
@@ -382,11 +352,7 @@ public class UserSignUpLLMGeneratedTest {
                 .check(matches(withText("Account was successfully created!")));
 
         // Wait for async database operations to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep();
         assertTrue("User should be created in database", userExistsInDatabase(VALID_USERNAME));
     }
 
@@ -405,11 +371,7 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.buttonRegister)).perform(click());
 
         // Wait for async database operations to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep();
 
         // Verify user exists in database
         assertTrue("User should exist in database", userExistsInDatabase(testUsername));
@@ -449,11 +411,7 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(password), closeSoftKeyboard());
         onView(withId(R.id.buttonRegister)).perform(click());
 
-        try {
-            Thread.sleep(600);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep();
 
         // Verify user exists
         assertTrue("User should exist", userExistsInDatabase(username1));
@@ -477,11 +435,7 @@ public class UserSignUpLLMGeneratedTest {
 
         // Small delay to ensure UI has updated (success message is shown synchronously)
         // We check before the 500ms navigation delay in RegisterActivity
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(500);
 
         // Verify success message is displayed (before navigation happens after 500ms)
         // Should show success message, not the previous error
@@ -489,11 +443,7 @@ public class UserSignUpLLMGeneratedTest {
                 .check(matches(withText("Account was successfully created!")));
 
         // Wait for async database operations to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep();
     }
 
     /**
@@ -511,11 +461,7 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.errorMessage))
                 .check(matches(withText("Account was successfully created!")));
 
-        try {
-            Thread.sleep(600);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(600);
         assertTrue("User with special characters should be created", userExistsInDatabase(specialUsername));
     }
 
@@ -533,18 +479,10 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.buttonRegister)).perform(click());
 
         // Wait for async database operations to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(500);
 
         // Wait additional time for database write to complete
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(500);
 
         // Username should be stored trimmed
         assertTrue("Trimmed username should be stored", userExistsInDatabase(trimmedUsername));
@@ -572,19 +510,11 @@ public class UserSignUpLLMGeneratedTest {
         // LLM timeout is 60 seconds, but we'll wait a reasonable amount for test
         // The flow is: LLM call (async) -> callback -> createUser (sync DB insert) -> showSuccess -> navigate
         // We need sufficient time for all these steps to complete
-        try {
-            Thread.sleep(15000); // Wait 15 seconds for LLM response and user creation
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(15000); // Wait 15 seconds for LLM response and user creation
 
         // Additional delay to ensure database write has fully completed
         // This helps with flakiness when database operations take longer than expected
-        try {
-            Thread.sleep(2000); // Additional 2 seconds for database write to complete
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        sleep(2000); // Additional 2 seconds for database write to complete
 
         // Verify user was created in database (even if LLM failed, user should be created with default theme)
         assertTrue("User should be created in database after LLM theme generation", 

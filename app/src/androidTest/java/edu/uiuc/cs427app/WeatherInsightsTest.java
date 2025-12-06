@@ -44,7 +44,7 @@ import edu.uiuc.cs427app.db.CityContract;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class WeatherInsightsTest {
+public class WeatherInsightsTest extends BaseAndroidTest {
 
     public final int EXPECTED_INITIAL_QUESTION_COUNT = 3; //according to prompt "at least 3" from GeminiWeatherInsightsRepository
     public final int EXPECTED_QUESTION_COUNT = 2;//according to prompt "at least 2"
@@ -53,8 +53,8 @@ public class WeatherInsightsTest {
     public static final String USER_ID_STR = "57364";
     public static final City EXAMPLE_CITY = new City(USER_ID,USER_ID_STR, "ChIJOwg_06VPwokRYv534QaPC8g", "New York City", "New York",
             "USA", 40.7128, -74.0060);
-    public static final int timeToWait = 10000; // api waiting time, recommend minimum 10 seconds unless you got fast internet
-    public static final int transitionTime = 2000; //transition time between tests
+    public static final int timeToWait = 15000; // api waiting time, recommend minimum 10 seconds unless you got fast internet
+    public static final int transitionTime = 4000; //transition time between tests
 
     /**
      * Creates weatherInsightsActivity intent
@@ -94,21 +94,13 @@ public class WeatherInsightsTest {
     @Test
     public void testQuestionsAppearAndAreUnique() {
         try(ActivityScenario<WeatherInsightsActivity> scenario = ActivityScenario.launch(createWeatherInsightsActivityIntent())) {
-            try {
-                Thread.sleep(timeToWait);
-            } catch (InterruptedException ie) {
-                // ignore
-            }
+            sleep(timeToWait);
             List<String> questions = getTextsFromContainer(scenario, R.id.weatherInsightsQuestionsContainer);
 
             assertTrue(EXPECTED_INITIAL_QUESTION_COUNT <= questions.size()); //at least 3 according to prompt
             assertEquals(questions.size(), new HashSet<>(questions).size());
 
-            try {
-                Thread.sleep(transitionTime);
-            } catch (InterruptedException ie) {
-                // ignore
-            }
+            sleep(transitionTime);
         }
     }
 
@@ -121,11 +113,7 @@ public class WeatherInsightsTest {
     public void testClickingQuestionGeneratesNewQuestions() {
         String sampleResponse = "Sample response from the Weather Insights LLM will appear here."; //make sure new responses aren't this
         try(ActivityScenario<WeatherInsightsActivity> scenario = ActivityScenario.launch(createWeatherInsightsActivityIntent())) {
-            try {
-                Thread.sleep(timeToWait);
-            } catch (InterruptedException e) {
-                //ignore
-            }
+            sleep(timeToWait);
             List<String> initialQuestions = getTextsFromContainer(scenario, R.id.weatherInsightsQuestionsContainer);
 
             assertEquals(EXPECTED_INITIAL_QUESTION_COUNT, initialQuestions.size());
@@ -134,11 +122,7 @@ public class WeatherInsightsTest {
 
             onView(ViewMatchers.withText(questionToClick)).perform(click());
 
-            try {
-                Thread.sleep(timeToWait);
-            } catch (InterruptedException ie) {
-                // ignore
-            }
+            sleep(timeToWait);
 
             List<String> newQuestions = getTextsFromContainer(scenario, R.id.weatherInsightsQuestionsContainer);
 
@@ -159,11 +143,7 @@ public class WeatherInsightsTest {
 
             onView(ViewMatchers.withText(anotherQuestionToClick)).perform(click());
 
-            try {
-                Thread.sleep(timeToWait);
-            } catch (InterruptedException ie) {
-                // ignore
-            }
+            sleep(timeToWait);
 
             List<String> moreNewQuestions = getTextsFromContainer(scenario, R.id.weatherInsightsQuestionsContainer);
 
@@ -175,11 +155,7 @@ public class WeatherInsightsTest {
             combinedSet.addAll(moreNewQuestions);
             assertEquals(combinedSet.size(), initialQuestions.size() + newQuestions.size() + moreNewQuestions.size());
 
-            try {
-                Thread.sleep(transitionTime);
-            } catch (InterruptedException ie) {
-                // ignore
-            }
+            sleep(transitionTime);
         }
     }
 
@@ -207,12 +183,11 @@ public class WeatherInsightsTest {
         Intent intent = new Intent(InstrumentationRegistry.getInstrumentation().getTargetContext(), MainActivity.class);
         intent.putExtra("city", EXAMPLE_CITY);
         try(ActivityScenario<MainActivity> scenario = ActivityScenario.launch(intent)){
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ie) {
-                // ignore
-            }
+            sleep(4000);
             onView(withId(R.id.weather_insights_button)).perform(click());
+
+            sleep(4000);
+
             Intents.intended(
                     allOf(
                             IntentMatchers.hasComponent(WeatherInsightsActivity.class.getName()),
@@ -224,11 +199,7 @@ public class WeatherInsightsTest {
 
         resolver.delete(uri, null, null);
 
-        try {
-            Thread.sleep(transitionTime);
-        } catch (InterruptedException ie) {
-            // ignore
-        }
+        sleep(transitionTime);
     }
 
     /**
@@ -240,12 +211,11 @@ public class WeatherInsightsTest {
         intent.putExtra("city", EXAMPLE_CITY);
 
         try(ActivityScenario<DetailsActivity> scenario = ActivityScenario.launch(intent)){
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ie) {
-                // ignore
-            }
+            sleep(4000);
             onView(withId(R.id.detailsWeatherInsightsButton)).perform(click());
+
+            sleep(4000);
+
             Intents.intended(
                     allOf(
                             IntentMatchers.hasComponent(WeatherInsightsActivity.class.getName()),
@@ -255,11 +225,7 @@ public class WeatherInsightsTest {
             onView(withId(R.id.weather_insights_root)).check(matches(isDisplayed()));
         }
 
-        try {
-            Thread.sleep(transitionTime);
-        } catch (InterruptedException ie) {
-            // ignore
-        }
+        sleep(transitionTime);
     }
 
     /**

@@ -21,18 +21,22 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MainActivityTest {
+public class MainActivityTest extends BaseAndroidTest {
 
     @Before
     public void setUp() {
         User.getInstance().clear();
+        sleep();
         Intents.init();
+        sleep();
     }
 
     @After
     public void tearDown() {
         Intents.release();
+        sleep();
         User.getInstance().clear();
+        sleep();
     }
 
     /**
@@ -42,6 +46,7 @@ public class MainActivityTest {
      */
     private ActivityScenario<MainActivity> launchLoggedInMainActivity() {
         User.getInstance().init(1L, "testuser", null);
+        sleep();
         return ActivityScenario.launch(MainActivity.class);
     }
 
@@ -52,7 +57,9 @@ public class MainActivityTest {
     public void logOutButton_redirectsToLoginActivity() {
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivity()) {
             onView(withId(R.id.buttonLogOut)).perform(click());
+            sleep();
             Intents.intended(IntentMatchers.hasComponent(LoginActivity.class.getName()));
+            sleep();
             onView(withId(R.id.login_form_view)).check(matches(isDisplayed()));
         }
     }
@@ -64,7 +71,9 @@ public class MainActivityTest {
     public void logOutButton_clearsUserSession() {
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivity()) {
             onView(withId(R.id.buttonLogOut)).perform(click());
+            sleep();
             InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+            sleep();
             assertFalse(User.getInstance().isLoggedIn());
         }
     }
