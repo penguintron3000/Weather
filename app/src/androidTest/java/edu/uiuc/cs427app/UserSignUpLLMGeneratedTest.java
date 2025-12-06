@@ -304,23 +304,26 @@ public class UserSignUpLLMGeneratedTest {
 
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Small delay to ensure UI has updated (success message is shown synchronously)
+        // We check before the 500ms navigation delay in RegisterActivity
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Verify success message is displayed (before navigation happens after 500ms)
+        onView(withId(R.id.errorMessage))
+                .check(matches(withText("Account was successfully created!")));
+
         // Wait for async database operations to complete
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-        // Verify success message
-        onView(withId(R.id.errorMessage))
-                .check(matches(withText("Account was successfully created!")));
-
+        
         // Verify user in database
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
         assertTrue("User should be created in database", userExistsInDatabase(VALID_USERNAME));
     }
 
@@ -444,16 +447,25 @@ public class UserSignUpLLMGeneratedTest {
         onView(withId(R.id.inputConfirmPassword)).perform(replaceText(VALID_CONFIRM_PASSWORD), closeSoftKeyboard());
         onView(withId(R.id.buttonRegister)).perform(click());
 
+        // Small delay to ensure UI has updated (success message is shown synchronously)
+        // We check before the 500ms navigation delay in RegisterActivity
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // Verify success message is displayed (before navigation happens after 500ms)
+        // Should show success message, not the previous error
+        onView(withId(R.id.errorMessage))
+                .check(matches(withText("Account was successfully created!")));
+
         // Wait for async database operations to complete
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-        // Should show success message, not the previous error
-        onView(withId(R.id.errorMessage))
-                .check(matches(withText("Account was successfully created!")));
     }
 
     /**
