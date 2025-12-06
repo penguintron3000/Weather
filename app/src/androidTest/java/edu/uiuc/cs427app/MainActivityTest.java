@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MainActivityTest {
+public class MainActivityTest extends BaseAndroidTest {
 
     @Before
     public void setUp() {
@@ -52,6 +52,7 @@ public class MainActivityTest {
     public void logOutButton_redirectsToLoginActivity() {
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivity()) {
             onView(withId(R.id.buttonLogOut)).perform(click());
+            sleep();
             Intents.intended(IntentMatchers.hasComponent(LoginActivity.class.getName()));
             onView(withId(R.id.login_form_view)).check(matches(isDisplayed()));
         }
@@ -64,6 +65,7 @@ public class MainActivityTest {
     public void logOutButton_clearsUserSession() {
         try (ActivityScenario<MainActivity> scenario = launchLoggedInMainActivity()) {
             onView(withId(R.id.buttonLogOut)).perform(click());
+            sleep();
             InstrumentationRegistry.getInstrumentation().waitForIdleSync();
             assertFalse(User.getInstance().isLoggedIn());
         }
