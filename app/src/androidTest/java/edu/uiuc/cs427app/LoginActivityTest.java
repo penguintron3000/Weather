@@ -72,6 +72,14 @@ public class LoginActivityTest {
         onView(withId(R.id.inputUsername)).perform(replaceText(USERNAME));
         onView(withId(R.id.inputPassword)).perform(replaceText(PASSWORD), closeSoftKeyboard());
         onView(withId(R.id.buttonSignIn)).perform(click());
+        
+        // Wait for async database operations to complete
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
         onView(withId(R.id.main_activity_container)).check(matches(isDisplayed()));
     }
 
@@ -84,6 +92,14 @@ public class LoginActivityTest {
         onView(withId(R.id.inputUsername)).perform(replaceText("invaliduser"));
         onView(withId(R.id.inputPassword)).perform(replaceText(PASSWORD), closeSoftKeyboard());
         onView(withId(R.id.buttonSignIn)).perform(click());
+        
+        // Wait for async database operations to complete
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
         onView(withId(R.id.errorMessage)).check(matches(withText("Your username and/or password was incorrect.")));
     }
 
@@ -96,6 +112,14 @@ public class LoginActivityTest {
         onView(withId(R.id.inputUsername)).perform(replaceText(USERNAME));
         onView(withId(R.id.inputPassword)).perform(replaceText("WrongPass1!"), closeSoftKeyboard());
         onView(withId(R.id.buttonSignIn)).perform(click());
+        
+        // Wait for async database operations to complete
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
         onView(withId(R.id.errorMessage)).check(matches(withText("Your username and/or password was incorrect.")));
     }
 
@@ -109,6 +133,13 @@ public class LoginActivityTest {
             onView(withId(R.id.inputUsername)).perform(replaceText(USERNAME));
             onView(withId(R.id.inputPassword)).perform(replaceText("WrongPass1!"), closeSoftKeyboard());
             onView(withId(R.id.buttonSignIn)).perform(click());
+            
+            // Wait for async database operations after each attempt
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
         onView(withId(R.id.errorMessage)).check(matches(withText("Account is temporarily locked due to too many failed attempts.")));
     }
@@ -128,6 +159,14 @@ public class LoginActivityTest {
         onView(withId(R.id.inputUsername)).perform(replaceText(USERNAME));
         onView(withId(R.id.inputPassword)).perform(replaceText(PASSWORD), closeSoftKeyboard());
         onView(withId(R.id.buttonSignIn)).perform(click());
+        
+        // Wait for async database operations to complete
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
         onView(withId(R.id.errorMessage)).check(matches(withText("Account is temporarily locked.")));
     }
 
@@ -147,6 +186,14 @@ public class LoginActivityTest {
         onView(withId(R.id.inputUsername)).perform(replaceText(USERNAME));
         onView(withId(R.id.inputPassword)).perform(replaceText(PASSWORD), closeSoftKeyboard());
         onView(withId(R.id.buttonSignIn)).perform(click());
+        
+        // Wait for async database operations (unlock and login) to complete
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
         onView(withId(R.id.main_activity_container)).check(matches(isDisplayed()));
     }
 }
