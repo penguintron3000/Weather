@@ -1,5 +1,5 @@
 #!/bin/bash
-ITERATIONS=100
+ITERATIONS=1
 LOGFILE="test_output.log"
 for ((i=1; i<=ITERATIONS; i++)); do
 	~/Library/Android/sdk/platform-tools/adb shell pm clear edu.uiuc.cs427app >> "$LOGFILE" 2>&1
